@@ -2,10 +2,9 @@
 This extension provides additional XML support to [VS Code](https://code.visualstudio.com).
 
 ## Features
-* Under Construction...
+* XML Formatting (Indent and Linearize)
 
 ## Roadmap
-* XML Formatting
 * XPath Evaluation
 * XPath Builder
 * View XML as Tree
