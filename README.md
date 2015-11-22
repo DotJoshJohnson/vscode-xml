@@ -3,8 +3,8 @@ This extension provides additional XML support to [VS Code](https://code.visuals
 
 ## Features
 * XML Formatting (Indent and Linearize)
+* XPath Evaluation
 
 ## Roadmap
-* XPath Evaluation
 * XPath Builder
 * View XML as Tree
