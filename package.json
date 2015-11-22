@@ -38,6 +38,10 @@
 			{
 				"command": "xmltools.linearizeXml",
 				"title": "XML Tools: Linearize XML"
+			},
+			{
+				"command": "xmltools.evaluateXPath",
+				"title": "XML Tools: Evaluate XPath"
 			}
 		]
 	},
@@ -51,7 +55,9 @@
 	"dependencies": {
 		"semver": "^5.1.0",
 		"request": "^2.67.0",
-		"pretty-data": "^0.40.0"
+		"pretty-data": "^0.40.0",
+		"xmldom": "^0.1.19",
+		"xpath": "^0.0.9"
 	},
 	"scripts": {
 		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
