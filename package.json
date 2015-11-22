@@ -29,6 +29,14 @@
 		"Languages", "Other"
 	],
 	"main": "./src/main",
+	"contributes": {
+		"commands": [
+			{
+				"command": "xmltools.formatXml",
+				"title": "Format XML"
+			}
+		]
+	},
 	"activationEvents": [
 		"onLanguage:xml"
 	],
@@ -38,7 +46,8 @@
 	},
 	"dependencies": {
 		"semver": "^5.1.0",
-		"request": "^2.67.0"
+		"request": "^2.67.0",
+		"pretty-data": "^0.40.0"
 	},
 	"scripts": {
 		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
