@@ -1,7 +1,7 @@
 {
 	"name": "xml",
 	"displayName": "XML Tools",
-	"description": "Additional XML Support for Visual Studio Code",
+	"description": "XML Formatting and XPath Tools for Visual Studio Code",
 	"version": "0.1.0",
 	"publisher": "DotJoshJohnson",
 	"author": {
