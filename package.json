@@ -33,7 +33,11 @@
 		"commands": [
 			{
 				"command": "xmltools.formatXml",
-				"title": "Format XML"
+				"title": "XML Tools: Format XML"
+			},
+			{
+				"command": "xmltools.linearizeXml",
+				"title": "XML Tools: Linearize XML"
 			}
 		]
 	},
