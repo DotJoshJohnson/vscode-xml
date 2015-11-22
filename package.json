@@ -1,0 +1,46 @@
+{
+	"name": "xml",
+	"displayName": "XML Tools",
+	"description": "Additional XML Support for Visual Studio Code",
+	"version": "0.1.0",
+	"publisher": "DotJoshJohnson",
+	"author": {
+		"name": "Josh Johnson",
+		"url": "https://github.com/DotJoshJohnson"
+	},
+	"icon": "resources/icon.png",
+	"galleryBanner": {
+		"color": "#3B4859",
+		"theme": "dark"
+	},
+	"homepage": "https://github.com/DotJoshJohnson/vscode-xml",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/DotJoshJohnson/vscode-xml.git"
+	},
+	"bugs": {
+		"url": "https://github.com/DotJoshJohnson/vscode-xml/issues"
+	},
+	"engines": {
+		"vscode": "^0.10.1",
+		"node": "*"
+	},
+	"categories": [
+		"Languages", "Other"
+	],
+	"main": "./src/main",
+	"activationEvents": [
+		"onLanguage:xml"
+	],
+	"devDependencies": {
+		"vscode": "^0.10.4",
+		"typescript": "^1.6.2"
+	},
+	"dependencies": {
+		"semver": "^5.1.0",
+		"request": "^2.67.0"
+	},
+	"scripts": {
+		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
+	}
+}
