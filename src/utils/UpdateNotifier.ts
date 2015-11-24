@@ -6,9 +6,9 @@ import { ExtensionManifestReader } from './ManifestUtils';
 let req = require('request');
 let semver = require('semver');
 
-export function checkForUpdates() {
+export function checkForUpdates() {	
 	let manifestReader: ExtensionManifestReader = new ExtensionManifestReader('DotJoshJohnson.xml');
-	let currentVersion = manifestReader.version;
+	let currentVersion = '0.0.0';//manifestReader.version;
 	
 	// use the GitHub api to determine the latest released version
 	let url = 'https://api.github.com/repos/DotJoshJohnson/vscode-xml/releases/latest';
@@ -24,7 +24,7 @@ export function checkForUpdates() {
 	req(options, (error, response, body) => {
 		if (!error && response.statusCode == 200) {
 			let release = JSON.parse(body);
-			let latestVersion = release.name.substring(1); // the telease/tag is prefixed with a "v"
+			let latestVersion = release.name.substring(1); // the release/tag is prefixed with a "v"
 			
 			if (!release.draft && semver.gt(latestVersion, currentVersion)) {
 				let updateNowLabel = 'Update Now';
@@ -34,6 +34,10 @@ export function checkForUpdates() {
 					}
 				});
 			}
+		}
+		
+		else {
+			console.log('XML Tools: Failed to get latest release information from GitHub.');
 		}
 	});
 }

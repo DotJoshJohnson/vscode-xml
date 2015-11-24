@@ -5,6 +5,7 @@ import { extensions, Extension } from 'vscode';
 export class ExtensionManifestReader {
 	constructor(extensionId: string) {
 		this._extension = extensions.getExtension(extensionId);
+		this.refresh();
 	}
 	
 	private _extension: Extension<any>
@@ -27,7 +28,7 @@ export class ExtensionManifestReader {
 	}
 	
 	refresh(): void {
-		let manifest: any = this._extension.packageJSON;
+		let manifest = this._extension.packageJSON;
 		
 		for (let property in manifest)
 		{
@@ -35,5 +36,7 @@ export class ExtensionManifestReader {
 				this[property] = manifest[property];
 			}
 		}
+		
+		this.displayName = manifest.displayName;
 	}
 }
