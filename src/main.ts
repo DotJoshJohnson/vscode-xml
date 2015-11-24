@@ -8,7 +8,7 @@ export function activate(ctx: ExtensionContext) {
 	// check for update
 	//...
 	
-	// register pallete commands
+	// register palette commands
 	ctx.subscriptions.push(commands.registerTextEditorCommand('xmltools.formatXml', formatXml));
 	ctx.subscriptions.push(commands.registerTextEditorCommand('xmltools.linearizeXml', linearizeXml));
 	ctx.subscriptions.push(commands.registerTextEditorCommand('xmltools.evaluateXPath', evaluateXPath));
