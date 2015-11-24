@@ -1,3 +1,5 @@
+'use strict';
+
 import { extensions, Extension } from 'vscode';
 
 export class ExtensionManifestReader {
