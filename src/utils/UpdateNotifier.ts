@@ -8,7 +8,7 @@ let semver = require('semver');
 
 export function checkForUpdates() {	
 	let manifestReader: ExtensionManifestReader = new ExtensionManifestReader('DotJoshJohnson.xml');
-	let currentVersion = '0.0.0';//manifestReader.version;
+	let currentVersion = manifestReader.version;
 	
 	// use the GitHub api to determine the latest released version
 	let url = 'https://api.github.com/repos/DotJoshJohnson/vscode-xml/releases/latest';
@@ -27,10 +27,10 @@ export function checkForUpdates() {
 			let latestVersion = release.name.substring(1); // the release/tag is prefixed with a "v"
 			
 			if (!release.draft && semver.gt(latestVersion, currentVersion)) {
-				let updateNowLabel = 'Update Now';
+				let updateNowLabel = 'Open Extension Manager';
 				window.showInformationMessage(`Version ${latestVersion} of the ${manifestReader.displayName} extension is available.`, updateNowLabel).then((clicked) => {
 					if (clicked == updateNowLabel) {
-						commands.executeCommand('workbench.extensions.action.installExtension', manifestReader.displayName);
+						commands.executeCommand('workbench.extensions.action.listExtensions', manifestReader.displayName);
 					}
 				});
 			}

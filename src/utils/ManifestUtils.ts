@@ -19,24 +19,16 @@ export class ExtensionManifestReader {
 	keywords: string[];
 	icon: string;
 	
-	private _checkPropertyExists(propertyName: string) {
-		for (let property in this) {
-			if (property === propertyName) return true;
-		}
-		
-		return false;
-	}
-	
 	refresh(): void {
 		let manifest = this._extension.packageJSON;
 		
-		for (let property in manifest)
-		{
-			if (this._checkPropertyExists(property)) {
-				this[property] = manifest[property];
-			}
-		}
-		
+		this.name = manifest.name;
+		this.version = manifest.version;
+		this.publisher = manifest.publisher;
 		this.displayName = manifest.displayName;
+		this.description = manifest.description;
+		this.categories = manifest.categories;
+		this.keywords = manifest.keywords;
+		this.icon = manifest.icon;
 	}
 }
