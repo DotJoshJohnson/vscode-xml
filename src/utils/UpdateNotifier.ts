@@ -1,6 +1,6 @@
 'use strict';
 
-import { window } from 'vscode';
+import { window, commands } from 'vscode';
 import { ExtensionManifestReader } from './ManifestUtils';
 
 let req = require('request');
@@ -27,7 +27,12 @@ export function checkForUpdates() {
 			let latestVersion = release.name.substring(1); // the telease/tag is prefixed with a "v"
 			
 			if (!release.draft && semver.gt(latestVersion, currentVersion)) {
-				window.showInformationMessage(`Version ${latestVersion} of the ${manifestReader.displayName} extension is available.`);
+				let updateNowLabel = 'Update Now';
+				window.showInformationMessage(`Version ${latestVersion} of the ${manifestReader.displayName} extension is available.`, updateNowLabel).then((clicked) => {
+					if (clicked == updateNowLabel) {
+						commands.executeCommand('workbench.extensions.action.installExtension', manifestReader.displayName);
+					}
+				});
 			}
 		}
 	});
