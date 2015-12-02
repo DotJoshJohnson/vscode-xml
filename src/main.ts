@@ -1,7 +1,7 @@
 'use strict';
 
-import { commands, ExtensionContext } from 'vscode';
-import { formatXml, linearizeXml } from './features/xmlFormatting';
+import { commands, languages, ExtensionContext } from 'vscode';
+import { linearizeXml, XmlDocumentFormattingProvider, XmlRangeFormattingProvider } from './features/xmlFormatting';
 import { evaluateXPath } from './features/xmlXPathEngine';
 import { checkForUpdates } from './utils/UpdateNotifier';
 
@@ -10,7 +10,10 @@ export function activate(ctx: ExtensionContext) {
 	checkForUpdates();
 	
 	// register palette commands
-	ctx.subscriptions.push(commands.registerTextEditorCommand('xmltools.formatXml', formatXml));
 	ctx.subscriptions.push(commands.registerTextEditorCommand('xmltools.linearizeXml', linearizeXml));
 	ctx.subscriptions.push(commands.registerTextEditorCommand('xmltools.evaluateXPath', evaluateXPath));
+	
+	// register formatting providers
+	ctx.subscriptions.push(languages.registerDocumentFormattingEditProvider('xml', new XmlDocumentFormattingProvider()));
+	ctx.subscriptions.push(languages.registerDocumentRangeFormattingEditProvider('xml', new XmlRangeFormattingProvider()));
 }
