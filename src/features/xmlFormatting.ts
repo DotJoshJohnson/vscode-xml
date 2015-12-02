@@ -53,78 +53,38 @@ function _linearizeXml(xml: string): string {
 }
 
 function _formatXml(xml: string, options: FormattingOptions): string {
-	/* This code was taken from https://github.com/vkiryukhin/pretty-data/blob/master/pretty-data.js
-	 * and refactored to fit our needs for this extension. pretty-data is dual-licensed (MIT/GPL).
-	 */
-	
-	let parts = _linearizeXml(xml)
-		.replace(/</g,"~::~<")
-		.replace(/xmlns\:/g,"~::~xmlns:")
-		.replace(/xmlns\=/g,"~::~xmlns=")
-		.split('~::~');
-	
 	let tab = _strRepeat(' ', options.tabSize);
-	let deep = 0;
 	let output = '';
-	let formatted = false;
+	let level = 0;
 	
-	for (let i = 0; i < parts.length; i++) {
+	// linearize the xml first for a consistent starting point
+	xml = _linearizeXml(xml);
+	
+	// put each tag on its own line
+	xml = xml.replace(/></g, '>\n<');
+	
+	// iterate over each line and plug in tabs
+	let tokens = xml.split('\n');
+	for (let i = 0; i < tokens.length; i++) {
+		let line = tokens[i];
 		
-		// start comment, CDATA, or DOCTYPE
-		if (parts[i].search(/<!/) > -1) {
-			output += _strRepeat(tab, deep) + parts[i];
-			formatted = true;
+		// start tags
+		let startMatch = /<[\w\d]+[^\/]*>/.exec(line);
+		if (startMatch !== null && startMatch[0] == line) {
+			output += _strRepeat(tab, level++) + line + '\n';
 			
-			// end comment, CDATA, or DOCTYPE
-			if (parts[i].search(/-->/) > -1 || parts[i].search(/\]>/) > -1 || parts[i].search(/!DOCTYPE/) > -1) {
-				formatted = false;
-			}
+			continue;
 		}
 		
-		// end comment or CDATA
-		else if (parts[i].search(/-->/) > -1 || parts[i].search(/\]>/) > -1) {
-			output += parts[i];
-			formatted = false;
+		// close tags
+		let closeMatch = /<\s*\/\s*[\w\d]+>/.exec(line);
+		if (closeMatch !== null && closeMatch[0] == line) {
+			output += _strRepeat(tab, --level) + line + '\n';
 		}
 		
-		// <elm></elm>
-		else if (/^<\w/.exec(parts[i - 1]) && /^<\/\w/.exec(parts[i]) && (/^<[\w:\-\.\,]+/.exec(parts[i - 1])[0] == /^<\/[\w:\-\.\,]+/.exec(parts[i])[0].replace('/','')) {
-			output += parts[i];
-			if (!formatted) deep--;
-		}
-		
-		// <elm>
-		else if (parts[i].search(/<\w/) > -1 && parts[i].search(/<\//) == -1 && parts[i].search(/\/>/) == -1 ) {
-			output = !formatted ? output += _strRepeat(tab, deep++) + parts[i] : output += parts[i];
-		}
-		
-		// <elm>...</elm>
-		else if (parts[i].search(/<\w/) > -1 && parts[i].search(/<\//) > -1) {
-			output = !formatted ? output += _strRepeat(tab, deep) + parts[i] : output += parts[i];
-		}
-		
-		// </elm>
-		else if (parts[i].search(/<\//) > -1) {
-			output = !formatted ? output += _strRepeat(tab, --deep) + parts[i] : output += parts[i];
-		}
-		
-		// <elm/>
-		else if (parts[i].search(/\/>/) > -1) {
-			output = !formatted ? output += _strRepeat(tab, deep) + parts[i] : output += parts[i];
-		}
-		
-		// <?xml ... ?>
-		else if (parts[i].search(/<\?/) > -1) {
-			output += _strRepeat(tab, deep) + parts[i];
-		}
-		
-		// xmlns
-		else if (parts[i].search(/xmlns\:/) > -1  || parts[i].search(/xmlns\=/) > -1) {
-			output += _strRepeat(tab, deep) + parts[i];
-		}
-		
+		// one-liners (items that do not affect level)
 		else {
-			output += parts[i];
+			output += _strRepeat(tab, level) + line + '\n';
 		}
 	}
 	
