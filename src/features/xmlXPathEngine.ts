@@ -34,6 +34,8 @@ export function evaluateXPath(editor: TextEditor, edit: TextEditorEdit): void {
 		if (resultChannel === null) resultChannel = window.createOutputChannel('XPath Evaluation Results');
 		resultChannel.clear();
 		
+		resultChannel.appendLine('Last query: ' + query + '\n');
+		
 		nodes.forEach((node) => {
 			resultChannel.appendLine(`${node.localName}: ${node.firstChild.data}`);
 		});
