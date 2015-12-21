@@ -1,16 +1,18 @@
 'use strict';
 
-import { window, TextEditor, TextEditorEdit, OutputChannel, ViewColumn } from 'vscode';
+import { window, TextEditor, TextEditorEdit, OutputChannel, ViewColumn, workspace } from 'vscode';
 
 let xpath = require('xpath');
 let dom = require('xmldom').DOMParser;
 let resultChannel: OutputChannel = null;
 
 export function evaluateXPath(editor: TextEditor, edit: TextEditorEdit): void {
-	window.showInputBox({
+    let isPersistant = workspace.getConfiguration().has('xmlTools.PersistXPathQuery') && workspace.getConfiguration('xmlTools').get<boolean>('PersistXPathQuery') === true	    
+    
+    window.showInputBox({
 		placeHolder: 'XPath Query',
 		prompt: 'Please enter an XPath query to evaluate.',
-		value: Singleton.getXPathValue()
+		value: isPersistant ? Singleton.getXPathValue() : ''
 		
 	}).then((query) => {
 		if (query === undefined) return;
@@ -36,9 +38,7 @@ export function evaluateXPath(editor: TextEditor, edit: TextEditorEdit): void {
 
 		if (resultChannel === null) resultChannel = window.createOutputChannel('XPath Evaluation Results');
 		resultChannel.clear();
-		
-		resultChannel.appendLine('Last query: ' + query + '\n');
-		
+				
 		nodes.forEach((node) => {
 			resultChannel.appendLine(`${node.localName}: ${node.firstChild.data}`);
 		});
