@@ -6,21 +6,21 @@ let xpath = require('xpath');
 let dom = require('xmldom').DOMParser;
 let resultChannel: OutputChannel = null;
 
+export var lastXPath: string;
+
 export function evaluateXPath(editor: TextEditor, edit: TextEditorEdit): void {
-    let isPersistant = workspace.getConfiguration().has('xmlTools.PersistXPathQuery') && workspace.getConfiguration('xmlTools').get<boolean>('PersistXPathQuery') === true	    
+    let isPersistant = workspace.getConfiguration().has('xmlTools.persistXPathQuery') && workspace.getConfiguration('xmlTools').get<boolean>('persistXPathQuery') === true	    
     
     window.showInputBox({
 		placeHolder: 'XPath Query',
 		prompt: 'Please enter an XPath query to evaluate.',
-		value: isPersistant ? Singleton.getXPathValue() : ''
+		value: isPersistant ? lastXPath : ''
 		
 	}).then((query) => {
 		if (query === undefined) return;
 		
 		let xml = editor.document.getText();
 		let doc = new dom().parseFromString(xml);
-		
-		Singleton.setXPathValue(query);
 		
 		try {
 			var nodes = xpath.select(query, doc);
@@ -30,6 +30,8 @@ export function evaluateXPath(editor: TextEditor, edit: TextEditorEdit): void {
 			window.showErrorMessage(ex);
 			return;
 		}
+		
+		lastXPath = query;
 		
 		if (nodes === null || nodes === undefined || nodes.length == 0) {
 			window.showInformationMessage('Your XPath query returned no results.');
@@ -45,22 +47,4 @@ export function evaluateXPath(editor: TextEditor, edit: TextEditorEdit): void {
 		
 		resultChannel.show(ViewColumn.Three);
 	});
-}
-
-namespace Singleton {
-	
-	class XPathContext 
-	{
-		static _lastXPathValue:string = '';
-	}
-		
-    export function getXPathValue():string
-	{ 
-		 return XPathContext._lastXPathValue;
-	}
-	
-	export function setXPathValue(val:string):void 
-	{ 
-		 XPathContext._lastXPathValue = val;
-	}
 }
