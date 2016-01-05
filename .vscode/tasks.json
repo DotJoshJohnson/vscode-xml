@@ -8,10 +8,8 @@
 
 {
 	"version": "0.1.0",
-	"command": "npm",
+	"command": "tsc",
 	"isShellCommand": true,
 	"showOutput": "silent",
-	"args": ["run", "compile"],
-	"isWatching": true,
 	"problemMatcher": "$tsc-watch"
 }
