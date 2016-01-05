@@ -3,7 +3,7 @@ This extension provides additional XML support to [VS Code](https://code.visuals
 
 ## Features
 * XML Formatting (Indent and Linearize)
-* XPath Evaluation
+* XPath Evaluation [wiki](./wiki/How-To:-Evaluate-XPath-Queries)
 
 ## Roadmap
 * XPath Builder
