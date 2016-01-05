@@ -44,6 +44,17 @@
 				"title": "XML Tools: Evaluate XPath"
 			}
 		],
+        "configuration": {
+            "title": "XML Tools Configuration",
+            "type": "object",
+            "properties": {
+                "xmlTools.persistXPathQuery": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Remember the last XPath query used."
+                }
+            }
+        },
 		"keybindings": [
 			{
 				"key": "ctrl+shift+alt+b",
