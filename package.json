@@ -76,7 +76,7 @@
 		"onLanguage:xml"
 	],
 	"devDependencies": {
-		"vscode": "^0.10.4",
+		"vscode": "^0.10.7",
 		"typescript": "^1.6.2"
 	},
 	"dependencies": {
