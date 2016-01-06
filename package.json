@@ -26,9 +26,10 @@
 		"node": "*"
 	},
 	"categories": [
-		"Languages", "Other"
+		"Languages",
+        "Other"
 	],
-	"main": "./src/main",
+	"main": "./src/Extension",
 	"contributes": {
 		"commands": [
 			{
@@ -36,11 +37,11 @@
 				"title": "XML Tools: Format XML"	
 			},
 			{
-				"command": "xmltools.linearizeXml",
-				"title": "XML Tools: Linearize XML"
+				"command": "xmlTools.minifyXml",
+				"title": "XML Tools: Minify XML"
 			},
 			{
-				"command": "xmltools.evaluateXPath",
+				"command": "xmlTools.evaluateXPath",
 				"title": "XML Tools: Evaluate XPath"
 			}
 		],
@@ -52,17 +53,22 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Remember the last XPath query used."
+                },
+                "xmlTools.removeCommentsOnMinify": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Remove XML comments when XML is minified."
                 }
             }
         },
 		"keybindings": [
 			{
 				"key": "ctrl+shift+alt+b",
-				"command": "xmltools.formatXml"
+				"command": "xmlTools.formatXml"
 			},
 			{
 				"key": "ctrl+shift+alt+x",
-				"command": "xmltools.evaluateXPath"
+				"command": "xmlTools.evaluateXPath"
 			}
 		]
 	},
@@ -74,12 +80,7 @@
 		"typescript": "^1.6.2"
 	},
 	"dependencies": {
-		"semver": "^5.1.0",
-		"request": "^2.67.0",
 		"xmldom": "^0.1.19",
 		"xpath": "^0.0.9"
-	},
-	"scripts": {
-		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
 	}
 }
