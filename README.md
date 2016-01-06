@@ -4,3 +4,5 @@ This extension provides additional XML support to [VS Code](https://code.visuals
 ## Features
 * XML Formatting (Indent and Minify)
 * XPath Evaluation ([Wiki](https://github.com/DotJoshJohnson/vscode-xml/wiki/How-To:-Evaluate-XPath-Queries))
+
+Detailed release notes are available [here](https://github.com/DotJoshJohnson/vscode-xml/releases).
