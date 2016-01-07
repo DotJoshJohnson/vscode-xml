@@ -80,7 +80,7 @@
 		"typescript": "^1.6.2"
 	},
 	"dependencies": {
-		"xmldom": "^0.1.19",
+		"xmldom": "DotJoshJohnson/xmldom#2794915",
 		"xpath": "^0.0.9"
 	},
     "scripts": {
