@@ -8,6 +8,7 @@ export var GlobalState: vsc.Memento;
 export var WorkspaceState: vsc.Memento;
 
 const LANG_XML: string = 'xml';
+const MEM_QUERY_HISTORY: string = 'xpathQueryHistory';
 
 export function activate(ctx: vsc.ExtensionContext) {
     // expose global and workspace state to the entire extension
@@ -26,4 +27,12 @@ export function activate(ctx: vsc.ExtensionContext) {
         vsc.languages.registerDocumentFormattingEditProvider(LANG_XML, new XmlDocumentFormattingEditProvider()),
         vsc.languages.registerDocumentRangeFormattingEditProvider(LANG_XML, new XmlRangeFormattingEditProvider())
     );
+}
+
+export function deactivate() {
+    // clean up xpath history
+    let memento: vsc.Memento = WorkspaceState || GlobalState;
+    let history = memento.get<any[]>(MEM_QUERY_HISTORY, []);
+    history.splice(0);
+    memento.update(MEM_QUERY_HISTORY, history);
 }
