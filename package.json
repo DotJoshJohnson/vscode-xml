@@ -44,7 +44,11 @@
 			{
 				"command": "xmlTools.evaluateXPath",
 				"title": "XML Tools: Evaluate XPath"
-			}
+			},
+            {
+                "command": "xmlTools.executeXQuery",
+                "title": "XML Tools: Execute XQuery"
+            }
 		],
         "configuration": {
             "title": "XML Tools Configuration",
@@ -64,6 +68,16 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Put each xmlns attribute on a new line when fromatting XML."
+                },
+                "xmlTools.xqueryExecutionEngine": {
+                    "type": "string",
+                    "default": "",
+                    "description": "The full path to the execution engine executable."
+                },
+                "xmlTools.xqueryExecutionArguments": {
+                    "type": "array",
+                    "default": ["-xquery", "$(script)", "-in", "$(input)", "-out", "$(input).output.xml"],
+                    "description": "Arguments to be passed to the execution engine. '$(script)' and '$(input)' refer to the XQuery script and input XML file, respectively."
                 }
             }
         },

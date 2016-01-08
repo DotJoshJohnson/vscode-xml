@@ -6,6 +6,7 @@ import * as xpath from 'xpath';
 import { RangeUtil } from './utils/RangeUtil';
 import { XmlFormatter } from './services/XmlFormatter';
 import { XPathFeatureProvider } from './providers/XPath';
+import { XQueryExecutionProvider } from './providers/Execution';
 
 const CFG_SECTION: string = 'xmlTools';
 const CFG_REMOVE_COMMENTS: string = 'removeCommentsOnMinify';
@@ -29,5 +30,9 @@ export class TextEditorCommands {
     
     static evaluateXPath(editor: vsc.TextEditor, edit: vsc.TextEditorEdit): void {
         XPathFeatureProvider.evaluateXPathAsync(editor, edit);
+    }
+    
+    static executeXQuery(editor: vsc.TextEditor, edit: vsc.TextEditorEdit): void {
+        XQueryExecutionProvider.executeXQueryAsync(editor);
     }
 }
