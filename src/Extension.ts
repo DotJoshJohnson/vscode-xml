@@ -2,7 +2,7 @@
 
 import * as vsc from 'vscode';
 import { TextEditorCommands } from './Commands';
-import { XmlDocumentFormattingEditProvider, XmlRangeFormattingEditProvider } from './providers/Formatting';
+import { XmlFormattingEditProvider } from './providers/Formatting';
 
 export var GlobalState: vsc.Memento;
 export var WorkspaceState: vsc.Memento;
@@ -24,8 +24,8 @@ export function activate(ctx: vsc.ExtensionContext) {
 	
 	// register language feature providers
     ctx.subscriptions.push(
-        vsc.languages.registerDocumentFormattingEditProvider(LANG_XML, new XmlDocumentFormattingEditProvider()),
-        vsc.languages.registerDocumentRangeFormattingEditProvider(LANG_XML, new XmlRangeFormattingEditProvider())
+        vsc.languages.registerDocumentFormattingEditProvider(LANG_XML, new XmlFormattingEditProvider()),
+        vsc.languages.registerDocumentRangeFormattingEditProvider(LANG_XML, new XmlFormattingEditProvider())
     );
 }
 

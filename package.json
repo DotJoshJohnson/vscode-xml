@@ -58,6 +58,11 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Remove XML comments when XML is minified."
+                },
+                "xmlTools.splitXmlnsOnFormat": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Put each xmlns attribute on a new line when fromatting XML."
                 }
             }
         },

@@ -2,29 +2,40 @@
 
 // Based on pretty-data (https://github.com/vkiryukhin/pretty-data)
 export class XmlFormatter {
-    constructor(preferSpaces?: boolean, tabSize?: number, newLine?: string) {
-        if (typeof preferSpaces === 'undefined') {
-            preferSpaces = false;
+    constructor(options?: IXmlFormatterOptions) {
+        options = options || {};
+        
+        if (typeof options.preferSpaces === 'undefined') {
+            options.preferSpaces = false;
         }
         
-        tabSize = tabSize || 4;
-        newLine = newLine || '\n';
+        if (typeof options.splitNamespaces === 'undefined') {
+            options.splitNamespaces = true;
+        }
         
-        this.newLine = newLine || '\n';
-        this.indentPattern = (preferSpaces) ? ' '.repeat(tabSize) : '\t';
+        options.tabSize = options.tabSize || 4;
+        options.newLine = options.newLine || '\n';
+        
+        this.newLine = options.newLine || '\n';
+        this.indentPattern = (options.preferSpaces) ? ' '.repeat(options.tabSize) : '\t';
+        this.splitNamespaces = options.splitNamespaces;
     }
     
     newLine: string;
     indentPattern: string;
+    splitNamespaces: boolean;
     
     format(xml: string): string {
         xml = this.minify(xml, false);
+        xml = xml.replace(/</g, '~::~<');
         
-        let parts: string[] = xml
-            .replace(/</g,"~::~<")
-		    .replace(/xmlns\:/g,"~::~xmlns:")
-		    .replace(/xmlns\=/g,"~::~xmlns=")
-		    .split('~::~');
+        if (this.splitNamespaces) {
+            xml = xml
+                .replace(/xmlns\:/g, '~::~xmlns:')
+                .replace(/xmlns\=/g, '~::~xmlns=');
+        }
+        
+        let parts: string[] = xml.split('~::~');
             
         let inComment: boolean = false;
         let level: number = 0;
@@ -119,4 +130,11 @@ export class XmlFormatter {
         
         return `${this.newLine}${this.indentPattern.repeat(level)}${trailingValue}`;
     }
+}
+
+export interface IXmlFormatterOptions {
+    preferSpaces?: boolean;
+    tabSize?: number;
+    newLine?: string;
+    splitNamespaces?: boolean;
 }
