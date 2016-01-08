@@ -27,6 +27,7 @@
 	},
 	"categories": [
 		"Languages",
+        "Linters",
         "Other"
 	],
 	"main": "./src/Extension",
@@ -75,10 +76,26 @@
 				"key": "ctrl+shift+alt+x",
 				"command": "xmlTools.evaluateXPath"
 			}
-		]
+		],
+        "languages": [
+            {
+                "id": "xquery",
+                "aliases": ["XQuery", "xquery"],
+                "extensions": [".xq",".xql",".xqm",".xqy",".xquery"],
+                "configuration": "./languages/xquery/xquery.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "xquery",
+                "scopeName": "source.xquery",
+                "path": "./languages/xquery/xquery.tmLanguage"
+            }
+        ]
 	},
 	"activationEvents": [
-		"onLanguage:xml"
+		"onLanguage:xml",
+        "onLanguage:xquery"
 	],
 	"devDependencies": {
 		"vscode": "^0.10.7",
@@ -86,7 +103,8 @@
 	},
 	"dependencies": {
 		"xmldom": "DotJoshJohnson/xmldom#2794915",
-		"xpath": "^0.0.9"
+		"xpath": "^0.0.9",
+        "xqlint": "^0.2.9"
 	},
     "scripts": {
         "vscode:prepublish": "tsc"

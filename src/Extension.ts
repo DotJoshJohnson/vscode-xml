@@ -3,11 +3,14 @@
 import * as vsc from 'vscode';
 import { TextEditorCommands } from './Commands';
 import { XmlFormattingEditProvider } from './providers/Formatting';
+import { XQueryLintingFeatureProvider } from './providers/Linting';
+import { XQueryCompletionItemProvider } from './providers/Completion';
 
 export var GlobalState: vsc.Memento;
 export var WorkspaceState: vsc.Memento;
 
 const LANG_XML: string = 'xml';
+const LANG_XQUERY: string = 'xquery;'
 const MEM_QUERY_HISTORY: string = 'xpathQueryHistory';
 
 export function activate(ctx: vsc.ExtensionContext) {
@@ -25,7 +28,15 @@ export function activate(ctx: vsc.ExtensionContext) {
 	// register language feature providers
     ctx.subscriptions.push(
         vsc.languages.registerDocumentFormattingEditProvider(LANG_XML, new XmlFormattingEditProvider()),
-        vsc.languages.registerDocumentRangeFormattingEditProvider(LANG_XML, new XmlFormattingEditProvider())
+        vsc.languages.registerDocumentRangeFormattingEditProvider(LANG_XML, new XmlFormattingEditProvider()),
+        
+        vsc.languages.registerCompletionItemProvider(LANG_XQUERY, new XQueryCompletionItemProvider(), ':', '$')
+    );
+    
+    // listen to editor events (for linting)
+    ctx.subscriptions.push(
+        vsc.window.onDidChangeActiveTextEditor(_handleChangeActiveTextEditor),
+        vsc.window.onDidChangeTextEditorSelection(_handleChangeTextEditorSelection)
     );
 }
 
@@ -35,4 +46,20 @@ export function deactivate() {
     let history = memento.get<any[]>(MEM_QUERY_HISTORY, []);
     history.splice(0);
     memento.update(MEM_QUERY_HISTORY, history);
+}
+
+function _handleContextChange(editor: vsc.TextEditor): void {
+    switch (editor.document.languageId) {
+        case 'xquery':
+            XQueryLintingFeatureProvider.provideXQueryDiagnostics(editor);
+            break;
+    }
+}
+
+function _handleChangeActiveTextEditor(editor: vsc.TextEditor): void {
+    _handleContextChange(editor);
+}
+
+function _handleChangeTextEditorSelection(e: vsc.TextEditorSelectionChangeEvent): void {
+    _handleContextChange(e.textEditor);
 }
