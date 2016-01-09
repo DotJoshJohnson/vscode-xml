@@ -119,10 +119,15 @@ export class XmlFormatter {
             removeComments = false;
         }
         
-        xml = this._stripLineBreaks(xml);
+        xml = this._stripLineBreaks(xml); // all line breaks outside of CDATA elements
         xml = (removeComments) ? xml.replace(/\<![ \r\n\t]*(--([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)\>/g, '') : xml;
-        xml = xml.replace(/>\s{0,}</g, '><');
-        xml = xml.replace(/"\s+(?=[^\s]+=)/g, '" ');
+        xml = xml.replace(/>\s{0,}</g, '><'); // insignificant whitespace between tags
+        xml = xml.replace(/"\s+(?=[^\s]+=)/g, '" '); // spaces between attributes
+        xml = xml.replace(/"\s+(?=>)/g, '"'); // spaces between the last attribute and tag close (>)
+        xml = xml.replace(/"\s+(?=\/>)/g, '" '); // spaces between the last attribute and tag close (/>)
+        xml = xml.replace(/[^ <>="]\s+[^ <>="]+=/g, (match: string) => { // spaces between the node name and the first attribute
+            return match.replace(/\s+/g, ' ');
+        });
         
         return xml;
     }
