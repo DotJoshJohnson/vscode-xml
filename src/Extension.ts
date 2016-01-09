@@ -51,6 +51,10 @@ export function deactivate() {
 }
 
 function _handleContextChange(editor: vsc.TextEditor): void {
+    if (!editor || !editor.document) {
+        return;
+    }
+    
     switch (editor.document.languageId) {
         case 'xquery':
             XQueryLintingFeatureProvider.provideXQueryDiagnostics(editor);

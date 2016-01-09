@@ -119,8 +119,10 @@ export class XmlFormatter {
             removeComments = false;
         }
         
+        xml = this._stripLineBreaks(xml);
         xml = (removeComments) ? xml.replace(/\<![ \r\n\t]*(--([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)\>/g, '') : xml;
         xml = xml.replace(/>\s{0,}</g, '><');
+        xml = xml.replace(/"\s+(?=[^\s]+=)/g, '" ');
         
         return xml;
     }
@@ -129,6 +131,34 @@ export class XmlFormatter {
         trailingValue = trailingValue || '';
         
         return `${this.newLine}${this.indentPattern.repeat(level)}${trailingValue}`;
+    }
+    
+    private _stripLineBreaks(xml: string): string {
+        let output: string = '';
+        let inTag: boolean = false;
+        let inTagName: boolean = false;
+        let inCdata: boolean = false;
+        let inAttribute: boolean = false;
+        
+        for (let i = 0; i < xml.length; i++) {
+            let char: string = xml.charAt(i);
+            
+            if (char == '!' && (xml.substr(i, 8) == '![CDATA[' || xml.substr(i, 3) == '!--')) {
+                inCdata = true;
+            }
+            
+            else if (char == ']' && (xml.substr(i, 3) == ']]>' || xml.substr(i, 3) == '-->')) {
+                inCdata = false;
+            }
+            
+            else if (char.search(/[\r\n]/g) > -1 && !inCdata) {
+                continue;
+            }
+            
+            output += char;
+        }
+        
+        return output;
     }
 }
 
