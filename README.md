@@ -1,13 +1,11 @@
 # XML Tools for Visual Studio Code
-[![License](https://img.shields.io/github/license/DotJoshJohnson/vscode-xml.svg)](https://github.com/DotJoshJohnson/vscode-xml/blob/master/LICENSE)
-[![Current Version](https://img.shields.io/github/release/DotJoshJohnson/vscode-xml.svg)](https://github.com/DotJoshJohnson/vscode-xml/releases)
-
 ## Features
 * XML Formatting (Indent and Minify)
-* XPath Evaluation ([Wiki](https://github.com/DotJoshJohnson/vscode-xml/wiki/How-To:-Evaluate-XPath-Queries))
+* XPath Evaluation ([How-To](https://github.com/DotJoshJohnson/vscode-xml/wiki/How-To:-Evaluate-XPath-Queries))
 * XQuery Language/Syntax Highlighting
 * XQuery Linting
 * XQuery Code Completion
+* XQuery Execution ([How-To](https://github.com/DotJoshJohnson/vscode-xml/wiki/How-To%3A-Executing-XQuery-Scripts))
 
 ## Release Notes
 Detailed release notes are available [here](https://github.com/DotJoshJohnson/vscode-xml/releases).
