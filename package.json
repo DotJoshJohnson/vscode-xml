@@ -113,7 +113,9 @@
 	],
 	"devDependencies": {
 		"vscode": "^0.10.7",
-		"typescript": "^1.6.2"
+		"typescript": "^1.6.2",
+        "gulp": "^3.9.0",
+        "gulp-shell": "^0.5.1"
 	},
 	"dependencies": {
 		"xmldom": "DotJoshJohnson/xmldom#2794915",
