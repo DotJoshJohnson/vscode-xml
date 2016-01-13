@@ -65,9 +65,7 @@ export class XPathFeatureProvider {
             outputChannel.appendLine(`XPath Query: ${query}`);
             outputChannel.append('\n');
             
-            // node.lineNumber and node.columnNumber are not standard properties of the Node object (implemented by xmldom)
-            // TypeScript will complain, but should still compile. this is preferable right now over mocking the entire typedef
-            nodes.forEach((node: Node) => {
+            nodes.forEach((node: XmlNode) => {
                 outputChannel.appendLine(`[Line ${node.lineNumber}] ${node.localName}: ${node.textContent}`);
             });
 
