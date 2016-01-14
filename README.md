@@ -1,4 +1,5 @@
 # XML Tools for Visual Studio Code
+[![Build Status](https://travis-ci.org/TrueCommerce/vscode-xml.svg?branch=master)](https://travis-ci.org/TrueCommerce/vscode-xml)
 ## Features
 * XML Formatting (Indent and Minify)
 * XPath Evaluation ([How-To](https://github.com/TrueCommerce/vscode-xml/wiki/How-To:-Evaluate-XPath-Queries))
