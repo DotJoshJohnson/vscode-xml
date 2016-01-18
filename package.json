@@ -78,6 +78,11 @@
                     "type": "array",
                     "default": ["-xquery", "$(script)", "-in", "$(input)", "-out", "$(input).output.xml"],
                     "description": "Arguments to be passed to the execution engine. '$(script)' and '$(input)' refer to the XQuery script and input XML file, respectively."
+                },
+                "xmlTools.ignoreDefaultNamespace": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Ignores default xmlns attribute when evaluating XPath."
                 }
             }
         },

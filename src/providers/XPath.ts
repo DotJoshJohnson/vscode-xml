@@ -6,6 +6,7 @@ import { XPathEvaluator } from '../services/XPathEvaluator';
 
 const CFG_SECTION: string = 'xmlTools';
 const CFG_PERSIST_QUERY: string = 'persistXPathQuery';
+const CFG_IGNORE_DEFAULT_XMLNS: string = 'ignoreDefaultNamespace';
 const MEM_QUERY_HISTORY: string = 'xpathQueryHistory';
 const MEM_QUERY_LAST: string = 'xPathQueryLast';
 const OUTPUT_CHANNEL: string = 'XPath Results';
@@ -54,9 +55,11 @@ export class XPathFeatureProvider {
         // showInputBox() will return undefined if the user dimissed the prompt
         if (query) {
             
+            let ignoreDefaultNamespace: boolean = vsc.workspace.getConfiguration(CFG_SECTION).get<boolean>(CFG_IGNORE_DEFAULT_XMLNS, true);
+            
             // run the query
             let xml: string = editor.document.getText();
-            let nodes: Node[] = XPathEvaluator.evaluate(query, xml);
+            let nodes: Node[] = XPathEvaluator.evaluate(query, xml, ignoreDefaultNamespace);
             
             // show the results to the user
             let outputChannel: vsc.OutputChannel = vsc.window.createOutputChannel(OUTPUT_CHANNEL);
