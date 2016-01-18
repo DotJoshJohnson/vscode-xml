@@ -12,7 +12,4 @@
 Detailed release notes are available [here](https://github.com/TrueCommerce/vscode-xml/releases).
 
 ## Issues
-[![Iteration Backlog](https://badge.waffle.io/TrueCommerce/vscode-xml.svg?label=Iteration:%20Backlog&title=Iteration%20Backlog)](http://waffle.io/DotJoshJohnson/vscode-xml)
-[![In Progress](https://badge.waffle.io/TrueCommerce/vscode-xml.svg?label=Iteration:%20In%20Progress&title=In%20Progress)](http://waffle.io/DotJoshJohnson/vscode-xml)
-
 Run into a bug? Report it [here](https://github.com/TrueCommerce/vscode-xml/issues).
