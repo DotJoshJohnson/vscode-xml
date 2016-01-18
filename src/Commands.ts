@@ -12,11 +12,6 @@ const CFG_SECTION: string = 'xmlTools';
 const CFG_REMOVE_COMMENTS: string = 'removeCommentsOnMinify';
 
 export class TextEditorCommands {
-    static formatXml(editor: vsc.TextEditor, edit: vsc.TextEditorEdit): void {
-        // alias for editor.action.format
-        vsc.commands.executeCommand('editor.action.format');
-    }
-    
     static minifyXml(editor: vsc.TextEditor, edit: vsc.TextEditorEdit): void {
         let removeComments: boolean = vsc.workspace.getConfiguration(CFG_SECTION).get<boolean>(CFG_REMOVE_COMMENTS, false);
         

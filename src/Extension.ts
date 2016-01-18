@@ -22,7 +22,6 @@ export function activate(ctx: vsc.ExtensionContext) {
 	// register palette commands
     ctx.subscriptions.push(
         vsc.commands.registerTextEditorCommand('xmlTools.minifyXml', TextEditorCommands.minifyXml),
-        vsc.commands.registerTextEditorCommand('xmlTools.formatXml', TextEditorCommands.formatXml),
         vsc.commands.registerTextEditorCommand('xmlTools.evaluateXPath', TextEditorCommands.evaluateXPath),
         
         vsc.commands.registerTextEditorCommand('xmlTools.executeXQuery', TextEditorCommands.executeXQuery)
