@@ -1,6 +1,5 @@
 # XML Tools for Visual Studio Code
-[![Build Status](https://travis-ci.org/TrueCommerce/vscode-xml.svg?branch=master)](https://travis-ci.org/TrueCommerce/vscode-xml)<br />
-**Roadmap Status:** [Passive](https://github.com/TrueCommerce/meta/wiki/roadmaps#passive-roadmap)
+[![Roadmap Status](https://img.shields.io/badge/roadmap-passive-blue.svg)](https://github.com/TrueCommerce/meta/wiki/roadmaps#passive-roadmap) [![Build Status](https://travis-ci.org/TrueCommerce/vscode-xml.svg?branch=master)](https://travis-ci.org/TrueCommerce/vscode-xml)
 
 ## Features
 * XML Formatting (Indent and Minify)
