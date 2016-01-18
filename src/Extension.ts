@@ -14,6 +14,7 @@ const LANG_XQUERY: string = 'xquery;'
 const MEM_QUERY_HISTORY: string = 'xpathQueryHistory';
 
 export function activate(ctx: vsc.ExtensionContext) {
+    console.log('activate extension');
     // expose global and workspace state to the entire extension
     GlobalState = ctx.globalState;
     WorkspaceState = ctx.workspaceState;
@@ -21,7 +22,6 @@ export function activate(ctx: vsc.ExtensionContext) {
 	// register palette commands
     ctx.subscriptions.push(
         vsc.commands.registerTextEditorCommand('xmlTools.minifyXml', TextEditorCommands.minifyXml),
-        vsc.commands.registerTextEditorCommand('xmlTools.formatXml', TextEditorCommands.formatXml),
         vsc.commands.registerTextEditorCommand('xmlTools.evaluateXPath', TextEditorCommands.evaluateXPath),
         
         vsc.commands.registerTextEditorCommand('xmlTools.executeXQuery', TextEditorCommands.executeXQuery)

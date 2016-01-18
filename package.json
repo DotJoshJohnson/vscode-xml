@@ -34,10 +34,6 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "xmlTools.formatXml",
-				"title": "XML Tools: Format XML"	
-			},
-			{
 				"command": "xmlTools.minifyXml",
 				"title": "XML Tools: Minify XML"
 			},
@@ -114,7 +110,10 @@
 	},
 	"activationEvents": [
 		"onLanguage:xml",
-        "onLanguage:xquery"
+        "onLanguage:xquery",
+        "onCommand:xmlTools.minifyXml",
+        "onCommand:xmlTools.evaluateXPath",
+        "onCommand:xmlTools.executeXQuery"
 	],
 	"devDependencies": {
 		"vscode": "^0.10.7",
