@@ -28,7 +28,7 @@ export class XmlFormattingEditProvider implements vsc.DocumentFormattingEditProv
         };
         
         let formatter = new XmlFormatter(formatterOptions);
-        let xml = formatter.format(document.getText());
+        let xml = formatter.format(document.getText(range));
         
         return [ vsc.TextEdit.replace(range, xml) ];
     }
