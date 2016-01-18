@@ -15,7 +15,6 @@ export class XPathEvaluator {
         let nodes: Node[] = new Array<Node>();
         
         let xdoc: Document = new DOMParser().parseFromString(xml, 'text/xml');
-        console.log(xdoc);
         
         let resolver: xpath.XPathNSResolver = xpath.createNSResolver(xdoc);
         let expression: xpath.XPathExpression = xpath.createExpression(query, resolver);
