@@ -14,6 +14,7 @@ const LANG_XQUERY: string = 'xquery;'
 const MEM_QUERY_HISTORY: string = 'xpathQueryHistory';
 
 export function activate(ctx: vsc.ExtensionContext) {
+    console.log('activate extension');
     // expose global and workspace state to the entire extension
     GlobalState = ctx.globalState;
     WorkspaceState = ctx.workspaceState;

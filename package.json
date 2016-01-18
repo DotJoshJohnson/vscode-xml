@@ -114,7 +114,11 @@
 	},
 	"activationEvents": [
 		"onLanguage:xml",
-        "onLanguage:xquery"
+        "onLanguage:xquery",
+        "onCommand:xmlTools.formatXml",
+        "onCommand:xmlTools.minifyXml",
+        "onCommand:xmlTools.evaluateXPath",
+        "onCommand:xmlTools.executeXQuery"
 	],
 	"devDependencies": {
 		"vscode": "^0.10.7",
