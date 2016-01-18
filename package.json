@@ -125,7 +125,8 @@
 	"dependencies": {
 		"xmldom": "DotJoshJohnson/xmldom#2794915",
 		"xpath": "^0.0.9",
-        "xqlint": "^0.2.9"
+        "xqlint": "^0.2.9",
+        "opener": "^1.4.1"
 	},
     "scripts": {
         "vscode:prepublish": "tsc"

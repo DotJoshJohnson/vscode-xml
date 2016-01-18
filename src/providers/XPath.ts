@@ -59,7 +59,17 @@ export class XPathFeatureProvider {
             
             // run the query
             let xml: string = editor.document.getText();
-            let nodes: Node[] = XPathEvaluator.evaluate(query, xml, ignoreDefaultNamespace);
+            let nodes: Node[];
+            
+            try {
+                nodes = XPathEvaluator.evaluate(query, xml, ignoreDefaultNamespace);
+            }
+            
+            catch (error) {
+                console.error(error);
+                vsc.window.showErrorMessage(`Something went wrong while evaluating the XPath: ${error}`);
+                return;
+            }
             
             // show the results to the user
             let outputChannel: vsc.OutputChannel = vsc.window.createOutputChannel(OUTPUT_CHANNEL);
