@@ -10,8 +10,8 @@
 	},
 	"icon": "resources/icon.png",
 	"galleryBanner": {
-		"color": "#3B4859",
-		"theme": "dark"
+		"color": "#FFFFFF",
+		"theme": "light"
 	},
 	"homepage": "https://github.com/TrueCommerce/vscode-xml",
 	"repository": {
