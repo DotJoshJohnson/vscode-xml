@@ -13,13 +13,13 @@
 		"color": "#FFFFFF",
 		"theme": "light"
 	},
-	"homepage": "https://github.com/TrueCommerce/vscode-xml",
+	"homepage": "https://github.com/TrueCommerce/vscode-xml/wiki",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/TrueCommerce/vscode-xml.git"
+		"url": "https://github.com/TrueCommerce/vscode-xml/wiki"
 	},
 	"bugs": {
-		"url": "https://github.com/TrueCommerce/vscode-xml/issues"
+		"url": "https://github.com/TrueCommerce/vscode-xml/wiki"
 	},
 	"engines": {
 		"vscode": "^0.10.6",
