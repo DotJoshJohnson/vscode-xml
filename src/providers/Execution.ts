@@ -97,7 +97,8 @@ export class XQueryExecutionProvider {
         args = args.map<string>((value: string) => {
             return value
                 .replace('$(script)', editor.document.uri.fsPath)
-                .replace('$(input)', inputFile.fsPath);
+                .replace('$(input)', inputFile.fsPath)
+                .replace('$(project)', vsc.workspace.rootPath);
         });
         
         try {
