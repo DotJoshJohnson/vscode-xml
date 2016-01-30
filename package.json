@@ -122,7 +122,7 @@
         "gulp-shell": "^0.5.1"
 	},
 	"dependencies": {
-		"xmldom": "DotJoshJohnson/xmldom#2794915",
+		"xmldom": "^0.1.22",
 		"xpath": "^0.0.9",
         "xqlint": "^0.2.9"
 	},
