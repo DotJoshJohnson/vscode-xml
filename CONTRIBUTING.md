@@ -2,22 +2,13 @@
 Thanks for helping out! This guide provides some guidelines on coding styles and architecture for this extension.
 Keep in mind that these are guidelines, not rules. Use your best judgement and feel free to make suggestions!
 
+## Workflow
+**Please read the [TrueCommerce organization's workflow documentation](https://github.com/TrueCommerce/Meta/wiki/workflow#truecommerce-workflow) before getting started.**
+
+
 ## Building the Extension
 1. Clone the repository locally and run `npm install` from the vscode-xml directory.
 2. Run the `build` task in VS Code (`CTRL + SHIFT + B`) or start extension debugging (`F5`), which will run the `build` task for you.
-
-## Pull Requests
-If you would like to work on an unassigned issue, please:
-
-1. Comment on the issue so others are aware of your intentions.
-2. Make a fork of the repository and create a branch named `issue-#<issue_number>`.
-3. When finished, create a pull request using the issue branch.
-
-If you would like to add unsolicited features, please:
-
-1. Make a fork of the repository and create a branch named `wip-<my_new_feature>`.
-2. Create a pull request using the WIP branch and prefix the name of the PR with "WIP".
-3. The pull request will be used as the channel of communication for discussion around the new feature. Once code is complete, the PR will be treated as per normal.
 
 ## Style Guide
 In short, favor clean, maintainable code over code that "just works".
