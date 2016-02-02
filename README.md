@@ -1,5 +1,5 @@
 # XML Tools for Visual Studio Code
-[![Roadmap Status](https://img.shields.io/badge/roadmap-passive-blue.svg)](https://github.com/TrueCommerce/meta/wiki/roadmaps#passive-roadmap) [![Build Status](https://travis-ci.org/TrueCommerce/vscode-xml.svg?branch=master)](https://travis-ci.org/TrueCommerce/vscode-xml)
+[![Build Status](https://travis-ci.org/TrueCommerce/vscode-xml.svg?branch=master)](https://travis-ci.org/TrueCommerce/vscode-xml)
 
 ## Features
 * [XML Formatting](https://github.com/TrueCommerce/vscode-xml/wiki/xml-formatting)
