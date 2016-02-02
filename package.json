@@ -2,7 +2,7 @@
 	"name": "xml",
 	"displayName": "XML Tools",
 	"description": "XML Formatting, XQuery, and XPath Tools for Visual Studio Code",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"publisher": "DotJoshJohnson",
 	"author": {
 		"name": "TrueCommerce",
@@ -122,7 +122,7 @@
         "gulp-shell": "^0.5.1"
 	},
 	"dependencies": {
-		"xmldom": "DotJoshJohnson/xmldom#2794915",
+		"xmldom": "^0.1.22",
 		"xpath": "^0.0.9",
         "xqlint": "^0.2.9"
 	},
