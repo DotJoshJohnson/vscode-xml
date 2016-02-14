@@ -22,7 +22,7 @@
 		"url": "https://github.com/TrueCommerce/vscode-xml/wiki"
 	},
 	"engines": {
-		"vscode": "^0.10.8",
+		"vscode": "^0.10.7",
 		"node": "*"
 	},
 	"categories": [
@@ -127,6 +127,7 @@
         "xqlint": "^0.2.9"
 	},
     "scripts": {
-        "vscode:prepublish": "tsc"
+        "vscode:prepublish": "tsc",
+        "postinstall": "node ./node_modules/vscode/bin/install"
     }
 }
