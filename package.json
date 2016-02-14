@@ -22,7 +22,7 @@
 		"url": "https://github.com/TrueCommerce/vscode-xml/wiki"
 	},
 	"engines": {
-		"vscode": "^0.10.6",
+		"vscode": "^0.10.8",
 		"node": "*"
 	},
 	"categories": [
@@ -116,7 +116,7 @@
         "onCommand:xmlTools.executeXQuery"
 	],
 	"devDependencies": {
-		"vscode": "^0.10.7",
+		"vscode": "^0.11.x",
 		"typescript": "^1.6.2",
         "gulp": "^3.9.0",
         "gulp-shell": "^0.5.1"
