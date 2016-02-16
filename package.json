@@ -44,6 +44,10 @@
             {
                 "command": "xmlTools.executeXQuery",
                 "title": "XML Tools: Execute XQuery"
+            },
+            {
+                "command": "xmlTools.viewXmlTree",
+                "title": "XML Tools: View XML Tree"
             }
 		],
         "configuration": {
@@ -113,7 +117,8 @@
         "onLanguage:xquery",
         "onCommand:xmlTools.minifyXml",
         "onCommand:xmlTools.evaluateXPath",
-        "onCommand:xmlTools.executeXQuery"
+        "onCommand:xmlTools.executeXQuery",
+        "onCommand:xmlTools.viewXmlTree"
 	],
 	"devDependencies": {
 		"vscode": "^0.11.x",

@@ -5,6 +5,7 @@ import { TextEditorCommands } from './Commands';
 import { XmlFormattingEditProvider } from './providers/Formatting';
 import { XQueryLintingFeatureProvider } from './providers/Linting';
 import { XQueryCompletionItemProvider } from './providers/Completion';
+import { XmlTreeDocumentContentProvider } from './providers/Content';
 
 export var GlobalState: vsc.Memento;
 export var WorkspaceState: vsc.Memento;
@@ -23,8 +24,8 @@ export function activate(ctx: vsc.ExtensionContext) {
     ctx.subscriptions.push(
         vsc.commands.registerTextEditorCommand('xmlTools.minifyXml', TextEditorCommands.minifyXml),
         vsc.commands.registerTextEditorCommand('xmlTools.evaluateXPath', TextEditorCommands.evaluateXPath),
-        
-        vsc.commands.registerTextEditorCommand('xmlTools.executeXQuery', TextEditorCommands.executeXQuery)
+        vsc.commands.registerTextEditorCommand('xmlTools.executeXQuery', TextEditorCommands.executeXQuery),
+        vsc.commands.registerTextEditorCommand('xmlTools.viewXmlTree', TextEditorCommands.viewXmlAsTree)
     );
 	
 	// register language feature providers
@@ -33,6 +34,11 @@ export function activate(ctx: vsc.ExtensionContext) {
         vsc.languages.registerDocumentRangeFormattingEditProvider(LANG_XML, new XmlFormattingEditProvider()),
         
         vsc.languages.registerCompletionItemProvider(LANG_XQUERY, new XQueryCompletionItemProvider(), ':', '$')
+    );
+    
+    // register workspace feature providers
+    ctx.subscriptions.push(
+        vsc.workspace.registerTextDocumentContentProvider(XmlTreeDocumentContentProvider.SCHEME, new XmlTreeDocumentContentProvider())
     );
     
     // listen to editor events (for linting)
