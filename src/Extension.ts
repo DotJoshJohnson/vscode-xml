@@ -25,7 +25,7 @@ export function activate(ctx: vsc.ExtensionContext) {
         vsc.commands.registerTextEditorCommand('xmlTools.minifyXml', TextEditorCommands.minifyXml),
         vsc.commands.registerTextEditorCommand('xmlTools.evaluateXPath', TextEditorCommands.evaluateXPath),
         vsc.commands.registerTextEditorCommand('xmlTools.executeXQuery', TextEditorCommands.executeXQuery),
-        vsc.commands.registerTextEditorCommand('xmlTools.viewXmlTree', TextEditorCommands.viewXmlAsTree)
+        vsc.commands.registerTextEditorCommand('xmlTools.viewXmlTree', TextEditorCommands.viewXmlTree)
     );
 	
 	// register language feature providers
