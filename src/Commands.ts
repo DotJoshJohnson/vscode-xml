@@ -7,6 +7,7 @@ import { RangeUtil } from './utils/RangeUtil';
 import { XmlFormatter } from './services/XmlFormatter';
 import { XPathFeatureProvider } from './providers/XPath';
 import { XQueryExecutionProvider } from './providers/Execution';
+import { XmlTreeDocumentContentProvider } from './providers/Content';
 
 const CFG_SECTION: string = 'xmlTools';
 const CFG_REMOVE_COMMENTS: string = 'removeCommentsOnMinify';
@@ -29,5 +30,18 @@ export class TextEditorCommands {
     
     static executeXQuery(editor: vsc.TextEditor, edit: vsc.TextEditorEdit): void {
         XQueryExecutionProvider.executeXQueryAsync(editor);
+    }
+    
+    static async viewXmlTree(editor: vsc.TextEditor, edit: vsc.TextEditorEdit): Promise<void> {
+        try {
+            await vsc.commands.executeCommand(
+                'vscode.previewHtml',
+                XmlTreeDocumentContentProvider.buildUri(editor.document.uri),
+                vsc.ViewColumn.Three);
+        }
+        
+        catch (error) {
+            vsc.window.showErrorMessage(`The XML Tree could not be created: ${error}`);
+        }
     }
 }

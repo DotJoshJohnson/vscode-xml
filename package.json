@@ -2,7 +2,7 @@
 	"name": "xml",
 	"displayName": "XML Tools",
 	"description": "XML Formatting, XQuery, and XPath Tools for Visual Studio Code",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"publisher": "DotJoshJohnson",
 	"author": {
 		"name": "TrueCommerce",
@@ -22,8 +22,8 @@
 		"url": "https://github.com/TrueCommerce/vscode-xml/wiki"
 	},
 	"engines": {
-		"vscode": "^0.10.6",
-		"node": "*"
+		"vscode": "^0.10.7",
+		"node": "^0.12.0"
 	},
 	"categories": [
 		"Languages",
@@ -44,6 +44,10 @@
             {
                 "command": "xmlTools.executeXQuery",
                 "title": "XML Tools: Execute XQuery"
+            },
+            {
+                "command": "xmlTools.viewXmlTree",
+                "title": "XML Tools: View XML Tree"
             }
 		],
         "configuration": {
@@ -113,20 +117,22 @@
         "onLanguage:xquery",
         "onCommand:xmlTools.minifyXml",
         "onCommand:xmlTools.evaluateXPath",
-        "onCommand:xmlTools.executeXQuery"
+        "onCommand:xmlTools.executeXQuery",
+        "onCommand:xmlTools.viewXmlTree"
 	],
 	"devDependencies": {
-		"vscode": "^0.10.7",
+		"vscode": "TrueCommerce/vscode-extension-vscode#519e686",
 		"typescript": "^1.6.2",
         "gulp": "^3.9.0",
         "gulp-shell": "^0.5.1"
 	},
 	"dependencies": {
-		"xmldom": "DotJoshJohnson/xmldom#2794915",
+		"xmldom": "^0.1.22",
 		"xpath": "^0.0.9",
         "xqlint": "^0.2.9"
 	},
     "scripts": {
-        "vscode:prepublish": "tsc"
+        "vscode:prepublish": "tsc",
+        "postinstall": "node ./node_modules/vscode/bin/install"
     }
 }
