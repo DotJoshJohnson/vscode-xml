@@ -23,7 +23,7 @@
 	},
 	"engines": {
 		"vscode": "^0.10.7",
-		"node": "*"
+		"node": "^0.12.0"
 	},
 	"categories": [
 		"Languages",
@@ -121,7 +121,7 @@
         "onCommand:xmlTools.viewXmlTree"
 	],
 	"devDependencies": {
-		"vscode": "^0.11.x",
+		"vscode": "TrueCommerce/vscode-extension-vscode#519e686",
 		"typescript": "^1.6.2",
         "gulp": "^3.9.0",
         "gulp-shell": "^0.5.1"
