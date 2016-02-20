@@ -139,6 +139,7 @@ export class XmlTreeService {
                     /* 1px */
                 }
             </style>
+            <script>function noop(){};</script>
         </head>
         <body>
         `;
@@ -165,12 +166,12 @@ export class XmlTreeService {
 
         if (node.attributes) {
             for (let i = 0; i < node.attributes.length; i++) {
-                html += `<li class="xml xml-attribute"><a href="">${node.attributes.item(i).localName} = '${node.attributes.item(i).value}'</a></li>`;
+                html += `<li class="xml xml-attribute"><a href="javascript:noop()">${node.attributes.item(i).localName} = '${node.attributes.item(i).value}'</a></li>`;
             }
         }
         
         if (!node.childNodes && node.textContent) {
-            html += `<li class="xml xml-text"><a href="">${node.textContent}</a></li>`;
+            html += `<li class="xml xml-text"><a href="javascript:noop()">${node.textContent}</a></li>`;
         }
         
         if (node.childNodes) {
