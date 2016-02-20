@@ -3,6 +3,7 @@
 
 ## Features
 * [XML Formatting](https://github.com/TrueCommerce/vscode-xml/wiki/xml-formatting)
+* [XML Tree View](https://github.com/TrueCommerce/vscode-xml/wiki/xml-tree-view)
 * [XPath Evaluation](https://github.com/TrueCommerce/vscode-xml/wiki/xpath-evaluation)
 * [XQuery Linting](https://github.com/TrueCommerce/vscode-xml/wiki/xquery-linting)
 * [XQuery Execution](https://github.com/TrueCommerce/vscode-xml/wiki/xquery-script-execution)
