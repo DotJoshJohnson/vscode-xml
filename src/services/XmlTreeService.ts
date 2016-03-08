@@ -1,10 +1,12 @@
 'use strict';
 
 let DOMParser = require('xmldom').DOMParser;
+let fs = require('fs');
 
 export class XmlTreeService {
     static getXmlTreeHtml(xml: string): string {
         let xdoc: Document = new DOMParser().parseFromString(xml, 'text/xml');
+        let fontColor: string = XmlTreeService._getRecommendedTextColor();
         let html: string =
         `
         <!DOCTYPE html>
@@ -22,7 +24,7 @@ export class XmlTreeService {
                 }
 
                 body {
-                    color: #ffffff;
+                    color: ${fontColor};
                     margin: 0;
                 }
 
@@ -74,7 +76,7 @@ export class XmlTreeService {
 
                 li.xml a {
                     background: url(document.png) 0 0 no-repeat;
-                    color: #000;
+                    color: ${fontColor};
                     padding-left: 21px;
                     text-decoration: none;
                     display: block;
@@ -114,6 +116,7 @@ export class XmlTreeService {
                 }
 
                 li label {
+                    color: ${fontColor};
                     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAYJJREFUOBFjYBjygJGQD1SmfNb+w8Sw8g8js/uTTK6n6OqZ0AXs/HfKIov9ZWKIANoi+OQl53Mb7y2CDqH7eZDlUQywD9qSxcj056ZT6GZpJEXhQANWMTQw/mNiY1j9/8+3dcZpZ1hh8nADHAO2BjP8Z5zMwPi/ZN9qX7BT5ad/NQQqVP3H8G8lSMP/f0x5QMqY9/WL+UAe2PtgAxwDt9n/Y2RYChRsPLjOZxpIMQgwM/yPYGBgfPAgi/8EiH94o9c1BoZ/Pv8ZGAMdArZ2g8TgLgBx0MH//wxhjIxA5+MBYAP2r/c6yPSfIRpoWz0oHEDqFaZ9tAC6SOEvA+MKmH5b/21aQDu3MDL8X39gg3cpSBzugv0bvNcC/Z8L9FoPKBCZGJjCgfK3H2Zyn4cZwMj0bxKQffazqEQi0LL/IHG4ASAOyP///7Go79P2eQ6UDQMKgQMPJAcC/34xhDKycAWdnWXyGyICNAbGQKZlpn+TZvn/dyfLP4bwOzm8V5HlhiEbAAAVeUhVveSUAAAAAElFTkSuQmCC) 15px 1px no-repeat;
                     cursor: pointer;
                     display: block;
@@ -183,5 +186,37 @@ export class XmlTreeService {
         }
         
         return html;
+    }
+    
+    private static _getRecommendedTextColor(): string {
+        let color = '#AAAAAA';
+        let path = '';
+        
+        switch (process.platform) {
+            case 'darwin':
+                path = `${process.env.HOME}/Library/Application Support/Code/storage.json`;
+                break;
+                
+            case 'win32':
+                path = `${process.env.APPDATA}\\Code\\storage.json`;
+                break;
+                
+            default:
+                path = `${process.env.HOME}/.config/Code/storage.json`
+                break;
+        }
+        
+        try {
+            fs.accessSync(path);
+            
+            let json = fs.readFileSync(path, 'utf8');
+            let storage = JSON.parse(json);
+            
+            color = (storage.theme.indexOf('vs-dark') > -1) ? '#FFFFFF' : '#000000';
+        }
+        
+        catch (error) { }
+        
+        return color;
     }
 }
