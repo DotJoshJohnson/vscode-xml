@@ -40,7 +40,7 @@ export class XmlFormatter {
         let inComment: boolean = false;
         let level: number = 0;
         let output: string = '';
-        
+
         for (let i = 0; i < parts.length; i++) {
             // <!
             if (parts[i].search(/<!/) > -1) {
@@ -62,7 +62,7 @@ export class XmlFormatter {
             // <elm></elm>
             else if (/^<\w/.test(parts[i - 1]) && /^<\/\w/.test(parts[i])
                 && /^<[\w:\-\.\,]+/.exec(parts[i - 1])[0] == /^<\/[\w:\-\.\,]+/.exec(parts[i])[0].replace('/', '')) {
-                
+                    
                 output += parts[i];
                 if (!inComment) level--;
             }
@@ -83,8 +83,13 @@ export class XmlFormatter {
             }
             
             // <elm />
-            else if (parts[i].search(/\/>/) > -1) {
+            else if (parts[i].search(/\/>/) > -1 && (!this.splitNamespaces || parts[i].search(/xmlns\:/) == -1)) {
                 output = (!inComment) ? output += this._getIndent(level, parts[i]) : output += parts[i];
+            }
+            
+            // xmlns />
+            else if (parts[i].search(/\/>/) > -1 && parts[i].search(/xmlns\:/) > -1 && this.splitNamespaces) {
+                output = (!inComment) ? output += this._getIndent(level--, parts[i]) : output += parts[i];
             }
             
             // <?xml ... ?>
