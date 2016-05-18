@@ -2,7 +2,7 @@
 	"name": "xml",
 	"displayName": "XML Tools",
 	"description": "XML Formatting, XQuery, and XPath Tools for Visual Studio Code",
-	"version": "1.5.2",
+	"version": "1.6.0-preview.1",
 	"publisher": "DotJoshJohnson",
 	"author": {
 		"name": "TrueCommerce",
