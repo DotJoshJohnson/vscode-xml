@@ -114,6 +114,7 @@
 	},
 	"activationEvents": [
 		"onLanguage:xml",
+        "onLanguage:xsl",
         "onLanguage:xquery",
         "onCommand:xmlTools.minifyXml",
         "onCommand:xmlTools.evaluateXPath",
