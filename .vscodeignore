@@ -5,3 +5,4 @@ CONTRIBUTING.md
 resources/wiki-images
 typings
 **/*.ts
+**/*.vsix
