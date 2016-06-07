@@ -62,7 +62,7 @@ export class XmlFormatter {
             // <elm></elm>
             else if (/^<\w/.test(parts[i - 1]) && /^<\/\w/.test(parts[i])
                 && /^<[\w:\-\.\,]+/.exec(parts[i - 1])[0] == /^<\/[\w:\-\.\,]+/.exec(parts[i])[0].replace('/', '')) {
-                    
+
                 output += parts[i];
                 if (!inComment) level--;
             }
@@ -157,7 +157,11 @@ export class XmlFormatter {
                 inCdata = true;
             }
             
-            else if (char == ']' && (xml.substr(i, 3) == ']]>' || xml.substr(i, 3) == '-->')) {
+            else if (char == ']' && (xml.substr(i, 3) == ']]>')) {
+                inCdata = false;
+            }
+            
+            else if (char == '-' && (xml.substr(i, 3) == '-->')) {
                 inCdata = false;
             }
             

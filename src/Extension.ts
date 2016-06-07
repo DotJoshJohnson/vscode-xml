@@ -11,6 +11,7 @@ export var GlobalState: vsc.Memento;
 export var WorkspaceState: vsc.Memento;
 
 const LANG_XML: string = 'xml';
+const LANG_XSL: string = 'xsl';
 const LANG_XQUERY: string = 'xquery;'
 const MEM_QUERY_HISTORY: string = 'xpathQueryHistory';
 
@@ -30,8 +31,8 @@ export function activate(ctx: vsc.ExtensionContext) {
 	
 	// register language feature providers
     ctx.subscriptions.push(
-        vsc.languages.registerDocumentFormattingEditProvider(LANG_XML, new XmlFormattingEditProvider()),
-        vsc.languages.registerDocumentRangeFormattingEditProvider(LANG_XML, new XmlFormattingEditProvider()),
+        vsc.languages.registerDocumentFormattingEditProvider([LANG_XML, LANG_XSL], new XmlFormattingEditProvider()),
+        vsc.languages.registerDocumentRangeFormattingEditProvider([LANG_XML, LANG_XSL], new XmlFormattingEditProvider()),
         
         vsc.languages.registerCompletionItemProvider(LANG_XQUERY, new XQueryCompletionItemProvider(), ':', '$')
     );
