@@ -15,3 +15,6 @@ Detailed release notes are available [here](https://github.com/TrueCommerce/vsco
 
 ## Issues
 Run into a bug? Report it [here](https://github.com/TrueCommerce/vscode-xml/issues).
+
+## Roadmap
+Check out development progress [here](https://github.com/DotJoshJohnson/vscode-xml/projects/1).
