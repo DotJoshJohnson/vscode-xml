@@ -1,6 +1,8 @@
 # XML Tools for Visual Studio Code
 [![](https://img.shields.io/badge/gitter-join_chat-1dce73.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSIwIiB5PSI1IiBmaWxsPSIjZmZmIiB3aWR0aD0iMSIgaGVpZ2h0PSI1Ii8%2BPHJlY3QgeD0iMiIgeT0iNiIgZmlsbD0iI2ZmZiIgd2lkdGg9IjEiIGhlaWdodD0iNyIvPjxyZWN0IHg9IjQiIHk9IjYiIGZpbGw9IiNmZmYiIHdpZHRoPSIxIiBoZWlnaHQ9IjciLz48cmVjdCB4PSI2IiB5PSI2IiBmaWxsPSIjZmZmIiB3aWR0aD0iMSIgaGVpZ2h0PSI0Ii8%2BPC9zdmc%2B&logoWidth=8)](https://gitter.im/vscode-xml/vscode-xml)
-[![Build Status](https://travis-ci.org/TrueCommerce/vscode-xml.svg?branch=master)](https://travis-ci.org/TrueCommerce/vscode-xml)
+
+## Current Version: v1.6.1
+[![Build Status](https://travis-ci.org/DotJoshJohnson/vscode-xml.svg?branch=master)](https://travis-ci.org/TrueCommerce/vscode-xml)
 
 ## Features
 * [XML Formatting](https://github.com/TrueCommerce/vscode-xml/wiki/xml-formatting)
@@ -15,3 +17,7 @@ Detailed release notes are available [here](https://github.com/TrueCommerce/vsco
 
 ## Issues
 Run into a bug? Report it [here](https://github.com/TrueCommerce/vscode-xml/issues).
+
+## Roadmap
+[![Build Status](https://travis-ci.org/DotJoshJohnson/vscode-xml.svg?branch=develop)](https://travis-ci.org/TrueCommerce/vscode-xml)<br />
+Check out development progress [here](https://github.com/DotJoshJohnson/vscode-xml/projects/1).
