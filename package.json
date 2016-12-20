@@ -13,13 +13,13 @@
 		"color": "#FFFFFF",
 		"theme": "light"
 	},
-	"homepage": "https://github.com/DotJoshJohnson/vscode-xml/wiki",
+	"homepage": "https://github.com/DotJoshJohnson/vscode-xml",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/DotJoshJohnson/vscode-xml/wiki"
+		"url": "https://github.com/DotJoshJohnson/vscode-xml.git"
 	},
 	"bugs": {
-		"url": "https://github.com/DotJoshJohnson/vscode-xml/wiki"
+		"url": "https://github.com/DotJoshJohnson/vscode-xml/issues"
 	},
 	"engines": {
 		"vscode": "^0.10.7",
