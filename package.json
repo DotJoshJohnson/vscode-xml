@@ -5,21 +5,21 @@
 	"version": "1.6.1",
 	"publisher": "DotJoshJohnson",
 	"author": {
-		"name": "TrueCommerce",
-		"url": "https://github.com/TrueCommerce"
+		"name": "Josh Johnson",
+		"url": "https://github.com/DotJoshJohnson"
 	},
-	"icon": "resources/icon.png",
+	"icon": "resources/xml.png",
 	"galleryBanner": {
 		"color": "#FFFFFF",
 		"theme": "light"
 	},
-	"homepage": "https://github.com/TrueCommerce/vscode-xml/wiki",
+	"homepage": "https://github.com/DotJoshJohnson/vscode-xml/wiki",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/TrueCommerce/vscode-xml/wiki"
+		"url": "https://github.com/DotJoshJohnson/vscode-xml/wiki"
 	},
 	"bugs": {
-		"url": "https://github.com/TrueCommerce/vscode-xml/wiki"
+		"url": "https://github.com/DotJoshJohnson/vscode-xml/wiki"
 	},
 	"engines": {
 		"vscode": "^0.10.7",
