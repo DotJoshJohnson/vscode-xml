@@ -28,7 +28,8 @@
 	"categories": [
 		"Languages",
         "Linters",
-        "Other"
+        "Other",
+	"Formatters"
 	],
 	"main": "./src/Extension",
 	"contributes": {
