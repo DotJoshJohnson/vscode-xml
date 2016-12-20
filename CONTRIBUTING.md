@@ -3,7 +3,11 @@ Thanks for helping out! This guide provides some guidelines on coding styles and
 Keep in mind that these are guidelines, not rules. Use your best judgement and feel free to make suggestions!
 
 ## Workflow
-**Please read the [TrueCommerce organization's workflow documentation](https://github.com/TrueCommerce/Meta/wiki/workflow#truecommerce-workflow) before getting started.**
+Please use the follow general workflow when making contributions to the code:
+
+1. Fork the repository.
+2. Create a feature branch or commit directly to the `develop` branch.
+3. Create a pull request to request that your commits be merged to the `develop` branch of the `vscode-xml` repository. PRs submitted to the `master` branch will not be considered.
 
 
 ## Building the Extension
@@ -11,8 +15,6 @@ Keep in mind that these are guidelines, not rules. Use your best judgement and f
 2. Run the `build` task in VS Code (`CTRL + SHIFT + B`) or start extension debugging (`F5`), which will run the `build` task for you.
 
 ## Style Guide
-In short, favor clean, maintainable code over code that "just works".
-
 ### Imports
 To keep *.ts files from getting too cluttered, use a namespace alias when pulling in more than 4 or 5 objects. As a general rule, always import the `vscode` namespace using the `vsc` alias for consistency.
 
