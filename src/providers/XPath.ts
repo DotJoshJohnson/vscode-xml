@@ -2,7 +2,7 @@
 
 import * as vsc from 'vscode';
 import * as ext from '../Extension';
-import { XPathEvaluator } from '../services/XPathEvaluator';
+import { XPathEvaluator, EvaluatorResult, EvaluatorResultType } from '../services/XPathEvaluator';
 
 const CFG_SECTION: string = 'xmlTools';
 const CFG_PERSIST_QUERY: string = 'persistXPathQuery';
@@ -59,12 +59,11 @@ export class XPathFeatureProvider {
             
             // run the query
             let xml: string = editor.document.getText();
-            let nodes: Node[];
+            let evalResult: EvaluatorResult;
             
             try {
-                nodes = XPathEvaluator.evaluate(query, xml, ignoreDefaultNamespace);
+                evalResult = XPathEvaluator.evaluate(query, xml, ignoreDefaultNamespace);
             }
-            
             catch (error) {
                 console.error(error);
                 vsc.window.showErrorMessage(`Something went wrong while evaluating the XPath: ${error}`);
@@ -78,10 +77,13 @@ export class XPathFeatureProvider {
             outputChannel.appendLine(`XPath Query: ${query}`);
             outputChannel.append('\n');
             
-            nodes.forEach((node: XmlNode) => {
-                outputChannel.appendLine(`[Line ${node.lineNumber}] ${node.localName}: ${node.textContent}`);
-            });
-
+            if (evalResult.type === EvaluatorResultType.NODE_COLLECTION) {
+                (evalResult.result as Node[]).forEach((node: XmlNode) => {
+                    outputChannel.appendLine(`[Line ${node.lineNumber}] ${node.localName}: ${node.textContent}`);
+                });
+            } else {    
+                outputChannel.appendLine(`[Result]: ${evalResult.result}`);
+            }
             outputChannel.show(vsc.ViewColumn.Three);
             
             // if persistence is enabled, save the query for later
