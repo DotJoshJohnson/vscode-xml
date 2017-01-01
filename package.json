@@ -2,7 +2,7 @@
 	"name": "xml",
 	"displayName": "XML Tools",
 	"description": "XML Formatting, XQuery, and XPath Tools for Visual Studio Code",
-	"version": "1.6.1",
+	"version": "1.7.0",
 	"publisher": "DotJoshJohnson",
 	"author": {
 		"name": "Josh Johnson",
@@ -28,7 +28,8 @@
 	"categories": [
 		"Languages",
         "Linters",
-        "Other"
+        "Other",
+	"Formatters"
 	],
 	"main": "./src/Extension",
 	"contributes": {
