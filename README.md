@@ -18,3 +18,8 @@ Run into a bug? Report it [here](https://github.com/DotJoshJohnson/vscode-xml/is
 
 ## Roadmap
 Check out development progress [here](https://github.com/DotJoshJohnson/vscode-xml/projects/1).
+
+## Icon Credits
+Icons used in the XML Tree View are used under the Creative Commons 3.0 BY license.
+* "Code" icon by Dave Gandy from www.flaticon.com
+* "At" icon by FreePik from www.flaticon.com

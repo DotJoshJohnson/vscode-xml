@@ -7,7 +7,6 @@ import { RangeUtil } from './utils/RangeUtil';
 import { XmlFormatter } from './services/XmlFormatter';
 import { XPathFeatureProvider } from './providers/XPath';
 import { XQueryExecutionProvider } from './providers/Execution';
-import { XmlTreeDocumentContentProvider } from './providers/Content';
 import { XmlFormattingEditProvider } from './providers/Formatting';
 
 const CFG_SECTION: string = 'xmlTools';
@@ -32,26 +31,13 @@ export class TextEditorCommands {
     static executeXQuery(editor: vsc.TextEditor, edit: vsc.TextEditorEdit): void {
         XQueryExecutionProvider.executeXQueryAsync(editor);
     }
-    
-    static async viewXmlTree(editor: vsc.TextEditor, edit: vsc.TextEditorEdit): Promise<void> {
-        try {
-            await vsc.commands.executeCommand(
-                'vscode.previewHtml',
-                XmlTreeDocumentContentProvider.buildUri(editor.document.uri),
-                vsc.ViewColumn.Three);
-        }
-        
-        catch (error) {
-            vsc.window.showErrorMessage(`The XML Tree could not be created: ${error}`);
-        }
-    }
 
     static formatAsXml(editor: vsc.TextEditor, edit: vsc.TextEditorEdit): void {
         let edits: vsc.TextEdit[];
         let formattingEditProvider = new XmlFormattingEditProvider();
         let formattingOptions: vsc.FormattingOptions = {
-            insertSpaces: editor.options.insertSpaces,
-            tabSize: editor.options.tabSize
+            insertSpaces: (editor.options.insertSpaces as boolean),
+            tabSize: (editor.options.tabSize as number)
         };
         
         // if the user has selected text, only format what is selected

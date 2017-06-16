@@ -5,7 +5,7 @@ import { TextEditorCommands } from './Commands';
 import { XmlFormattingEditProvider } from './providers/Formatting';
 import { XQueryLintingFeatureProvider } from './providers/Linting';
 import { XQueryCompletionItemProvider } from './providers/Completion';
-import { XmlTreeDocumentContentProvider } from './providers/Content';
+import { XmlTreeViewDataProvider } from "./providers/XmlTreeView";
 
 export var GlobalState: vsc.Memento;
 export var WorkspaceState: vsc.Memento;
@@ -26,7 +26,6 @@ export function activate(ctx: vsc.ExtensionContext) {
         vsc.commands.registerTextEditorCommand('xmlTools.minifyXml', TextEditorCommands.minifyXml),
         vsc.commands.registerTextEditorCommand('xmlTools.evaluateXPath', TextEditorCommands.evaluateXPath),
         vsc.commands.registerTextEditorCommand('xmlTools.executeXQuery', TextEditorCommands.executeXQuery),
-        vsc.commands.registerTextEditorCommand('xmlTools.viewXmlTree', TextEditorCommands.viewXmlTree),
         vsc.commands.registerTextEditorCommand('xmlTools.formatAsXml', TextEditorCommands.formatAsXml)
     );
 	
@@ -38,15 +37,15 @@ export function activate(ctx: vsc.ExtensionContext) {
         vsc.languages.registerCompletionItemProvider(LANG_XQUERY, new XQueryCompletionItemProvider(), ':', '$')
     );
     
-    // register workspace feature providers
-    ctx.subscriptions.push(
-        vsc.workspace.registerTextDocumentContentProvider(XmlTreeDocumentContentProvider.SCHEME, new XmlTreeDocumentContentProvider())
-    );
-    
     // listen to editor events (for linting)
     ctx.subscriptions.push(
         vsc.window.onDidChangeActiveTextEditor(_handleChangeActiveTextEditor),
         vsc.window.onDidChangeTextEditorSelection(_handleChangeTextEditorSelection)
+    );
+
+    // add views
+    ctx.subscriptions.push(
+        vsc.window.registerTreeDataProvider("xmlTreeView", new XmlTreeViewDataProvider(ctx))
     );
 }
 
