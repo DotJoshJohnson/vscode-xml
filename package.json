@@ -22,7 +22,7 @@
 		"url": "https://github.com/DotJoshJohnson/vscode-xml/issues"
 	},
 	"engines": {
-		"vscode": "^0.10.7",
+		"vscode": "^1.13.0",
 		"node": "^0.12.0"
 	},
 	"categories": [
@@ -45,10 +45,6 @@
             {
                 "command": "xmlTools.executeXQuery",
                 "title": "XML Tools: Execute XQuery"
-            },
-            {
-                "command": "xmlTools.viewXmlTree",
-                "title": "XML Tools: View XML Tree"
             },
             {
                 "command": "xmlTools.formatAsXml",
@@ -115,7 +111,15 @@
                 "scopeName": "source.xquery",
                 "path": "./languages/xquery/xquery.tmLanguage"
             }
-        ]
+        ],
+        "views": {
+            "explorer": [
+                {
+                    "id": "xmlTreeView",
+                    "name": "XML Document"
+                }
+            ]
+        }
 	},
 	"activationEvents": [
 		"onLanguage:xml",
@@ -124,12 +128,11 @@
         "onCommand:xmlTools.minifyXml",
         "onCommand:xmlTools.evaluateXPath",
         "onCommand:xmlTools.executeXQuery",
-        "onCommand:xmlTools.viewXmlTree",
         "onCommand:xmlTools.formatAsXml"
 	],
 	"devDependencies": {
-		"vscode": "^0.11.8",
-		"typescript": "^1.6.2",
+		"vscode": "^1.1.0",
+		"typescript": "^2.3.4",
         "gulp": "^3.9.0",
         "gulp-shell": "^0.5.1"
 	},
