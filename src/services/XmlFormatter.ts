@@ -152,6 +152,8 @@ export class XmlFormatter {
         
         for (let i = 0; i < xml.length; i++) {
             let char: string = xml.charAt(i);
+            let prev: string = xml.charAt(i - 1);
+            let next: string = xml.charAt(i + 1);
             
             if (char == '!' && (xml.substr(i, 8) == '![CDATA[' || xml.substr(i, 3) == '!--')) {
                 inCdata = true;
@@ -166,6 +168,14 @@ export class XmlFormatter {
             }
             
             else if (char.search(/[\r\n]/g) > -1 && !inCdata) {
+                if (/\r/.test(char) && /\S|\r|\n/.test(prev) && /\S|\r|\n/.test(xml.charAt(i + this.newLine.length))) {
+                    output += char;
+                }
+
+                else if (/\n/.test(char) && /\S|\r|\n/.test(xml.charAt(i - this.newLine.length)) && /\S|\r|\n/.test(next)) {
+                    output += char;
+                }
+
                 continue;
             }
             
