@@ -83,12 +83,12 @@ export class XmlFormatter {
             }
             
             // <elm />
-            else if (parts[i].search(/\/>/) > -1 && (!this.splitNamespaces || parts[i].search(/xmlns\:/) == -1)) {
+            else if (parts[i].search(/\/>/) > -1 && (!this.splitNamespaces || parts[i].search(/xmlns(:|=)/) == -1)) {
                 output = (!inComment) ? output += this._getIndent(level, parts[i]) : output += parts[i];
             }
             
             // xmlns />
-            else if (parts[i].search(/\/>/) > -1 && parts[i].search(/xmlns\:/) > -1 && this.splitNamespaces) {
+            else if (parts[i].search(/\/>/) > -1 && parts[i].search(/xmlns(:|=)/) > -1 && this.splitNamespaces) {
                 output = (!inComment) ? output += this._getIndent(level--, parts[i]) : output += parts[i];
             }
             
