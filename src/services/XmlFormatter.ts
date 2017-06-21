@@ -1,5 +1,3 @@
-'use strict';
-
 // Based on pretty-data (https://github.com/vkiryukhin/pretty-data)
 export class XmlFormatter {
     constructor(options?: IXmlFormatterOptions) {

@@ -1,5 +1,3 @@
-'use strict';
-
 import * as xpath from 'xpath';
 
 let DOMParser = require('xmldom').DOMParser;

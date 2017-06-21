@@ -1,5 +1,3 @@
-'use strict';
-
 import * as vsc from 'vscode';
 import { RangeUtil } from '../utils/RangeUtil';
 import { XmlFormatter, IXmlFormatterOptions } from '../services/XmlFormatter';

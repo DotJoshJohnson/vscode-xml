@@ -1,5 +1,3 @@
-'use strict';
-
 import * as vsc from 'vscode';
 import * as ext from '../Extension';
 import { XPathEvaluator, EvaluatorResult, EvaluatorResultType } from '../services/XPathEvaluator';

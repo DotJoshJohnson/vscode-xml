@@ -1,5 +1,3 @@
-'use strict';
-
 import * as vsc from 'vscode';
 
 export class RangeUtil {

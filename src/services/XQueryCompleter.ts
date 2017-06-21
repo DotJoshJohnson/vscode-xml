@@ -1,5 +1,3 @@
-'use strict';
-
 let XQLint = require('xqlint').XQLint;
 
 export class XQueryCompleter {

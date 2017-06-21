@@ -1,5 +1,3 @@
-'use strict';
-
 import * as vsc from 'vscode';
 import { TextEditorCommands } from './Commands';
 import { XmlFormattingEditProvider } from './providers/Formatting';

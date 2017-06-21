@@ -1,5 +1,3 @@
-'use strict';
-
 import * as vsc from 'vscode';
 import { XQueryLinter, XQueryDiagnostic } from '../services/XQueryLinter';
 
