@@ -60,7 +60,7 @@ export class XmlFormatter {
             }
             
             // <elm></elm>
-            else if (/^<\w/.test(parts[i - 1]) && /^<\/\w/.test(parts[i])
+            else if (/^<(\w|:)/.test(parts[i - 1]) && /^<\/(\w|:)/.test(parts[i])
                 && /^<[\w:\-\.\,]+/.exec(parts[i - 1])[0] == /^<\/[\w:\-\.\,]+/.exec(parts[i])[0].replace('/', '')) {
 
                 output += parts[i];
@@ -68,12 +68,12 @@ export class XmlFormatter {
             }
             
             // <elm>
-            else if (parts[i].search(/<\w/) > -1 && parts[i].search(/<\//) == -1 && parts[i].search(/\/>/) == -1) {
+            else if (parts[i].search(/<(\w|:)/) > -1 && parts[i].search(/<\//) == -1 && parts[i].search(/\/>/) == -1) {
                 output = (!inComment) ? output += this._getIndent(level++, parts[i]) : output += parts[i];
             }
             
             // <elm>...</elm>
-            else if (parts[i].search(/<\w/) > -1 && parts[i].search(/<\//) > -1) {
+            else if (parts[i].search(/<(\w|:)/) > -1 && parts[i].search(/<\//) > -1) {
                 output = (!inComment) ? output += this._getIndent(level, parts[i]) : output += parts[i];
             }
             
