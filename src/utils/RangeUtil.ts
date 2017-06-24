@@ -1,4 +1,4 @@
-import * as vsc from 'vscode';
+import * as vsc from "vscode";
 
 export class RangeUtil {
     static getRangeForDocument(document: vsc.TextDocument): vsc.Range {

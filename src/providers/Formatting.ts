@@ -1,9 +1,9 @@
-import * as vsc from 'vscode';
-import { RangeUtil } from '../utils/RangeUtil';
-import { XmlFormatter, IXmlFormatterOptions } from '../services/XmlFormatter';
+import * as vsc from "vscode";
+import { RangeUtil } from "../utils/RangeUtil";
+import { XmlFormatter, IXmlFormatterOptions } from "../services/XmlFormatter";
 
-const CFG_SECTION: string = 'xmlTools';
-const CFG_SPLIT_NAMESPACES: string = 'splitXmlnsOnFormat';
+const CFG_SECTION: string = "xmlTools";
+const CFG_SPLIT_NAMESPACES: string = "splitXmlnsOnFormat";
 
 export class XmlFormattingEditProvider implements vsc.DocumentFormattingEditProvider, vsc.DocumentRangeFormattingEditProvider {
     provideDocumentFormattingEdits(document: vsc.TextDocument, options: vsc.FormattingOptions): vsc.TextEdit[] {

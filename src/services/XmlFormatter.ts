@@ -3,19 +3,19 @@ export class XmlFormatter {
     constructor(options?: IXmlFormatterOptions) {
         options = options || {};
         
-        if (typeof options.preferSpaces === 'undefined') {
+        if (typeof options.preferSpaces === "undefined") {
             options.preferSpaces = false;
         }
         
-        if (typeof options.splitNamespaces === 'undefined') {
+        if (typeof options.splitNamespaces === "undefined") {
             options.splitNamespaces = true;
         }
         
         options.tabSize = options.tabSize || 4;
-        options.newLine = options.newLine || '\n';
+        options.newLine = options.newLine || "\n";
         
-        this.newLine = options.newLine || '\n';
-        this.indentPattern = (options.preferSpaces) ? ' '.repeat(options.tabSize) : '\t';
+        this.newLine = options.newLine || "\n";
+        this.indentPattern = (options.preferSpaces) ? " ".repeat(options.tabSize) : "\t";
         this.splitNamespaces = options.splitNamespaces;
     }
     
@@ -25,19 +25,19 @@ export class XmlFormatter {
     
     format(xml: string): string {
         xml = this.minify(xml, false);
-        xml = xml.replace(/</g, '~::~<');
+        xml = xml.replace(/</g, "~::~<");
         
         if (this.splitNamespaces) {
             xml = xml
-                .replace(/xmlns\:/g, '~::~xmlns:')
-                .replace(/xmlns\=/g, '~::~xmlns=');
+                .replace(/xmlns\:/g, "~::~xmlns:")
+                .replace(/xmlns\=/g, "~::~xmlns=");
         }
         
-        let parts: string[] = xml.split('~::~');
+        let parts: string[] = xml.split("~::~");
             console.log(parts);
         let inComment: boolean = false;
         let level: number = 0;
-        let output: string = '';
+        let output: string = "";
 
         for (let i = 0; i < parts.length; i++) {
             // <!
@@ -59,7 +59,7 @@ export class XmlFormatter {
             
             // <elm></elm>
             else if (/^<(\w|:)/.test(parts[i - 1]) && /^<\/(\w|:)/.test(parts[i])
-                && /^<[\w:\-\.\,\/]+/.exec(parts[i - 1])[0] == /^<\/[\w:\-\.\,]+/.exec(parts[i])[0].replace('/', '')) {
+                && /^<[\w:\-\.\,\/]+/.exec(parts[i - 1])[0] == /^<\/[\w:\-\.\,]+/.exec(parts[i])[0].replace("/", "")) {
 
                 output += parts[i];
                 if (!inComment) level--;
@@ -118,31 +118,31 @@ export class XmlFormatter {
     }
     
     minify(xml: string, removeComments?: boolean): string {
-        if (typeof removeComments === 'undefined') {
+        if (typeof removeComments === "undefined") {
             removeComments = false;
         }
         
         xml = this._stripLineBreaks(xml); // all line breaks outside of CDATA elements
-        xml = (removeComments) ? xml.replace(/\<![ \r\n\t]*(--([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)\>/g, '') : xml;
-        xml = xml.replace(/>\s{0,}</g, '><'); // insignificant whitespace between tags
-        xml = xml.replace(/"\s+(?=[^\s]+=)/g, '" '); // spaces between attributes
-        xml = xml.replace(/"\s+(?=>)/g, '"'); // spaces between the last attribute and tag close (>)
-        xml = xml.replace(/"\s+(?=\/>)/g, '" '); // spaces between the last attribute and tag close (/>)
+        xml = (removeComments) ? xml.replace(/\<![ \r\n\t]*(--([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)\>/g, "") : xml;
+        xml = xml.replace(/>\s{0,}</g, "><"); // insignificant whitespace between tags
+        xml = xml.replace(/"\s+(?=[^\s]+=)/g, "\" "); // spaces between attributes
+        xml = xml.replace(/"\s+(?=>)/g, "\""); // spaces between the last attribute and tag close (>)
+        xml = xml.replace(/"\s+(?=\/>)/g, "\" "); // spaces between the last attribute and tag close (/>)
         xml = xml.replace(/[^ <>="]\s+[^ <>="]+=/g, (match: string) => { // spaces between the node name and the first attribute
-            return match.replace(/\s+/g, ' ');
+            return match.replace(/\s+/g, " ");
         });
         
         return xml;
     }
     
     private _getIndent(level: number, trailingValue?: string): string {
-        trailingValue = trailingValue || '';
+        trailingValue = trailingValue || "";
         
         return `${this.newLine}${this.indentPattern.repeat(level)}${trailingValue}`;
     }
     
     private _stripLineBreaks(xml: string): string {
-        let output: string = '';
+        let output: string = "";
         let inTag: boolean = false;
         let inTagName: boolean = false;
         let inCdata: boolean = false;
@@ -153,15 +153,15 @@ export class XmlFormatter {
             let prev: string = xml.charAt(i - 1);
             let next: string = xml.charAt(i + 1);
             
-            if (char == '!' && (xml.substr(i, 8) == '![CDATA[' || xml.substr(i, 3) == '!--')) {
+            if (char == "!" && (xml.substr(i, 8) == "![CDATA[" || xml.substr(i, 3) == "!--")) {
                 inCdata = true;
             }
             
-            else if (char == ']' && (xml.substr(i, 3) == ']]>')) {
+            else if (char == "]" && (xml.substr(i, 3) == "]]>")) {
                 inCdata = false;
             }
             
-            else if (char == '-' && (xml.substr(i, 3) == '-->')) {
+            else if (char == "-" && (xml.substr(i, 3) == "-->")) {
                 inCdata = false;
             }
             

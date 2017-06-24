@@ -1,14 +1,14 @@
-import * as vsc from 'vscode';
-import * as ext from './Extension';
-import * as xpath from 'xpath';
-import { RangeUtil } from './utils/RangeUtil';
-import { XmlFormatter } from './services/XmlFormatter';
-import { XPathFeatureProvider } from './providers/XPath';
-import { XQueryExecutionProvider } from './providers/Execution';
-import { XmlFormattingEditProvider } from './providers/Formatting';
+import * as vsc from "vscode";
+import * as ext from "./Extension";
+import * as xpath from "xpath";
+import { RangeUtil } from "./utils/RangeUtil";
+import { XmlFormatter } from "./services/XmlFormatter";
+import { XPathFeatureProvider } from "./providers/XPath";
+import { XQueryExecutionProvider } from "./providers/Execution";
+import { XmlFormattingEditProvider } from "./providers/Formatting";
 
-const CFG_SECTION: string = 'xmlTools';
-const CFG_REMOVE_COMMENTS: string = 'removeCommentsOnMinify';
+const CFG_SECTION: string = "xmlTools";
+const CFG_REMOVE_COMMENTS: string = "removeCommentsOnMinify";
 
 export class TextEditorCommands {
     static minifyXml(editor: vsc.TextEditor, edit: vsc.TextEditorEdit): void {
@@ -54,13 +54,13 @@ export class TextEditorCommands {
                     editBuilder.replace(edits[i].range, edits[i].newText);
 
                     // wiggle the cursor to deselect the formatted XML (is there a non-hacky way to go about this?)
-                    await vsc.commands.executeCommand('cursorMove', {
-                        to: 'left',
-                        by: 'character'
+                    await vsc.commands.executeCommand("cursorMove", {
+                        to: "left",
+                        by: "character"
                     });
-                    await vsc.commands.executeCommand('cursorMove', {
-                        to: 'right',
-                        by: 'character'
+                    await vsc.commands.executeCommand("cursorMove", {
+                        to: "right",
+                        by: "character"
                     });
                 });
             }

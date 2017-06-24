@@ -1,5 +1,5 @@
-import * as vsc from 'vscode';
-import { XQueryCompleter, XQueryCompletionItem } from '../services/XQueryCompleter';
+import * as vsc from "vscode";
+import { XQueryCompleter, XQueryCompletionItem } from "../services/XQueryCompleter";
 
 export class XQueryCompletionItemProvider implements vsc.CompletionItemProvider {
     provideCompletionItems(document: vsc.TextDocument, position: vsc.Position): vsc.CompletionItem[] {
@@ -14,20 +14,20 @@ export class XQueryCompletionItemProvider implements vsc.CompletionItemProvider 
             
             switch (completion.meta) {
                 // functions (always qualified with a colon)
-                case 'function':
+                case "function":
                     item.kind = vsc.CompletionItemKind.Function;
                     
-                    let funcStart = (completion.value.indexOf(':') + 1);
-                    let funcEnd = completion.value.indexOf('(');
+                    let funcStart = (completion.value.indexOf(":") + 1);
+                    let funcEnd = completion.value.indexOf("(");
                     
                     item.insertText = completion.value.substring(funcStart, funcEnd);
                     break;
                     
                 // variables and parameters (always qualified with a dollar sign)
-                case 'Let binding':
-				case 'Local variable':
-				case 'Window variable':
-				case 'Function parameter':
+                case "Let binding":
+				case "Local variable":
+				case "Window variable":
+				case "Function parameter":
                     item.kind = vsc.CompletionItemKind.Variable;
                     item.insertText = completion.value.substring(1);
                     break;
