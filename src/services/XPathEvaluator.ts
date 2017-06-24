@@ -1,8 +1,6 @@
-'use strict';
+import * as xpath from "xpath";
 
-import * as xpath from 'xpath';
-
-let DOMParser = require('xmldom').DOMParser;
+let DOMParser = require("xmldom").DOMParser;
 
 export class EvaluatorResult {
     type: EvaluatorResultType;
@@ -18,13 +16,13 @@ export class XPathEvaluator {
     static evaluate(query: string, xml: string, ignoreDefaultNamespace: boolean): EvaluatorResult {
         if (ignoreDefaultNamespace) {
             xml = xml.replace(/xmlns=".+"/g, (match: string) => {
-                return match.replace(/xmlns/g, 'xmlns:default');
+                return match.replace(/xmlns/g, "xmlns:default");
             });
         }
         
         let nodes: Node[] = new Array<Node>();
         
-        let xdoc: Document = new DOMParser().parseFromString(xml, 'text/xml');
+        let xdoc: Document = new DOMParser().parseFromString(xml, "text/xml");
         
         let resolver: xpath.XPathNSResolver = xpath.createNSResolver(xdoc);
         let result: xpath.XPathResult = xpath.evaluate(

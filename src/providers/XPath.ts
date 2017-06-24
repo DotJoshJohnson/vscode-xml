@@ -1,15 +1,13 @@
-'use strict';
+import * as vsc from "vscode";
+import * as ext from "../Extension";
+import { XPathEvaluator, EvaluatorResult, EvaluatorResultType } from "../services/XPathEvaluator";
 
-import * as vsc from 'vscode';
-import * as ext from '../Extension';
-import { XPathEvaluator, EvaluatorResult, EvaluatorResultType } from '../services/XPathEvaluator';
-
-const CFG_SECTION: string = 'xmlTools';
-const CFG_PERSIST_QUERY: string = 'persistXPathQuery';
-const CFG_IGNORE_DEFAULT_XMLNS: string = 'ignoreDefaultNamespace';
-const MEM_QUERY_HISTORY: string = 'xpathQueryHistory';
-const MEM_QUERY_LAST: string = 'xPathQueryLast';
-const OUTPUT_CHANNEL: string = 'XPath Results';
+const CFG_SECTION: string = "xmlTools";
+const CFG_PERSIST_QUERY: string = "persistXPathQuery";
+const CFG_IGNORE_DEFAULT_XMLNS: string = "ignoreDefaultNamespace";
+const MEM_QUERY_HISTORY: string = "xpathQueryHistory";
+const MEM_QUERY_LAST: string = "xPathQueryLast";
+const OUTPUT_CHANNEL: string = "XPath Results";
 
 export class XPathFeatureProvider {
     static async evaluateXPathAsync(editor: vsc.TextEditor, edit: vsc.TextEditorEdit): Promise<void> {
@@ -23,7 +21,7 @@ export class XPathFeatureProvider {
         // if not, try pulling the last query ran, regardless of document
         // NOTE: if the user has focus on the output channel when opening the xquery prompt, the channel is the "active" document
         let history: HistoricQuery[] = memento.get<HistoricQuery[]>(MEM_QUERY_HISTORY, new Array<HistoricQuery>());
-        let globalLastQuery: string = memento.get<string>(MEM_QUERY_LAST, '');
+        let globalLastQuery: string = memento.get<string>(MEM_QUERY_LAST, "");
 
         let lastQuery: HistoricQuery = history.find((item: HistoricQuery) => {
             if (item.uri == editor.document.uri.toString()) {
@@ -34,7 +32,7 @@ export class XPathFeatureProvider {
         });
 
         // set the inital display value and prompt the user
-        let query: string = '';
+        let query: string = "";
         
         if (persistQueries) {
             if (lastQuery) {
@@ -47,8 +45,8 @@ export class XPathFeatureProvider {
         }
 
         query = await vsc.window.showInputBox({
-            placeHolder: 'XPath Query',
-            prompt: 'Please enter an XPath query to evaluate.',
+            placeHolder: "XPath Query",
+            prompt: "Please enter an XPath query to evaluate.",
             value: query
         });
         
@@ -75,7 +73,7 @@ export class XPathFeatureProvider {
             outputChannel.clear();
 
             outputChannel.appendLine(`XPath Query: ${query}`);
-            outputChannel.append('\n');
+            outputChannel.append("\n");
             
             if (evalResult.type === EvaluatorResultType.NODE_COLLECTION) {
                 (evalResult.result as Node[]).forEach((node: XmlNode) => {

@@ -1,14 +1,12 @@
-'use strict';
-
-import * as vsc from 'vscode';
-import { XQueryLinter, XQueryDiagnostic } from '../services/XQueryLinter';
+import * as vsc from "vscode";
+import { XQueryLinter, XQueryDiagnostic } from "../services/XQueryLinter";
 
 export class XQueryLintingFeatureProvider {
     private static _coreDiagnostics: vsc.DiagnosticCollection;
     
     static get coreDiagnostics(): vsc.DiagnosticCollection {
         if (!XQueryLintingFeatureProvider._coreDiagnostics) {
-            XQueryLintingFeatureProvider._coreDiagnostics = vsc.languages.createDiagnosticCollection('XQueryDiagnostics');
+            XQueryLintingFeatureProvider._coreDiagnostics = vsc.languages.createDiagnosticCollection("XQueryDiagnostics");
         }
         
         return XQueryLintingFeatureProvider._coreDiagnostics;

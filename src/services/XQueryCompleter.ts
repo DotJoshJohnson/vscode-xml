@@ -1,6 +1,4 @@
-'use strict';
-
-let XQLint = require('xqlint').XQLint;
+let XQLint = require("xqlint").XQLint;
 
 export class XQueryCompleter {
     constructor(script: string) {

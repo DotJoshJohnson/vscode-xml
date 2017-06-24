@@ -1,9 +1,9 @@
-var gulp = require('gulp');
+var gulp = require("gulp");
 
-var shell = require('gulp-shell');
+var shell = require("gulp-shell");
 
-gulp.task('compile-typescript', function () {
-    gulp.src('package.json').pipe(shell('tsc'));
+gulp.task("compile-typescript", function () {
+    gulp.src("package.json").pipe(shell("tsc"));
 });
 
-gulp.task('build', ['compile-typescript']);
+gulp.task("build", ["compile-typescript"]);

@@ -1,32 +1,30 @@
-'use strict';
-
-import * as vsc from 'vscode';
-import { TextEditorCommands } from './Commands';
-import { XmlFormattingEditProvider } from './providers/Formatting';
-import { XQueryLintingFeatureProvider } from './providers/Linting';
-import { XQueryCompletionItemProvider } from './providers/Completion';
+import * as vsc from "vscode";
+import { TextEditorCommands } from "./Commands";
+import { XmlFormattingEditProvider } from "./providers/Formatting";
+import { XQueryLintingFeatureProvider } from "./providers/Linting";
+import { XQueryCompletionItemProvider } from "./providers/Completion";
 import { XmlTreeViewDataProvider } from "./providers/XmlTreeView";
 
 export var GlobalState: vsc.Memento;
 export var WorkspaceState: vsc.Memento;
 
-const LANG_XML: string = 'xml';
-const LANG_XSL: string = 'xsl';
-const LANG_XQUERY: string = 'xquery;'
-const MEM_QUERY_HISTORY: string = 'xpathQueryHistory';
+const LANG_XML: string = "xml";
+const LANG_XSL: string = "xsl";
+const LANG_XQUERY: string = "xquery;"
+const MEM_QUERY_HISTORY: string = "xpathQueryHistory";
 
 export function activate(ctx: vsc.ExtensionContext) {
-    console.log('activate extension');
+    console.log("activate extension");
     // expose global and workspace state to the entire extension
     GlobalState = ctx.globalState;
     WorkspaceState = ctx.workspaceState;
     
 	// register palette commands
     ctx.subscriptions.push(
-        vsc.commands.registerTextEditorCommand('xmlTools.minifyXml', TextEditorCommands.minifyXml),
-        vsc.commands.registerTextEditorCommand('xmlTools.evaluateXPath', TextEditorCommands.evaluateXPath),
-        vsc.commands.registerTextEditorCommand('xmlTools.executeXQuery', TextEditorCommands.executeXQuery),
-        vsc.commands.registerTextEditorCommand('xmlTools.formatAsXml', TextEditorCommands.formatAsXml)
+        vsc.commands.registerTextEditorCommand("xmlTools.minifyXml", TextEditorCommands.minifyXml),
+        vsc.commands.registerTextEditorCommand("xmlTools.evaluateXPath", TextEditorCommands.evaluateXPath),
+        vsc.commands.registerTextEditorCommand("xmlTools.executeXQuery", TextEditorCommands.executeXQuery),
+        vsc.commands.registerTextEditorCommand("xmlTools.formatAsXml", TextEditorCommands.formatAsXml)
     );
 	
 	// register language feature providers
@@ -34,7 +32,7 @@ export function activate(ctx: vsc.ExtensionContext) {
         vsc.languages.registerDocumentFormattingEditProvider([LANG_XML, LANG_XSL], new XmlFormattingEditProvider()),
         vsc.languages.registerDocumentRangeFormattingEditProvider([LANG_XML, LANG_XSL], new XmlFormattingEditProvider()),
         
-        vsc.languages.registerCompletionItemProvider(LANG_XQUERY, new XQueryCompletionItemProvider(), ':', '$')
+        vsc.languages.registerCompletionItemProvider(LANG_XQUERY, new XQueryCompletionItemProvider(), ":", "$")
     );
     
     // listen to editor events (for linting)
@@ -63,7 +61,7 @@ function _handleContextChange(editor: vsc.TextEditor): void {
     }
     
     switch (editor.document.languageId) {
-        case 'xquery':
+        case "xquery":
             XQueryLintingFeatureProvider.provideXQueryDiagnostics(editor);
             break;
     }
