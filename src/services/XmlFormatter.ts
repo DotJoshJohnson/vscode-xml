@@ -34,7 +34,7 @@ export class XmlFormatter {
         }
         
         let parts: string[] = xml.split('~::~');
-            
+            console.log(parts);
         let inComment: boolean = false;
         let level: number = 0;
         let output: string = '';
@@ -59,7 +59,7 @@ export class XmlFormatter {
             
             // <elm></elm>
             else if (/^<(\w|:)/.test(parts[i - 1]) && /^<\/(\w|:)/.test(parts[i])
-                && /^<[\w:\-\.\,\/ ]+/.exec(parts[i - 1])[0] == /^<\/[\w:\-\.\, ]+/.exec(parts[i])[0].replace('/', '')) {
+                && /^<[\w:\-\.\,\/]+/.exec(parts[i - 1])[0] == /^<\/[\w:\-\.\,]+/.exec(parts[i])[0].replace('/', '')) {
 
                 output += parts[i];
                 if (!inComment) level--;
@@ -96,7 +96,7 @@ export class XmlFormatter {
             }
             
             // xmlns
-            else if (parts[i].search(/xmlns\:/) > -1 || parts[i].search(/xmlns\=/) > -1) {
+            else if (this.splitNamespaces && (parts[i].search(/xmlns\:/) > -1 || parts[i].search(/xmlns\=/) > -1)) {
                 output += this._getIndent(level, parts[i]);
             }
             
