@@ -91,6 +91,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Ignores default xmlns attribute when evaluating XPath."
+                },
+                "xmlTools.treeViewEnabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable the XML Tree (XML Document) custom view."
                 }
             }
         },
@@ -132,7 +137,8 @@
             "explorer": [
                 {
                     "id": "xmlTreeView",
-                    "name": "XML Document"
+                    "name": "XML Document",
+                    "when": "config.xmlTools.treeViewEnabled != false"
                 }
             ]
         }
