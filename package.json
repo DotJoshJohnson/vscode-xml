@@ -1,47 +1,47 @@
 {
-	"name": "xml",
-	"displayName": "XML Tools",
-	"description": "XML Formatting, XQuery, and XPath Tools for Visual Studio Code",
-	"version": "1.9.2",
-	"publisher": "DotJoshJohnson",
-	"author": {
-		"name": "Josh Johnson",
-		"url": "https://github.com/DotJoshJohnson"
-	},
-	"icon": "resources/xml.png",
-	"galleryBanner": {
-		"color": "#FFFFFF",
-		"theme": "light"
-	},
-	"homepage": "https://github.com/DotJoshJohnson/vscode-xml",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/DotJoshJohnson/vscode-xml.git"
-	},
-	"bugs": {
-		"url": "https://github.com/DotJoshJohnson/vscode-xml/issues"
-	},
-	"engines": {
-		"vscode": "^1.13.0",
-		"node": "^0.12.0"
-	},
-	"categories": [
-		"Languages",
+    "name": "xml",
+    "displayName": "XML Tools",
+    "description": "XML Formatting, XQuery, and XPath Tools for Visual Studio Code",
+    "version": "1.9.2",
+    "publisher": "DotJoshJohnson",
+    "author": {
+        "name": "Josh Johnson",
+        "url": "https://github.com/DotJoshJohnson"
+    },
+    "icon": "resources/xml.png",
+    "galleryBanner": {
+        "color": "#FFFFFF",
+        "theme": "light"
+    },
+    "homepage": "https://github.com/DotJoshJohnson/vscode-xml",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DotJoshJohnson/vscode-xml.git"
+    },
+    "bugs": {
+        "url": "https://github.com/DotJoshJohnson/vscode-xml/issues"
+    },
+    "engines": {
+        "vscode": "^1.13.0",
+        "node": "^0.12.0"
+    },
+    "categories": [
+        "Languages",
         "Linters",
         "Other",
-	"Formatters"
-	],
-	"main": "./src/Extension",
-	"contributes": {
-		"commands": [
-			{
-				"command": "xmlTools.minifyXml",
-				"title": "XML Tools: Minify XML"
-			},
-			{
-				"command": "xmlTools.evaluateXPath",
-				"title": "XML Tools: Evaluate XPath"
-			},
+        "Formatters"
+    ],
+    "main": "./src/Extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "xmlTools.minifyXml",
+                "title": "XML Tools: Minify XML"
+            },
+            {
+                "command": "xmlTools.evaluateXPath",
+                "title": "XML Tools: Evaluate XPath"
+            },
             {
                 "command": "xmlTools.executeXQuery",
                 "title": "XML Tools: Execute XQuery"
@@ -50,7 +50,7 @@
                 "command": "xmlTools.formatAsXml",
                 "title": "XML Tools: Format as XML"
             }
-		],
+        ],
         "configuration": {
             "title": "XML Tools Configuration",
             "type": "object",
@@ -77,7 +77,14 @@
                 },
                 "xmlTools.xqueryExecutionArguments": {
                     "type": "array",
-                    "default": ["-xquery", "$(script)", "-in", "$(input)", "-out", "$(input).output.xml"],
+                    "default": [
+                        "-xquery",
+                        "$(script)",
+                        "-in",
+                        "$(input)",
+                        "-out",
+                        "$(input).output.xml"
+                    ],
                     "description": "Arguments to be passed to the execution engine. '$(script)' and '$(input)' refer to the XQuery script and input XML file, respectively."
                 },
                 "xmlTools.ignoreDefaultNamespace": {
@@ -87,21 +94,30 @@
                 }
             }
         },
-		"keybindings": [
-			{
-				"key": "ctrl+shift+alt+b",
-				"command": "xmlTools.formatXml"
-			},
-			{
-				"key": "ctrl+shift+alt+x",
-				"command": "xmlTools.evaluateXPath"
-			}
-		],
+        "keybindings": [
+            {
+                "key": "ctrl+shift+alt+b",
+                "command": "xmlTools.formatXml"
+            },
+            {
+                "key": "ctrl+shift+alt+x",
+                "command": "xmlTools.evaluateXPath"
+            }
+        ],
         "languages": [
             {
                 "id": "xquery",
-                "aliases": ["XQuery", "xquery"],
-                "extensions": [".xq",".xql",".xqm",".xqy",".xquery"],
+                "aliases": [
+                    "XQuery",
+                    "xquery"
+                ],
+                "extensions": [
+                    ".xq",
+                    ".xql",
+                    ".xqm",
+                    ".xqy",
+                    ".xquery"
+                ],
                 "configuration": "./languages/xquery/xquery.json"
             }
         ],
@@ -120,27 +136,27 @@
                 }
             ]
         }
-	},
-	"activationEvents": [
-		"onLanguage:xml",
+    },
+    "activationEvents": [
+        "onLanguage:xml",
         "onLanguage:xsl",
         "onLanguage:xquery",
         "onCommand:xmlTools.minifyXml",
         "onCommand:xmlTools.evaluateXPath",
         "onCommand:xmlTools.executeXQuery",
         "onCommand:xmlTools.formatAsXml"
-	],
-	"devDependencies": {
-		"vscode": "^1.1.0",
-		"typescript": "^2.3.4",
+    ],
+    "devDependencies": {
+        "vscode": "^1.1.0",
+        "typescript": "^2.3.4",
         "gulp": "^3.9.0",
         "gulp-shell": "^0.5.1"
-	},
-	"dependencies": {
-		"xmldom": "^0.1.22",
-		"xpath": "^0.0.9",
+    },
+    "dependencies": {
+        "xmldom": "^0.1.22",
+        "xpath": "^0.0.9",
         "xqlint": "^0.2.9"
-	},
+    },
     "scripts": {
         "vscode:prepublish": "tsc",
         "postinstall": "node ./node_modules/vscode/bin/install"
