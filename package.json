@@ -138,7 +138,7 @@
                 {
                     "id": "xmlTreeView",
                     "name": "XML Document",
-                    "when": "config.xmlTools.treeViewEnabled != false"
+                    "when": "resourceLangId == 'xml' && config.xmlTools.treeViewEnabled != false"
                 }
             ]
         }
