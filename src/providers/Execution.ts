@@ -15,8 +15,8 @@ export class XQueryExecutionProvider {
             return;
         }
         
-        let executable = vsc.workspace.getConfiguration(CFG_SECTION).get<string>(CFG_XQEXEC, null);
-        let args = vsc.workspace.getConfiguration(CFG_SECTION).get<string[]>(CFG_XQARGS, []);
+        let executable = vsc.workspace.getConfiguration(CFG_SECTION, editor.document.uri).get<string>(CFG_XQEXEC, null);
+        let args = vsc.workspace.getConfiguration(CFG_SECTION, editor.document.uri).get<string[]>(CFG_XQARGS, []);
         
         if (!executable || executable == "") {
             let action = await vsc.window.showWarningMessage("An XQuery execution engine has not been defined.", "Define Now");
@@ -89,14 +89,16 @@ export class XQueryExecutionProvider {
             
             args[outputPathPos] = outputPath;
         }
-        
+
+        const project = vsc.workspace.getWorkspaceFolder(editor.document.uri) ? vsc.workspace.getWorkspaceFolder(editor.document.uri).uri.fsPath : '';
+
         // call out to the execution engine
         disposable = vsc.window.setStatusBarMessage("Executing XQuery Script...");
         args = args.map<string>((value: string) => {
             return value
                 .replace("$(script)", editor.document.uri.fsPath)
                 .replace("$(input)", inputFile.fsPath)
-                .replace("$(project)", vsc.workspace.rootPath);
+                .replace("$(project)", project);
         });
         
         try {

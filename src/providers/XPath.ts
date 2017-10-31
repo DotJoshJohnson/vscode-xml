@@ -15,7 +15,7 @@ export class XPathFeatureProvider {
         let memento: vsc.Memento = ext.WorkspaceState || ext.GlobalState;
         
         // get the xpath persistence setting
-        let persistQueries: boolean = vsc.workspace.getConfiguration(CFG_SECTION).get<boolean>(CFG_PERSIST_QUERY, true);
+        let persistQueries: boolean = vsc.workspace.getConfiguration(CFG_SECTION, editor.document.uri).get<boolean>(CFG_PERSIST_QUERY, true);
         
         // get the last query if there is one for this document
         // if not, try pulling the last query ran, regardless of document
@@ -53,7 +53,7 @@ export class XPathFeatureProvider {
         // showInputBox() will return undefined if the user dimissed the prompt
         if (query) {
             
-            let ignoreDefaultNamespace: boolean = vsc.workspace.getConfiguration(CFG_SECTION).get<boolean>(CFG_IGNORE_DEFAULT_XMLNS, true);
+            let ignoreDefaultNamespace: boolean = vsc.workspace.getConfiguration(CFG_SECTION, editor.document.uri).get<boolean>(CFG_IGNORE_DEFAULT_XMLNS, true);
             
             // run the query
             let xml: string = editor.document.getText();

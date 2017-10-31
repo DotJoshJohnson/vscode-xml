@@ -12,7 +12,7 @@ const CFG_REMOVE_COMMENTS: string = "removeCommentsOnMinify";
 
 export class TextEditorCommands {
     static minifyXml(editor: vsc.TextEditor, edit: vsc.TextEditorEdit): void {
-        let removeComments: boolean = vsc.workspace.getConfiguration(CFG_SECTION).get<boolean>(CFG_REMOVE_COMMENTS, false);
+        let removeComments: boolean = vsc.workspace.getConfiguration(CFG_SECTION, editor.document.uri).get<boolean>(CFG_REMOVE_COMMENTS, false);
         
         let range: vsc.Range = RangeUtil.getRangeForDocument(editor.document);
         
