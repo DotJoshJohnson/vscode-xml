@@ -17,7 +17,7 @@ export class XmlFormattingEditProvider implements vsc.DocumentFormattingEditProv
     }
     
     private _provideFormattingEdits(document: vsc.TextDocument, range: vsc.Range, options: vsc.FormattingOptions): vsc.TextEdit[] {
-        let splitNamespaces: boolean = vsc.workspace.getConfiguration(CFG_SECTION).get<boolean>(CFG_SPLIT_NAMESPACES, true);
+        let splitNamespaces: boolean = vsc.workspace.getConfiguration(CFG_SECTION, document.uri).get<boolean>(CFG_SPLIT_NAMESPACES, true);
         
         let formatterOptions: IXmlFormatterOptions = {
             preferSpaces: options.insertSpaces,

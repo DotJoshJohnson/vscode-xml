@@ -22,7 +22,7 @@
 		"url": "https://github.com/DotJoshJohnson/vscode-xml/issues"
 	},
 	"engines": {
-		"vscode": "^1.13.0",
+		"vscode": "^1.17.0",
 		"node": "^0.12.0"
 	},
 	"categories": [
@@ -58,32 +58,38 @@
                 "xmlTools.persistXPathQuery": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Remember the last XPath query used."
+                    "description": "Remember the last XPath query used.",
+                    "scope": "resource"
                 },
                 "xmlTools.removeCommentsOnMinify": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Remove XML comments when XML is minified."
+                    "description": "Remove XML comments when XML is minified.",
+                    "scope": "resource"
                 },
                 "xmlTools.splitXmlnsOnFormat": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Put each xmlns attribute on a new line when fromatting XML."
+                    "description": "Put each xmlns attribute on a new line when fromatting XML.",
+                    "scope": "resource"
                 },
                 "xmlTools.xqueryExecutionEngine": {
                     "type": "string",
                     "default": "",
-                    "description": "The full path to the execution engine executable."
+                    "description": "The full path to the execution engine executable.",
+                    "scope": "resource"
                 },
                 "xmlTools.xqueryExecutionArguments": {
                     "type": "array",
                     "default": ["-xquery", "$(script)", "-in", "$(input)", "-out", "$(input).output.xml"],
-                    "description": "Arguments to be passed to the execution engine. '$(script)' and '$(input)' refer to the XQuery script and input XML file, respectively."
+                    "description": "Arguments to be passed to the execution engine. '$(script)' and '$(input)' refer to the XQuery script and input XML file, respectively.",
+                    "scope": "resource"
                 },
                 "xmlTools.ignoreDefaultNamespace": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Ignores default xmlns attribute when evaluating XPath."
+                    "description": "Ignores default xmlns attribute when evaluating XPath.",
+                    "scope": "resource"
                 }
             }
         },
