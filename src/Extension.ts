@@ -8,6 +8,8 @@ import { XmlTreeViewDataProvider } from "./providers/XmlTreeView";
 export var GlobalState: vsc.Memento;
 export var WorkspaceState: vsc.Memento;
 
+const CFG_SECTION: string = "xmlTools";
+const CFG_SHOW_EXPLORER: string = "showExplorer";
 const LANG_XML: string = "xml";
 const LANG_XSL: string = "xsl";
 const LANG_XQUERY: string = "xquery;"
@@ -42,9 +44,12 @@ export function activate(ctx: vsc.ExtensionContext) {
     );
 
     // add views
-    ctx.subscriptions.push(
-        vsc.window.registerTreeDataProvider("xmlTreeView", new XmlTreeViewDataProvider(ctx))
-    );
+    let showExplorer: boolean = vsc.workspace.getConfiguration(CFG_SECTION).get<boolean>(CFG_SHOW_EXPLORER, true);
+    if (showExplorer){
+        ctx.subscriptions.push(
+            vsc.window.registerTreeDataProvider("xmlTreeView", new XmlTreeViewDataProvider(ctx))
+        );
+    }
 }
 
 export function deactivate() {

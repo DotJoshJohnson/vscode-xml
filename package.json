@@ -84,6 +84,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Ignores default xmlns attribute when evaluating XPath."
+                },
+                "xmlTools.showExplorer": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show the XML Document view in the explorer panel"
                 }
             }
         },
