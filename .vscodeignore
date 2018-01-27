@@ -1,8 +1,0 @@
-tsconfig.json
-CONTRIBUTING.md
-.gitignore
-.vscode
-resources/wiki-images
-typings
-**/*.ts
-**/*.vsix
