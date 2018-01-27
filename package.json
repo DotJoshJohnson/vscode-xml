@@ -2,23 +2,113 @@
     "name": "xml",
     "displayName": "XML Tools",
     "description": "XML Formatting, XQuery, and XPath Tools for Visual Studio Code",
-    "version": "0.0.1",
+    "version": "2.0.0",
     "publisher": "DotJoshJohnson",
+    "author": {
+		"name": "Josh Johnson",
+		"url": "https://github.com/DotJoshJohnson"
+    },
+    "galleryBanner": {
+		"color": "#FFFFFF",
+		"theme": "light"
+	},
+	"homepage": "https://github.com/DotJoshJohnson/vscode-xml",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/DotJoshJohnson/vscode-xml.git"
+	},
+	"bugs": {
+		"url": "https://github.com/DotJoshJohnson/vscode-xml/issues"
+	},
     "engines": {
         "vscode": "^1.19.0"
     },
     "categories": [
+        "Formatters",
+        "Languages",
+        "Linters",
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:xmlTools.evaluateXPath",
+        "onCommand:xmlTools.executeXQuery",
+        "onCommand:xmlTools.formatAsXml",
+        "onCommand:xmlTools.minifyXml",
+        "onLanguage:xml",
+        "onLanguage:xquery",
+        "onLanguage:xsl"
     ],
     "main": "./out/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "xmlTools.evaluateXPath",
+                "title": "XML Tools: Evaluate XPath"
+            },
+            {
+                "command": "xmlTools.executeXQuery",
+                "title": "XML Tools: Execute XQuery"
+            },
+            {
+                "command": "xmlTools.formatAsXml",
+                "title": "XML Tools: Format as XML"
+            },
+            {
+                "command": "xmlTools.minifyXml",
+                "title": "XML Tools: Minify XML"
+            }
+        ],
+        "configuration": {
+            "title": "XML Tools Configuration",
+            "type": "object",
+            "properties": {
+                "xmlTools.ignoreDefaultNamespace": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Ignore default xmlns attributes when evaluating XPath."
+                },
+                "xmlTools.persistXPathQuery": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Remember the last XPath query used."
+                },
+                "xmlTools.removeCommentsOnMinify": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Remove XML comments during minification."
+                },
+                "xmlTools.splitXmlnsOnFormat": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Put each xmlns attribute on a new line when formatting XML."
+                },
+                "xmlTools.xqueryExecutionArguments": {
+                    "type": "array",
+                    "default": ["-xquery", "$(script)", "-in", "$(input)", "-out", "$(input.output.xml"],
+                    "description": "Arguments to be passed to the XQuery execution engine."
+                },
+                "xmlTools.xqueryExecutionEngine": {
+                    "type": "string",
+                    "default": "",
+                    "description": "The full path to the executable to run when executing XQuery scripts."
+                }
+            }
+        },
+        "grammars": [
+            {
+                "language": "xquery",
+                "path": "./languages/xquery/xquery.tmLanguage",
+                "scopeName": "source.xquery"
+            }
+        ],
+        "keybindings": [
+            {
+                "key": "ctrl+shift+alt+x",
+                "command": "xmlTools.evaluateXPath"
+            },
+            {
+                "key": "ctrl+shift+alt+b",
+                "command": "xmlTools.formatXml"
             }
         ]
     },
