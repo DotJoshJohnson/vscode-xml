@@ -31,6 +31,7 @@ export class XmlFormattingEditProvider implements DocumentFormattingEditProvider
             editorOptions: options,
             newLine: (document.eol === EndOfLine.CRLF) ? "\r\n" : "\n",
             removeCommentsOnMinify: this.workspaceConfiguration.get<boolean>("removeCommentsOnMinify"),
+            splitAttributesOnFormat: this.workspaceConfiguration.get<boolean>("splitAttributesOnFormat"),
             splitXmlnsOnFormat: this.workspaceConfiguration.get<boolean>("splitXmlnsOnFormat")
         });
 

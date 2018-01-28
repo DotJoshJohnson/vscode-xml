@@ -80,6 +80,12 @@
                     "description": "Remove XML comments during minification.",
                     "scope": "resource"
                 },
+                "xmlTools.splitAttributesOnFormat": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Put each attribute on a new line when formatting XML. Overrides `xmlTools.splitXmlsOnFormat` if set to `true`.",
+                    "scope": "resource"
+                },
                 "xmlTools.splitXmlnsOnFormat": {
                     "type": "boolean",
                     "default": true,

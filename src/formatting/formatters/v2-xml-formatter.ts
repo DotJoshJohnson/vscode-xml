@@ -87,6 +87,10 @@ export class V2XmlFormatter implements XmlFormatter {
             
             // entering StartTag.Attribute
             else if (location === Location.StartTag && [" ", "/", ">"].indexOf(cc) === -1) {
+                if (lastNonTextLocation === Location.AttributeValue && ((options.splitXmlnsOnFormat && xml.substr(i, 5).toLowerCase() === "xmlns") || options.splitAttributesOnFormat)) {
+                    output += `${options.newLine}${this._getIndent(options, indentLevel)}`;
+                }
+
                 output += cc;
                 lastNonTextLocation = location;
                 location = Location.Attribute;
