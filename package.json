@@ -82,6 +82,11 @@
                     "default": true,
                     "description": "Put each xmlns attribute on a new line when formatting XML."
                 },
+                "xmlTools.xmlFormatterImplementation": {
+                    "type": "string",
+                    "default": "classic",
+                    "description": "Supported XML Formatters: classic"
+                },
                 "xmlTools.xqueryExecutionArguments": {
                     "type": "array",
                     "default": ["-xquery", "$(script)", "-in", "$(input)", "-out", "$(input.output.xml"],
