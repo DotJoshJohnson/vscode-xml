@@ -112,12 +112,15 @@ export class V2XmlFormatter implements XmlFormatter {
 
             // exiting StartTag or StartTag.StartTagName, entering Text
             else if ((location === Location.StartTag || location === Location.StartTagName) && cc === ">") {
-                // if this was a self-closing tag, we need to decrement the indent level
+                // if this was a self-closing tag, we need to decrement the indent level and add a newLine
                 if (pc === "/") {
                     indentLevel--;
+                    output += `>${options.newLine}`;
                 }
 
-                output += ">";
+                else {
+                    output += ">";
+                }
 
                 lastNonTextLocation = location;
                 location = Location.Text;
