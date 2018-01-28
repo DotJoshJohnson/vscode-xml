@@ -65,37 +65,44 @@
                 "xmlTools.ignoreDefaultNamespace": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Ignore default xmlns attributes when evaluating XPath."
+                    "description": "Ignore default xmlns attributes when evaluating XPath.",
+                    "scope": "resource"
                 },
                 "xmlTools.persistXPathQuery": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Remember the last XPath query used."
+                    "description": "Remember the last XPath query used.",
+                    "scope": "resource"
                 },
                 "xmlTools.removeCommentsOnMinify": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Remove XML comments during minification."
+                    "description": "Remove XML comments during minification.",
+                    "scope": "resource"
                 },
                 "xmlTools.splitXmlnsOnFormat": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Put each xmlns attribute on a new line when formatting XML."
+                    "description": "Put each xmlns attribute on a new line when formatting XML.",
+                    "scope": "resource"
                 },
                 "xmlTools.xmlFormatterImplementation": {
                     "type": "string",
                     "default": "classic",
-                    "description": "Supported XML Formatters: classic"
+                    "description": "Supported XML Formatters: classic",
+                    "scope": "resource"
                 },
                 "xmlTools.xqueryExecutionArguments": {
                     "type": "array",
                     "default": ["-xquery", "$(script)", "-in", "$(input)", "-out", "$(input.output.xml"],
-                    "description": "Arguments to be passed to the XQuery execution engine."
+                    "description": "Arguments to be passed to the XQuery execution engine.",
+                    "scope": "resource"
                 },
                 "xmlTools.xqueryExecutionEngine": {
                     "type": "string",
                     "default": "",
-                    "description": "The full path to the executable to run when executing XQuery scripts."
+                    "description": "The full path to the executable to run when executing XQuery scripts.",
+                    "scope": "resource"
                 }
             }
         },
