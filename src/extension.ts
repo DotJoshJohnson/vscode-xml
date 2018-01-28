@@ -1,11 +1,13 @@
 import { workspace } from "vscode";
 import { ExtensionContext, WorkspaceConfiguration } from "vscode";
 
+import * as constants from "./constants";
+
 const onActivateHandlers: OnActivateHandler[] = [];
 const onDeactivateHandlers: OnDeactivateHandler[] = [];
 
 export function activate(context: ExtensionContext) {
-    const workspaceConfiguration = workspace.getConfiguration("xmlTools");
+    const workspaceConfiguration = workspace.getConfiguration(constants.extensionPrefix);
 
     onActivateHandlers.forEach(x => x(context, workspaceConfiguration));
 }

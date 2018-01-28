@@ -1,9 +1,10 @@
-import { commands, languages } from "vscode";
+import { commands, languages, workspace } from "vscode";
 import {
     CancellationToken, DocumentFormattingEditProvider, DocumentRangeFormattingEditProvider, ExtensionContext,
     FormattingOptions, ProviderResult, Range, TextDocument, TextEdit, TextEditor, WorkspaceConfiguration
 } from "vscode";
 
+import * as constants from "../constants";
 import * as extension from "../extension";
 import { XmlFormatter } from "./xml-formatter";
 
@@ -52,6 +53,9 @@ export class XmlFormattingEditProvider implements DocumentFormattingEditProvider
     }
 
     provideDocumentRangeFormattingEdits(document: TextDocument, range: Range, options: FormattingOptions, token: CancellationToken): ProviderResult<TextEdit[]> {
+        // override global configuration (issue #128)
+        this.workspaceConfiguration = workspace.getConfiguration(constants.extensionPrefix, document.uri);
+
         let xml = document.getText(range);
 
         xml = this.xmlFormatter.formatXml(xml, {
