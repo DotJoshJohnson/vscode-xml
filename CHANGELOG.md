@@ -1,7 +1,1 @@
-# Change Log
-All notable changes to the "xml" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
-- Initial release
+Detailed release notes are available [here](https://github.com/DotJoshJohnson/vscode-xml/releases).
