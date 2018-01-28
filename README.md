@@ -1,65 +1,32 @@
-# xml README
-
-This is the README for your extension "xml". After writing up a brief description, we recommend including the following sections.
+# XML Tools for Visual Studio Code
+[![](https://img.shields.io/badge/gitter-join_chat-1dce73.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSIwIiB5PSI1IiBmaWxsPSIjZmZmIiB3aWR0aD0iMSIgaGVpZ2h0PSI1Ii8%2BPHJlY3QgeD0iMiIgeT0iNiIgZmlsbD0iI2ZmZiIgd2lkdGg9IjEiIGhlaWdodD0iNyIvPjxyZWN0IHg9IjQiIHk9IjYiIGZpbGw9IiNmZmYiIHdpZHRoPSIxIiBoZWlnaHQ9IjciLz48cmVjdCB4PSI2IiB5PSI2IiBmaWxsPSIjZmZmIiB3aWR0aD0iMSIgaGVpZ2h0PSI0Ii8%2BPC9zdmc%2B&logoWidth=8)](https://gitter.im/vscode-xml/vscode-xml)
+[![Build Status](https://travis-ci.org/DotJoshJohnson/vscode-xml.svg?branch=master)](https://travis-ci.org/DotJoshJohnson/vscode-xml)
 
 ## Features
-
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+* [XML Formatting](https://github.com/DotJoshJohnson/vscode-xml/wiki/xml-formatting)
+* [XML Tree View](https://github.com/DotJoshJohnson/vscode-xml/wiki/xml-tree-view)
+* [XPath Evaluation](https://github.com/DotJoshJohnson/vscode-xml/wiki/xpath-evaluation)
+* [XQuery Linting](https://github.com/DotJoshJohnson/vscode-xml/wiki/xquery-linting)
+* [XQuery Execution](https://github.com/DotJoshJohnson/vscode-xml/wiki/xquery-script-execution)
+* [XQuery Code Completion](https://github.com/DotJoshJohnson/vscode-xml/wiki/xquery-code-completion)
 
 ## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+*In Progress*
 
 ## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+* `xmlTools.ignoreDefaultNamespace`: Ignore default xmlns attributes when evaluating XPath.
+* `xmlTools.persistXPathQuery`: Remember the last XPath query used.
+* `xmlTools.removeCommentsOnMinify`: Remove XML comments during minification.
+* `xmlTools.splitXmlnsOnFormat`: Put each xmlns attribute on a new line when formatting XML.
+* `xmlTools.xmlFormatterImplementation`: Supported XML Formatters: `classic`.
+* `xmlTools.xqueryExecutionArguments`: Arguments to be passed to the XQuery execution engine.
+* `xmlTools.xqueryExecutionEngine`: The full path to the executable to run when executing XQuery scripts.
 
 ## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
+*In Progress*
 
 ## Release Notes
+Detailed release notes are available [here](https://github.com/DotJoshJohnson/vscode-xml/releases).
 
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on OSX or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on OSX or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (OSX) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+## Issues
+Run into a bug? Report it [here](https://github.com/DotJoshJohnson/vscode-xml/issues).
