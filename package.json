@@ -88,7 +88,7 @@
                 },
                 "xmlTools.xmlFormatterImplementation": {
                     "type": "string",
-                    "default": "classic",
+                    "default": "v2",
                     "description": "Supported XML Formatters: classic",
                     "scope": "resource"
                 },
@@ -121,6 +121,14 @@
             {
                 "key": "ctrl+shift+alt+b",
                 "command": "xmlTools.formatXml"
+            }
+        ],
+        "languages": [
+            {
+                "id": "xquery",
+                "aliases": ["XQuery", "xquery"],
+                "extensions": [".xq",".xql",".xqm",".xqy",".xquery"],
+                "configuration": "./languages/xquery/xquery.json"
             }
         ]
     },
