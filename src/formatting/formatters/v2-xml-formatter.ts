@@ -121,21 +121,6 @@ export class V2XmlFormatter implements XmlFormatter {
                     output += `>${options.newLine}`;
                 }
 
-                // if this is an open tag followed by a line break, add an indent before the text (after the line break)
-                // TODO: there could be multiple lines of text here, so we'll need a less naive implementation at some point
-                else if (nc === "\r" || nc === "\n") {
-                    output += `>${options.newLine}${this._getIndent(options, indentLevel)}`;
-
-                    // fast-forward based on what type of line break was used
-                    if (nc === "\r") {
-                        i += 2;
-                    }
-
-                    else {
-                        i++;
-                    }
-                }
-
                 else {
                     output += ">";
                 }

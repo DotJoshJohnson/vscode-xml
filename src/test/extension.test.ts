@@ -28,6 +28,18 @@ describe("V2XmlFormatter", () => {
             testFormatter(xmlFormatter, options, "basic");
         });
 
+        it("should handle unicode element names", () => {
+            testFormatter(xmlFormatter, options, "unicode");
+        });
+
+        it("should handle self-closing elements", () => {
+            testFormatter(xmlFormatter, options, "self-closing");
+        });
+
+        it("should handle text-only lines", () => {
+            testFormatter(xmlFormatter, options, "text-only-line");
+        });
+
     });
 
 });
