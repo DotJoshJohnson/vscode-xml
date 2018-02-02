@@ -5,7 +5,18 @@ import { ClassicXmlFormatter } from "./classic-xml-formatter";
 /* tslint:disable no-use-before-declare */
 export class V2XmlFormatter implements XmlFormatter {
     formatXml(xml: string, options: XmlFormattingOptions): string {
-        xml = this.minifyXml(xml, options);
+        // remove whitespace from between tags, except for line breaks
+        xml = xml.replace(/>\s{0,}</g, (match: string) => { // spaces between the node name and the first attribute
+            return match.replace(/[^\S\r\n]/g, "");
+        });
+
+        // do some light minification to get rid of insignificant whitespace
+        xml = xml.replace(/"\s+(?=[^\s]+=)/g, "\" "); // spaces between attributes
+        xml = xml.replace(/"\s+(?=>)/g, "\""); // spaces between the last attribute and tag close (>)
+        xml = xml.replace(/"\s+(?=\/>)/g, "\" "); // spaces between the last attribute and tag close (/>)
+        xml = xml.replace(/[^ <>="]\s+[^ <>="]+=/g, (match: string) => { // spaces between the node name and the first attribute
+            return match.replace(/\s+/g, " ");
+        });
 
         let output = "";
 
@@ -133,15 +144,15 @@ export class V2XmlFormatter implements XmlFormatter {
             else if (location === Location.Text && cc === "<" && nc === "/") {
                 indentLevel--;
 
-                // if the end tag immediately follows another end tag, add a line break and indent
                 // if the end tag immediately follows a line break, just add an indentation
+                // if the end tag immediately follows another end tag, add a line break and indent
                 // otherwise, this should be treated as a same-line end tag(ex. <element>text</element>)
-                if (lastNonTextLocation === Location.EndTag) {
-                    output += `${options.newLine}${this._getIndent(options, indentLevel)}<`;
+                if (pc === "\n") {
+                    output += `${this._getIndent(options, indentLevel)}<`;
                 }
 
-                else if (pc === "\n") {
-                    output += `${this._getIndent(options, indentLevel)}<`;
+                else if (lastNonTextLocation === Location.EndTag) {
+                    output += `${options.newLine}${this._getIndent(options, indentLevel)}<`;
                 }
 
                 else {

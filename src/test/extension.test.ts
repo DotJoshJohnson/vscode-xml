@@ -40,6 +40,14 @@ describe("V2XmlFormatter", () => {
             testFormatter(xmlFormatter, options, "text-only-line");
         });
 
+        it("should handle preformatted xml", () => {
+            testFormatter(xmlFormatter, options, "preformatted");
+        });
+
+        it ("should preserve line breaks between elements", () => {
+            testFormatter(xmlFormatter, options, "preserve-breaks");
+        });
+
     });
 
 });
