@@ -44,7 +44,7 @@ function _handleContextChange(editor: TextEditor): void {
     if (!editor || !editor.document) {
         return;
     }
-    
+
     switch (editor.document.languageId) {
         case "xquery":
             languages.createDiagnosticCollection("XQueryDiagnostics").set(editor.document.uri, new XQueryLinter().lint(editor.document.getText()));
