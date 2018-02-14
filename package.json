@@ -5,21 +5,21 @@
     "version": "2.0.0",
     "publisher": "DotJoshJohnson",
     "author": {
-		"name": "Josh Johnson",
-		"url": "https://github.com/DotJoshJohnson"
+        "name": "Josh Johnson",
+        "url": "https://github.com/DotJoshJohnson"
     },
     "galleryBanner": {
-		"color": "#FFFFFF",
-		"theme": "light"
-	},
-	"homepage": "https://github.com/DotJoshJohnson/vscode-xml",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/DotJoshJohnson/vscode-xml.git"
-	},
-	"bugs": {
-		"url": "https://github.com/DotJoshJohnson/vscode-xml/issues"
-	},
+        "color": "#FFFFFF",
+        "theme": "light"
+    },
+    "homepage": "https://github.com/DotJoshJohnson/vscode-xml",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DotJoshJohnson/vscode-xml.git"
+    },
+    "bugs": {
+        "url": "https://github.com/DotJoshJohnson/vscode-xml/issues"
+    },
     "engines": {
         "vscode": "^1.19.0"
     },
@@ -100,7 +100,14 @@
                 },
                 "xmlTools.xqueryExecutionArguments": {
                     "type": "array",
-                    "default": ["-xquery", "$(script)", "-in", "$(input)", "-out", "$(input.output.xml"],
+                    "default": [
+                        "-xquery",
+                        "$(script)",
+                        "-in",
+                        "$(input)",
+                        "-out",
+                        "$(input.output.xml"
+                    ],
                     "description": "Arguments to be passed to the XQuery execution engine.",
                     "scope": "resource"
                 },
@@ -132,8 +139,17 @@
         "languages": [
             {
                 "id": "xquery",
-                "aliases": ["XQuery", "xquery"],
-                "extensions": [".xq",".xql",".xqm",".xqy",".xquery"],
+                "aliases": [
+                    "XQuery",
+                    "xquery"
+                ],
+                "extensions": [
+                    ".xq",
+                    ".xql",
+                    ".xqm",
+                    ".xqy",
+                    ".xquery"
+                ],
                 "configuration": "./languages/xquery/xquery.json"
             }
         ]
@@ -152,5 +168,8 @@
         "tslint": "^5.9.1",
         "typescript": "^2.6.1",
         "vscode": "^1.1.6"
+    },
+    "dependencies": {
+        "xqlint": "^0.4.0"
     }
 }
