@@ -2,11 +2,17 @@ import { XmlFormatter } from "../xml-formatter";
 import { XmlFormattingOptions } from "../xml-formatting-options";
 import { ClassicXmlFormatter } from "./classic-xml-formatter";
 
+const MagicalStringOfWonders = "~::~MAAAGIC~::~";
+
 /* tslint:disable no-use-before-declare */
 export class V2XmlFormatter implements XmlFormatter {
     formatXml(xml: string, options: XmlFormattingOptions): string {
+        // this replaces all "<" brackets inside of comments to a magical string
+        // so the following minification steps don't mess with comment formatting
+        xml = this._sanitizeComments(xml);
+
         // remove whitespace from between tags, except for line breaks
-        xml = xml.replace(/>\s{0,}</g, (match: string) => { // spaces between the node name and the first attribute
+        xml = xml.replace(/>\s{0,}</g, (match: string) => {
             return match.replace(/[^\S\r\n]/g, "");
         });
 
@@ -17,6 +23,9 @@ export class V2XmlFormatter implements XmlFormatter {
         xml = xml.replace(/[^ <>="]\s+[^ <>="]+=/g, (match: string) => { // spaces between the node name and the first attribute
             return match.replace(/\s+/g, " ");
         });
+
+        // the coast is clear - we can drop those "<" brackets back in
+        xml = this._unsanitizeComments(xml);
 
         let output = "";
 
@@ -184,6 +193,46 @@ export class V2XmlFormatter implements XmlFormatter {
 
     private _getIndent(options: XmlFormattingOptions, indentLevel: number): string {
         return ((options.editorOptions.insertSpaces) ? " ".repeat(options.editorOptions.tabSize) : "\t").repeat(indentLevel);
+    }
+
+    private _sanitizeComments(xml: string): string {
+        let output = "";
+        let inComment = false;
+
+        for (let i = 0; i < xml.length; i++) {
+            const cc = xml[i];
+            const nc = xml.charAt(i + 1);
+            const nnc = xml.charAt(i + 2);
+            const pc = xml.charAt(i - 1);
+
+            if (!inComment && cc === "<" && nc === "!" && nnc === "-") {
+                inComment = true;
+                output += "<!--";
+
+                i += 3;
+            }
+
+            else if (inComment && cc === "<") {
+                output += MagicalStringOfWonders;
+            }
+
+            else if (inComment && cc === "-" && nc === "-" && nnc === ">") {
+                inComment = false;
+                output += "-->";
+
+                i += 2;
+            }
+
+            else {
+                output += cc;
+            }
+        }
+
+        return output;
+    }
+
+    private _unsanitizeComments(xml: string): string {
+        return xml.replace(new RegExp(MagicalStringOfWonders, "g"), "<");
     }
 }
 

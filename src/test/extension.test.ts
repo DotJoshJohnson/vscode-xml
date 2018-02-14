@@ -48,6 +48,10 @@ describe("V2XmlFormatter", () => {
             testFormatter(xmlFormatter, options, "preserve-breaks");
         });
 
+        it("should maintain comment formatting", () => {
+            testFormatter(xmlFormatter, options, "maintain-comment-formatting");
+        });
+
     });
 
 });
