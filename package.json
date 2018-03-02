@@ -133,7 +133,7 @@
             },
             {
                 "key": "ctrl+shift+alt+b",
-                "command": "xmlTools.formatXml"
+                "command": "xmlTools.formatAsXml"
             }
         ],
         "languages": [
