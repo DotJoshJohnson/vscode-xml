@@ -7,7 +7,7 @@ import { XmlFormatterFactory } from "../xml-formatter";
 import { XmlFormattingEditProvider } from "../xml-formatting-edit-provider";
 import { XmlFormattingOptionsFactory } from "../xml-formatting-options";
 
-export const FormatAsXmlCommandName = "formatAsXml";
+export const FormatAsXmlCommandName = "xmlTools.formatAsXml";
 
 export function formatAsXml(editor: TextEditor, edit: TextEditorEdit): void {
     const xmlFormattingEditProvider = new XmlFormattingEditProvider(workspace.getConfiguration(constants.extensionPrefix), XmlFormatterFactory.getXmlFormatter());

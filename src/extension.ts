@@ -2,6 +2,7 @@ import { languages, window, workspace, commands } from "vscode";
 import { ExtensionContext, TextEditor, TextEditorSelectionChangeEvent, WorkspaceConfiguration } from "vscode";
 
 import { FormatAsXmlCommandName, formatAsXml } from "./formatting/commands/formatAsXml";
+import { MinifyXmlCommandName, minifyXml } from "./formatting/commands/minifyXml";
 import { XmlFormatterFactory } from "./formatting/xml-formatter";
 import { XmlFormattingEditProvider } from "./formatting/xml-formatting-edit-provider";
 import { XQueryLinter } from "./linting/xquery-linter";
@@ -16,6 +17,7 @@ export function activate(context: ExtensionContext) {
 
     context.subscriptions.push(
         commands.registerTextEditorCommand(FormatAsXmlCommandName, formatAsXml),
+        commands.registerTextEditorCommand(MinifyXmlCommandName, minifyXml),
         languages.registerDocumentFormattingEditProvider("xml", xmlFormattingEditProvider),
         languages.registerDocumentRangeFormattingEditProvider("xml", xmlFormattingEditProvider)
     );
