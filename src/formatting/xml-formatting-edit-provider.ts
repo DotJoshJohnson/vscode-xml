@@ -6,6 +6,7 @@ import {
 
 import * as constants from "../constants";
 import { XmlFormatter } from "./xml-formatter";
+import { XmlFormattingOptionsFactory } from "./xml-formatting-options";
 
 export class XmlFormattingEditProvider implements DocumentFormattingEditProvider, DocumentRangeFormattingEditProvider {
 
@@ -27,13 +28,7 @@ export class XmlFormattingEditProvider implements DocumentFormattingEditProvider
 
         let xml = document.getText(range);
 
-        xml = this.xmlFormatter.formatXml(xml, {
-            editorOptions: options,
-            newLine: (document.eol === EndOfLine.CRLF) ? "\r\n" : "\n",
-            removeCommentsOnMinify: this.workspaceConfiguration.get<boolean>("removeCommentsOnMinify"),
-            splitAttributesOnFormat: this.workspaceConfiguration.get<boolean>("splitAttributesOnFormat"),
-            splitXmlnsOnFormat: this.workspaceConfiguration.get<boolean>("splitXmlnsOnFormat")
-        });
+        xml = this.xmlFormatter.formatXml(xml, XmlFormattingOptionsFactory.getXmlFormattingOptions(options, document.eol));
 
         return [ TextEdit.replace(range, xml) ];
     }
