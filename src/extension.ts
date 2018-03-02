@@ -1,6 +1,7 @@
 import { languages, window, workspace, commands } from "vscode";
 import { ExtensionContext, TextEditor, TextEditorSelectionChangeEvent, WorkspaceConfiguration } from "vscode";
 
+import { XQueryCompletionItemProvider } from "./completion/xquery-completion-item-provider";
 import { FormatAsXmlCommandName, formatAsXml } from "./formatting/commands/formatAsXml";
 import { MinifyXmlCommandName, minifyXml } from "./formatting/commands/minifyXml";
 import { XmlFormatterFactory } from "./formatting/xml-formatter";
@@ -11,6 +12,11 @@ import * as constants from "./constants";
 
 export function activate(context: ExtensionContext) {
     const config = workspace.getConfiguration(constants.extensionPrefix);
+
+    /* Completion Features */
+    context.subscriptions.push(
+        languages.registerCompletionItemProvider("xquery", new XQueryCompletionItemProvider(), ":", "$")
+    );
 
     /* Formatting Features */
     const xmlFormattingEditProvider = new XmlFormattingEditProvider(config, XmlFormatterFactory.getXmlFormatter());
