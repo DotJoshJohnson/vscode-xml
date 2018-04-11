@@ -8,9 +8,16 @@ import { XmlTreeViewDataProvider } from "./providers/XmlTreeView";
 export var GlobalState: vsc.Memento;
 export var WorkspaceState: vsc.Memento;
 
-const LANG_XML: string = "xml";
-const LANG_XSL: string = "xsl";
-const LANG_XQUERY: string = "xquery;"
+function createSelector(language: string): vsc.DocumentFilter[] {
+    return [
+        { language, scheme: "file" },
+        { language, scheme: "untitled" },
+    ];
+}
+
+const SELECTOR_XML_XSL: vsc.DocumentSelector = [...createSelector("xml"), ...createSelector("xsl")];
+const SELECTOR_XQUERY: vsc.DocumentSelector = createSelector("xquery");
+
 const MEM_QUERY_HISTORY: string = "xpathQueryHistory";
 
 export function activate(ctx: vsc.ExtensionContext) {
@@ -29,10 +36,10 @@ export function activate(ctx: vsc.ExtensionContext) {
 	
 	// register language feature providers
     ctx.subscriptions.push(
-        vsc.languages.registerDocumentFormattingEditProvider([LANG_XML, LANG_XSL], new XmlFormattingEditProvider()),
-        vsc.languages.registerDocumentRangeFormattingEditProvider([LANG_XML, LANG_XSL], new XmlFormattingEditProvider()),
+        vsc.languages.registerDocumentFormattingEditProvider(SELECTOR_XML_XSL, new XmlFormattingEditProvider()),
+        vsc.languages.registerDocumentRangeFormattingEditProvider(SELECTOR_XML_XSL, new XmlFormattingEditProvider()),
         
-        vsc.languages.registerCompletionItemProvider(LANG_XQUERY, new XQueryCompletionItemProvider(), ":", "$")
+        vsc.languages.registerCompletionItemProvider(SELECTOR_XQUERY, new XQueryCompletionItemProvider(), ":", "$")
     );
     
     // listen to editor events (for linting)
