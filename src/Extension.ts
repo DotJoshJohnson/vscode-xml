@@ -63,7 +63,7 @@ export function deactivate() {
 }
 
 function _handleContextChange(editor: vsc.TextEditor): void {
-    if (!editor || !editor.document) {
+    if (!editor || !editor.document || editor.document.uri.scheme !== "file") {
         return;
     }
     
