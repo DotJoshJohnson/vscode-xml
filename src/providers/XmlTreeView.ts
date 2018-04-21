@@ -23,7 +23,7 @@ export class XmlTreeViewDataProvider implements vsc.TreeDataProvider<Node> {
         return vsc.window.activeTextEditor || null;
     }
 
-    getChildren(element?: Node): Node[] {
+    getChildren(element?: Element): Node[] {
         if (!this._xmlDocument) {
             this._refreshTree();
         }
@@ -41,7 +41,7 @@ export class XmlTreeViewDataProvider implements vsc.TreeDataProvider<Node> {
         }
     }
 
-    getTreeItem(element: Node): vsc.TreeItem {
+    getTreeItem(element: Element): vsc.TreeItem {
         let treeItem = new vsc.TreeItem(element.localName);
 
         if (this._getChildAttributeArray(element).length > 0) {
@@ -66,7 +66,7 @@ export class XmlTreeViewDataProvider implements vsc.TreeDataProvider<Node> {
         return treeItem;
     }
 
-    private _getChildAttributeArray(node: Node): Node[] {
+    private _getChildAttributeArray(node: Element): Node[] {
         if (!node.attributes) {
             return [];
         }
