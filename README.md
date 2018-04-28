@@ -14,6 +14,7 @@
 *In Progress*
 
 ## Extension Settings
+* `xmlTools.enableXmlTreeView`: Enables the XML Tree View for XML documents.
 * `xmlTools.ignoreDefaultNamespace`: Ignore default xmlns attributes when evaluating XPath.
 * `xmlTools.persistXPathQuery`: Remember the last XPath query used.
 * `xmlTools.removeCommentsOnMinify`: Remove XML comments during minification.

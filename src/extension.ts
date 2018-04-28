@@ -1,5 +1,5 @@
 import { languages, window, workspace, commands } from "vscode";
-import { ExtensionContext, TextEditor, TextEditorSelectionChangeEvent, WorkspaceConfiguration } from "vscode";
+import { ExtensionContext, Memento, TextEditor, TextEditorSelectionChangeEvent, WorkspaceConfiguration } from "vscode";
 
 import { XQueryCompletionItemProvider } from "./completion/xquery-completion-item-provider";
 import { FormatAsXmlCommandName, formatAsXml } from "./formatting/commands/formatAsXml";
@@ -8,10 +8,16 @@ import { XmlFormatterFactory } from "./formatting/xml-formatter";
 import { XmlFormattingEditProvider } from "./formatting/xml-formatting-edit-provider";
 import { XQueryLinter } from "./linting/xquery-linter";
 import { XmlTreeDataProvider } from "./tree-view/xml-tree-data-provider";
+import { evaluateXPath } from "./xpath/commands/evaluateXPath";
 
 import * as constants from "./constants";
 
+export const ExtensionState: { global?: Memento, workspace?: Memento } = { };
+
 export function activate(context: ExtensionContext) {
+    ExtensionState.global = context.globalState;
+    ExtensionState.workspace = context.workspaceState;
+
     const config = workspace.getConfiguration(constants.extensionPrefix);
 
     /* Completion Features */
@@ -38,6 +44,11 @@ export function activate(context: ExtensionContext) {
     /* Tree View Features */
     context.subscriptions.push(
         window.registerTreeDataProvider("xmlTreeView", new XmlTreeDataProvider(context))
+    );
+
+    /* XPath Features */
+    context.subscriptions.push(
+        commands.registerTextEditorCommand(constants.commands.evaluateXPath, evaluateXPath)
     );
 }
 
