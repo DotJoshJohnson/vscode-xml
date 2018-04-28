@@ -94,7 +94,7 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         const array = new Array<any>();
 
         for (let i = 0; i < node.childNodes.length; i++) {
-            let child = node.childNodes[i];
+            const child = node.childNodes[i];
 
             if (child.tagName) {
                 array.push(child);
