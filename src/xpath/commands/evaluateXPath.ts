@@ -6,6 +6,16 @@ import { ExtensionState } from "../../extension";
 
 import { EvaluatorResult, EvaluatorResultType, XPathEvaluator } from "../xpath-evaluator";
 
+class HistoricQuery {
+    constructor(uri: string, query: string) {
+        this.uri = uri;
+        this.query = query;
+    }
+
+    uri: string;
+    query: string;
+}
+
 export async function evaluateXPath(editor: TextEditor, edit: TextEditorEdit): Promise<void> {
     const config = workspace.getConfiguration(constants.extensionPrefix);
 
@@ -91,14 +101,4 @@ export async function evaluateXPath(editor: TextEditor, edit: TextEditorEdit): P
         memento.update(constants.stateKeys.xpathQueryHistory, history);
         memento.update(constants.stateKeys.xPathQueryLast, query);
     }
-}
-
-class HistoricQuery {
-    constructor(uri: string, query: string) {
-        this.uri = uri;
-        this.query = query;
-    }
-
-    uri: string;
-    query: string;
 }
