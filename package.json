@@ -63,6 +63,12 @@
             "title": "XML Tools Configuration",
             "type": "object",
             "properties": {
+                "xmlTools.enableXmlTreeView": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enables the XML Document view in the explorer for XML documents.",
+                    "scope": "window"
+                },
                 "xmlTools.ignoreDefaultNamespace": {
                     "type": "boolean",
                     "default": true,
@@ -153,7 +159,16 @@
                 ],
                 "configuration": "./languages/xquery/xquery.json"
             }
-        ]
+        ],
+        "views": {
+            "explorer": [
+                {
+                    "id": "xmlTreeView",
+                    "name": "XML Document",
+                    "when": "xmlTreeViewEnabled"
+                }
+            ]
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
@@ -166,11 +181,13 @@
     "devDependencies": {
         "@types/mocha": "^2.2.42",
         "@types/node": "^7.0.43",
+        "@types/xmldom": "^0.1.29",
         "tslint": "^5.9.1",
         "typescript": "^2.6.1",
         "vscode": "^1.1.6"
     },
     "dependencies": {
+        "xmldom": "^0.1.27",
         "xqlint": "^0.4.0"
     }
 }

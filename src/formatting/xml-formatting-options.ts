@@ -14,7 +14,7 @@ export interface XmlFormattingOptions {
 export class XmlFormattingOptionsFactory {
     static getXmlFormattingOptions(formattingOptions: FormattingOptions, eol: EndOfLine): XmlFormattingOptions {
         const config = workspace.getConfiguration(constants.extensionPrefix);
-        
+
         return {
             editorOptions: formattingOptions,
             newLine: (eol === EndOfLine.CRLF) ? "\r\n" : "\n",

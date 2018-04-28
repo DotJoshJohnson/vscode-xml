@@ -7,6 +7,7 @@ import { MinifyXmlCommandName, minifyXml } from "./formatting/commands/minifyXml
 import { XmlFormatterFactory } from "./formatting/xml-formatter";
 import { XmlFormattingEditProvider } from "./formatting/xml-formatting-edit-provider";
 import { XQueryLinter } from "./linting/xquery-linter";
+import { XmlTreeDataProvider } from "./tree-view/xml-tree-data-provider";
 
 import * as constants from "./constants";
 
@@ -32,6 +33,11 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         window.onDidChangeActiveTextEditor(_handleChangeActiveTextEditor),
         window.onDidChangeTextEditorSelection(_handleChangeTextEditorSelection)
+    );
+
+    /* Tree View Features */
+    context.subscriptions.push(
+        window.registerTreeDataProvider("xmlTreeView", new XmlTreeDataProvider(context))
     );
 }
 
