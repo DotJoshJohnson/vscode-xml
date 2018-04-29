@@ -2,8 +2,8 @@ import { languages, window, workspace, commands } from "vscode";
 import { ExtensionContext, Memento, TextEditor, TextEditorSelectionChangeEvent, WorkspaceConfiguration } from "vscode";
 
 import { XQueryCompletionItemProvider } from "./completion/xquery-completion-item-provider";
-import { FormatAsXmlCommandName, formatAsXml } from "./formatting/commands/formatAsXml";
-import { MinifyXmlCommandName, minifyXml } from "./formatting/commands/minifyXml";
+import { formatAsXml } from "./formatting/commands/formatAsXml";
+import { minifyXml } from "./formatting/commands/minifyXml";
 import { XmlFormatterFactory } from "./formatting/xml-formatter";
 import { XmlFormattingEditProvider } from "./formatting/xml-formatting-edit-provider";
 import { XQueryLinter } from "./linting/xquery-linter";
@@ -22,17 +22,17 @@ export function activate(context: ExtensionContext) {
 
     /* Completion Features */
     context.subscriptions.push(
-        languages.registerCompletionItemProvider("xquery", new XQueryCompletionItemProvider(), ":", "$")
+        languages.registerCompletionItemProvider(constants.languageIds.xquery, new XQueryCompletionItemProvider(), ":", "$")
     );
 
     /* Formatting Features */
     const xmlFormattingEditProvider = new XmlFormattingEditProvider(config, XmlFormatterFactory.getXmlFormatter());
 
     context.subscriptions.push(
-        commands.registerTextEditorCommand(FormatAsXmlCommandName, formatAsXml),
-        commands.registerTextEditorCommand(MinifyXmlCommandName, minifyXml),
-        languages.registerDocumentFormattingEditProvider("xml", xmlFormattingEditProvider),
-        languages.registerDocumentRangeFormattingEditProvider("xml", xmlFormattingEditProvider)
+        commands.registerTextEditorCommand(constants.commands.formatAsXml, formatAsXml),
+        commands.registerTextEditorCommand(constants.commands.minifyXml, minifyXml),
+        languages.registerDocumentFormattingEditProvider(constants.languageIds.xml, xmlFormattingEditProvider),
+        languages.registerDocumentRangeFormattingEditProvider(constants.languageIds.xml, xmlFormattingEditProvider)
     );
 
     /* Linting Features */
@@ -43,7 +43,7 @@ export function activate(context: ExtensionContext) {
 
     /* Tree View Features */
     context.subscriptions.push(
-        window.registerTreeDataProvider("xmlTreeView", new XmlTreeDataProvider(context))
+        window.registerTreeDataProvider(constants.views.xmlTreeView, new XmlTreeDataProvider(context))
     );
 
     /* XPath Features */
@@ -63,8 +63,10 @@ function _handleContextChange(editor: TextEditor): void {
     }
 
     switch (editor.document.languageId) {
-        case "xquery":
-            languages.createDiagnosticCollection("XQueryDiagnostics").set(editor.document.uri, new XQueryLinter().lint(editor.document.getText()));
+        case constants.languageIds.xquery:
+            languages
+                .createDiagnosticCollection(constants.diagnosticCollections.xquery)
+                .set(editor.document.uri, new XQueryLinter().lint(editor.document.getText()));
             break;
     }
 }

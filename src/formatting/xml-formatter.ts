@@ -23,8 +23,9 @@ export class XmlFormatterFactory {
         let xmlFormatterImplementation: XmlFormatter;
 
         switch (xmlFormatterImplementationSetting) {
-            case "classic": xmlFormatterImplementation = new ClassicXmlFormatter(); break;
-            case "v2": default: xmlFormatterImplementation = new V2XmlFormatter(); break;
+            case constants.xmlFormatterImplementations.classic: xmlFormatterImplementation = new ClassicXmlFormatter(); break;
+            case constants.xmlFormatterImplementations.v2:
+            default: xmlFormatterImplementation = new V2XmlFormatter(); break;
         }
 
         return (XmlFormatterFactory._xmlFormatter = xmlFormatterImplementation);

@@ -41,7 +41,7 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         }
 
         treeItem.command = {
-            command: "revealLine",
+            command: constants.nativeCommands.revealLine,
             title: "",
             arguments: [{
                 lineNumber: element.lineNumber - 1,
@@ -120,8 +120,8 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
     }
 
     private _refreshTree(): void {
-        if (!this.activeEditor || this.activeEditor.document.languageId !== "xml") {
-            commands.executeCommand(constants.commands.setContext, constants.contextKeys.xmlTreeViewEnabled, false);
+        if (!this.activeEditor || this.activeEditor.document.languageId !== constants.languageIds.xml) {
+            commands.executeCommand(constants.nativeCommands.setContext, constants.contextKeys.xmlTreeViewEnabled, false);
 
             this._xmlDocument = null;
             this._onDidChangeTreeData.fire();
@@ -131,7 +131,7 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         const config = workspace.getConfiguration(constants.extensionPrefix);
         const enableTreeView = config.get<boolean>(constants.configKeys.enableXmlTreeView, true);
 
-        commands.executeCommand(constants.commands.setContext, constants.contextKeys.xmlTreeViewEnabled, enableTreeView);
+        commands.executeCommand(constants.nativeCommands.setContext, constants.contextKeys.xmlTreeViewEnabled, enableTreeView);
 
         const xml = this.activeEditor.document.getText();
         this._xmlDocument = new DOMParser().parseFromString(xml, "text/xml");

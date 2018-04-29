@@ -7,8 +7,6 @@ import { XmlFormatterFactory } from "../xml-formatter";
 import { XmlFormattingEditProvider } from "../xml-formatting-edit-provider";
 import { XmlFormattingOptionsFactory } from "../xml-formatting-options";
 
-export const FormatAsXmlCommandName = "xmlTools.formatAsXml";
-
 export function formatAsXml(editor: TextEditor, edit: TextEditorEdit): void {
     const xmlFormattingEditProvider = new XmlFormattingEditProvider(workspace.getConfiguration(constants.extensionPrefix), XmlFormatterFactory.getXmlFormatter());
     const formattingOptions = {
@@ -40,11 +38,11 @@ export function formatAsXml(editor: TextEditor, edit: TextEditorEdit): void {
             editBuilder.replace(textEdit.range, textEdit.newText);
 
             // wiggle the cursor to deselect the formatted XML (is there a non-hacky way to go about this?)
-            await commands.executeCommand("cursorMove", {
+            await commands.executeCommand(constants.nativeCommands.cursorMove, {
                 to: "left",
                 by: "character"
             });
-            await commands.executeCommand("cursorMove", {
+            await commands.executeCommand(constants.nativeCommands.cursorMove, {
                 to: "right",
                 by: "character"
             });

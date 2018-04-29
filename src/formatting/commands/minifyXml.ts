@@ -7,8 +7,6 @@ import { XmlFormatterFactory } from "../xml-formatter";
 import { XmlFormattingEditProvider } from "../xml-formatting-edit-provider";
 import { XmlFormattingOptionsFactory } from "../xml-formatting-options";
 
-export const MinifyXmlCommandName = "xmlTools.minifyXml";
-
 export function minifyXml(editor: TextEditor, edit: TextEditorEdit): void {
     const xmlFormatter = XmlFormatterFactory.getXmlFormatter();
     const xmlFormattingOptions = XmlFormattingOptionsFactory.getXmlFormattingOptions({

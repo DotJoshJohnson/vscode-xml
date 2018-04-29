@@ -18,9 +18,9 @@ export class XmlFormattingOptionsFactory {
         return {
             editorOptions: formattingOptions,
             newLine: (eol === EndOfLine.CRLF) ? "\r\n" : "\n",
-            removeCommentsOnMinify: config.get<boolean>("removeCommentsOnMinify"),
-            splitAttributesOnFormat: config.get<boolean>("splitAttributesOnFormat"),
-            splitXmlnsOnFormat: config.get<boolean>("splitXmlnsOnFormat")
+            removeCommentsOnMinify: config.get<boolean>(constants.configKeys.removeCommentsOnMinify),
+            splitAttributesOnFormat: config.get<boolean>(constants.configKeys.splitAttributesOnFormat),
+            splitXmlnsOnFormat: config.get<boolean>(constants.configKeys.splitXmlnsOnFormat)
         };
     }
 }
