@@ -36,12 +36,27 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
             treeItem.label = `${element.localName} = "${element.nodeValue}"`;
         }
 
-        if (this._isElement(element) && this._getChildAttributeArray(<Element>element).length > 0) {
-            treeItem.collapsibleState = TreeItemCollapsibleState.Collapsed;
-        }
+        else {
+            const childAttributes = this._getChildAttributeArray(<Element>element);
+            const childElements = this._getChildElementArray(<Element>element);
+            const totalChildren = (childAttributes.length + childElements.length);
 
-        if (this._isElement(element) && this._getChildElementArray(<Element>element).length > 0) {
-            treeItem.collapsibleState = TreeItemCollapsibleState.Collapsed;
+            if (totalChildren > 0) {
+                treeItem.label += "  (";
+
+                if (childAttributes.length > 0) {
+                    treeItem.label += `attributes: ${childAttributes.length}, `;
+                    treeItem.collapsibleState = TreeItemCollapsibleState.Collapsed;
+                }
+
+                if (childElements.length > 0) {
+                    treeItem.label += `children: ${childElements.length}, `;
+                    treeItem.collapsibleState = TreeItemCollapsibleState.Collapsed;
+                }
+
+                treeItem.label = treeItem.label.substr(0, treeItem.label.length - 2);
+                treeItem.label += ")";
+            }
         }
 
         treeItem.command = {
