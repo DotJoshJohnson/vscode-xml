@@ -29,14 +29,14 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         return window.activeTextEditor || null;
     }
 
-    getTreeItem(element: any): TreeItem | Thenable<TreeItem> {
+    getTreeItem(element: Node): TreeItem | Thenable<TreeItem> {
         const treeItem = new TreeItem(element.localName);
 
-        if (this._getChildAttributeArray(element).length > 0) {
+        if (this._isElement(element) && this._getChildAttributeArray(<Element>element).length > 0) {
             treeItem.collapsibleState = TreeItemCollapsibleState.Collapsed;
         }
 
-        if (this._getChildElementArray(element).length > 0) {
+        if (this._isElement(element) && this._getChildElementArray(<Element>element).length > 0) {
             treeItem.collapsibleState = TreeItemCollapsibleState.Collapsed;
         }
 
@@ -44,7 +44,7 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
             command: constants.nativeCommands.revealLine,
             title: "",
             arguments: [{
-                lineNumber: element.lineNumber - 1,
+                lineNumber: (element as any).lineNumber - 1,
                 at: "top"
             }]
         };
@@ -54,13 +54,13 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         return treeItem;
     }
 
-    getChildren(element?: any): any[] | Thenable<any[]> {
+    getChildren(element?: Node): any[] | Thenable<any[]> {
         if (!this._xmlDocument) {
             this._refreshTree();
         }
 
-        if (element) {
-            return [].concat(this._getChildAttributeArray(element), this._getChildElementArray(element));
+        if (this._isElement(element)) {
+            return [].concat(this._getChildAttributeArray(<Element>element), this._getChildElementArray(<Element>element));
         }
 
         else if (this._xmlDocument) {
@@ -72,7 +72,7 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         }
     }
 
-    private _getChildAttributeArray(node: any): any[] {
+    private _getChildAttributeArray(node: Element): any[] {
         if (!node.attributes) {
             return [];
         }
@@ -86,7 +86,7 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         return array;
     }
 
-    private _getChildElementArray(node: any): any[] {
+    private _getChildElementArray(node: Element): any[] {
         if (!node.childNodes) {
             return [];
         }
@@ -96,7 +96,7 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         for (let i = 0; i < node.childNodes.length; i++) {
             const child = node.childNodes[i];
 
-            if (child.tagName) {
+            if (this._isElement(child)) {
                 array.push(child);
             }
         }
@@ -104,10 +104,10 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         return array;
     }
 
-    private _getIcon(element: any): any {
+    private _getIcon(element: Node): any {
         let type = "element";
 
-        if (!element.tagName) {
+        if (!this._isElement(element)) {
             type = "attribute";
         }
 
@@ -117,6 +117,10 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         };
 
         return icon;
+    }
+
+    private _isElement(node: Node): boolean {
+        return (!!node && !!(node as Element).tagName);
     }
 
     private _refreshTree(): void {
@@ -134,9 +138,15 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         commands.executeCommand(constants.nativeCommands.setContext, constants.contextKeys.xmlTreeViewEnabled, enableTreeView);
 
         const xml = this.activeEditor.document.getText();
-        this._xmlDocument = new DOMParser().parseFromString(xml, "text/xml");
 
-        this._onDidChangeTreeData.fire();
+        try {
+            this._xmlDocument = new DOMParser().parseFromString(xml, "text/xml");
+            this._onDidChangeTreeData.fire();
+        }
+
+        catch {
+            this._xmlDocument = new DOMParser().parseFromString("<InvalidDocument />", "text/xml");
+        }
     }
 
 }
