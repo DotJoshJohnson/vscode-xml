@@ -32,6 +32,10 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
     getTreeItem(element: Node): TreeItem | Thenable<TreeItem> {
         const treeItem = new TreeItem(element.localName);
 
+        if (!this._isElement(element)) {
+            treeItem.label = `${element.localName} = "${element.nodeValue}"`;
+        }
+
         if (this._isElement(element) && this._getChildAttributeArray(<Element>element).length > 0) {
             treeItem.collapsibleState = TreeItemCollapsibleState.Collapsed;
         }
