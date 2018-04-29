@@ -1,5 +1,8 @@
 import { languages, window, workspace, commands } from "vscode";
-import { ExtensionContext, Memento, TextEditor, TextEditorSelectionChangeEvent, WorkspaceConfiguration } from "vscode";
+import {
+    ExtensionContext, Memento, TextEditor, TextEditorSelectionChangeEvent,
+    TextEditorSelectionChangeKind, WorkspaceConfiguration
+} from "vscode";
 
 import { createDocumentSelector } from "./common/create-document-selector";
 import { XQueryCompletionItemProvider } from "./completion/xquery-completion-item-provider";
@@ -47,8 +50,21 @@ export function activate(context: ExtensionContext) {
     );
 
     /* Tree View Features */
+    const treeViewDataProvider = new XmlTreeDataProvider(context);
+    const treeView = window.createTreeView<Node>(constants.views.xmlTreeView, {
+        treeDataProvider: treeViewDataProvider
+    });
+
+    if (config.get<boolean>(constants.configKeys.enableXmlTreeViewCursorSync)) {
+        window.onDidChangeTextEditorSelection(x => {
+            if (x.kind === TextEditorSelectionChangeKind.Mouse && x.selections.length > 0) {
+                treeView.reveal(treeViewDataProvider.getNodeAtPosition(x.selections[0].start));
+            }
+        });
+    }
+
     context.subscriptions.push(
-        window.registerTreeDataProvider(constants.views.xmlTreeView, new XmlTreeDataProvider(context))
+        treeView
     );
 
     /* XPath Features */

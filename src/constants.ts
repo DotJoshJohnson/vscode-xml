@@ -13,6 +13,8 @@ export namespace contextKeys {
 
 export namespace configKeys {
     export const enableXmlTreeView = "enableXmlTreeView";
+    export const enableXmlTreeViewMetadata = "enableXmlTreeViewMetadata";
+    export const enableXmlTreeViewCursorSync = "enableXmlTreeViewCursorSync";
     export const ignoreDefaultNamespace = "ignoreDefaultNamespace";
     export const persistXPathQuery = "persistXPathQuery";
     export const removeCommentsOnMinify = "removeCommentsOnMinify";

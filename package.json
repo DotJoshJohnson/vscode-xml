@@ -22,7 +22,7 @@
         "url": "https://github.com/DotJoshJohnson/vscode-xml/issues"
     },
     "engines": {
-        "vscode": "^1.19.0"
+        "vscode": "^1.22.2"
     },
     "categories": [
         "Formatters",
@@ -67,6 +67,18 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Enables the XML Document view in the explorer for XML documents.",
+                    "scope": "window"
+                },
+                "xmlTools.enableXmlTreeViewMetadata": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enables attribute and child element counts in the XML Document view.",
+                    "scope": "window"
+                },
+                "xmlTools.enableXmlTreeViewCursorSync": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enables auto-reveal of elements in the XML Document view when a start tag is clicked in the editor.",
                     "scope": "window"
                 },
                 "xmlTools.ignoreDefaultNamespace": {
@@ -196,7 +208,7 @@
         "@types/xmldom": "^0.1.29",
         "tslint": "^5.9.1",
         "typescript": "^2.6.1",
-        "vscode": "^1.1.6"
+        "vscode": "^1.1.16"
     },
     "dependencies": {
         "xmldom": "^0.1.27",

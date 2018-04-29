@@ -1,7 +1,7 @@
 import { commands, window, workspace } from "vscode";
 import {
-    Event, EventEmitter, ExtensionContext, TextEditor, TreeDataProvider,
-    TreeItem, TreeItemCollapsibleState
+    Event, EventEmitter, ExtensionContext, Position, TextEditor, TreeDataProvider,
+    TreeItem, TreeItemCollapsibleState, WorkspaceConfiguration
 } from "vscode";
 
 import * as path from "path";
@@ -10,10 +10,13 @@ import { DOMParser } from "xmldom";
 import * as constants from "../constants";
 
 export class XmlTreeDataProvider implements TreeDataProvider<any> {
+    private _config: WorkspaceConfiguration;
     private _onDidChangeTreeData: EventEmitter<any> = new EventEmitter<any>();
-    private _xmlDocument: any;
+    private _xmlDocument: Document;
 
     constructor(private _context: ExtensionContext) {
+        this._config = workspace.getConfiguration(constants.extensionPrefix);
+
         window.onDidChangeActiveTextEditor(() => {
             this._refreshTree();
         });
@@ -30,13 +33,16 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
     }
 
     getTreeItem(element: Node): TreeItem | Thenable<TreeItem> {
+        const enableMetadata = this._config.get<boolean>(constants.configKeys.enableXmlTreeViewMetadata);
+        const enableSync = this._config.get<boolean>(constants.configKeys.enableXmlTreeViewCursorSync);
+
         const treeItem = new TreeItem(element.localName);
 
         if (!this._isElement(element)) {
             treeItem.label = `${element.localName} = "${element.nodeValue}"`;
         }
 
-        else {
+        else if (enableMetadata) {
             const childAttributes = this._getChildAttributeArray(<Element>element);
             const childElements = this._getChildElementArray(<Element>element);
             const totalChildren = (childAttributes.length + childElements.length);
@@ -57,6 +63,10 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
                 treeItem.label = treeItem.label.substr(0, treeItem.label.length - 2);
                 treeItem.label += ")";
             }
+
+            if (this._hasSimilarSiblings(<Element>element) && enableSync) {
+                treeItem.label += ` [line ${(element as any).lineNumber}]`;
+            }
         }
 
         treeItem.command = {
@@ -73,7 +83,7 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         return treeItem;
     }
 
-    getChildren(element?: Node): any[] | Thenable<any[]> {
+    getChildren(element?: Node): Node[] | Thenable<Node[]> {
         if (!this._xmlDocument) {
             this._refreshTree();
         }
@@ -89,6 +99,43 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         else {
             return [];
         }
+    }
+
+    getParent(element: Node): Node {
+        if (!element || !element.parentNode || !element.parentNode.parentNode) {
+            return undefined;
+        }
+
+        return element.parentNode;
+    }
+
+    getNodeAtPosition(position: Position): Node {
+        return this._getNodeAtPositionCore(position, this._xmlDocument.documentElement);
+    }
+
+    private _getNodeAtPositionCore(position: Position, contextElement: Element): Node {
+        if (!contextElement) {
+            return undefined;
+        }
+
+        if (((contextElement as any).lineNumber - 1) === position.line) {
+            return contextElement;
+        }
+
+        const children = this._getChildElementArray(<Element>contextElement);
+        let result: Node;
+
+        for (let i = 0; i < children.length; i++) {
+            const child = children[i];
+
+            result = this._getNodeAtPositionCore(position, child);
+
+            if (result) {
+                return result;
+            }
+        }
+
+        return undefined;
     }
 
     private _getChildAttributeArray(node: Element): any[] {
@@ -138,6 +185,16 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         return icon;
     }
 
+    private _hasSimilarSiblings(element: Element): boolean {
+        if (!element || !element.parentNode) {
+            return false;
+        }
+
+        const siblings = this._getChildElementArray(<Element>element.parentNode);
+
+        return (siblings.filter(x => x.tagName === element.tagName).length > 1);
+    }
+
     private _isElement(node: Node): boolean {
         return (!!node && !!(node as Element).tagName);
     }
@@ -151,8 +208,7 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
             return;
         }
 
-        const config = workspace.getConfiguration(constants.extensionPrefix);
-        const enableTreeView = config.get<boolean>(constants.configKeys.enableXmlTreeView, true);
+        const enableTreeView = this._config.get<boolean>(constants.configKeys.enableXmlTreeView, true);
 
         commands.executeCommand(constants.nativeCommands.setContext, constants.contextKeys.xmlTreeViewEnabled, enableTreeView);
 
@@ -160,12 +216,13 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
 
         try {
             this._xmlDocument = new DOMParser().parseFromString(xml, "text/xml");
-            this._onDidChangeTreeData.fire();
         }
 
         catch {
             this._xmlDocument = new DOMParser().parseFromString("<InvalidDocument />", "text/xml");
         }
+
+        this._onDidChangeTreeData.fire();
     }
 
 }
