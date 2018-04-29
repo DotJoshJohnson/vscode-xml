@@ -123,6 +123,18 @@
                     "default": "",
                     "description": "The full path to the executable to run when executing XQuery scripts.",
                     "scope": "resource"
+                },
+                "xmlTools.xqueryExecutionInputLimit": {
+                    "type": "integer",
+                    "default": 100,
+                    "description": "The maximum number of input files to enumerate when executing XQuery scripts.",
+                    "scope": "resource"
+                },
+                "xmlTools.xqueryExecutionInputSearchPattern": {
+                    "type": "string",
+                    "default": "**/*.xml",
+                    "description": "The pattern used to search for input XML files when executing XQuery scripts.",
+                    "scope": "resource"
                 }
             }
         },

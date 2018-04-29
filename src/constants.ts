@@ -2,6 +2,7 @@ export const extensionPrefix = "xmlTools";
 
 export namespace commands {
     export const evaluateXPath = "xmlTools.evaluateXPath";
+    export const executeXQuery = "xmlTools.executeXQuery";
     export const formatAsXml = "xmlTools.formatAsXml";
     export const minifyXml = "xmlTools.minifyXml";
 }
@@ -17,6 +18,10 @@ export namespace configKeys {
     export const removeCommentsOnMinify = "removeCommentsOnMinify";
     export const splitAttributesOnFormat = "splitAttributesOnFormat";
     export const splitXmlnsOnFormat = "splitXmlnsOnFormat";
+    export const xqueryExecutionArguments = "xqueryExecutionArguments";
+    export const xqueryExecutionEngine = "xqueryExecutionEngine";
+    export const xqueryExecutionInputLimit = "xqueryExecutionInputLimit";
+    export const xqueryExecutionInputSearchPattern = "xqueryExecutionInputSearchPattern";
 }
 
 export namespace diagnosticCollections {
@@ -30,6 +35,7 @@ export namespace languageIds {
 
 export namespace nativeCommands {
     export const cursorMove = "cursorMove";
+    export const openGlobalSettings = "workbench.action.openGlobalSettings";
     export const revealLine = "revealLine";
     export const setContext = "setContext";
 }
