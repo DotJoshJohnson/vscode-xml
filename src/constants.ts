@@ -30,6 +30,7 @@ export namespace diagnosticCollections {
 
 export namespace languageIds {
     export const xml = "xml";
+    export const xsd = "xsd";
     export const xquery = "xquery";
 }
 
@@ -43,6 +44,11 @@ export namespace nativeCommands {
 export namespace stateKeys {
     export const xpathQueryHistory = "xpathQueryHistory";
     export const xPathQueryLast = "xPathQueryLast";
+}
+
+export namespace uriSchemes {
+    export const file = "file";
+    export const untitled = "untitled";
 }
 
 export namespace views {

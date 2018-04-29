@@ -1,6 +1,7 @@
 import { languages, window, workspace, commands } from "vscode";
 import { ExtensionContext, Memento, TextEditor, TextEditorSelectionChangeEvent, WorkspaceConfiguration } from "vscode";
 
+import { createDocumentSelector } from "./common/create-document-selector";
 import { XQueryCompletionItemProvider } from "./completion/xquery-completion-item-provider";
 import { formatAsXml } from "./formatting/commands/formatAsXml";
 import { minifyXml } from "./formatting/commands/minifyXml";
@@ -21,9 +22,12 @@ export function activate(context: ExtensionContext) {
 
     const config = workspace.getConfiguration(constants.extensionPrefix);
 
+    const xmlXsdDocSelector = [...createDocumentSelector(constants.languageIds.xml), ...createDocumentSelector(constants.languageIds.xsd)];
+    const xqueryDocSelector = createDocumentSelector(constants.languageIds.xquery);
+
     /* Completion Features */
     context.subscriptions.push(
-        languages.registerCompletionItemProvider(constants.languageIds.xquery, new XQueryCompletionItemProvider(), ":", "$")
+        languages.registerCompletionItemProvider(xqueryDocSelector, new XQueryCompletionItemProvider(), ":", "$")
     );
 
     /* Formatting Features */
@@ -32,8 +36,8 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerTextEditorCommand(constants.commands.formatAsXml, formatAsXml),
         commands.registerTextEditorCommand(constants.commands.minifyXml, minifyXml),
-        languages.registerDocumentFormattingEditProvider(constants.languageIds.xml, xmlFormattingEditProvider),
-        languages.registerDocumentRangeFormattingEditProvider(constants.languageIds.xml, xmlFormattingEditProvider)
+        languages.registerDocumentFormattingEditProvider(xmlXsdDocSelector, xmlFormattingEditProvider),
+        languages.registerDocumentRangeFormattingEditProvider(xmlXsdDocSelector, xmlFormattingEditProvider)
     );
 
     /* Linting Features */
@@ -64,7 +68,9 @@ export function deactivate() {
 
 
 function _handleContextChange(editor: TextEditor): void {
-    if (!editor || !editor.document) {
+    const supportedSchemes = [constants.uriSchemes.file, constants.uriSchemes.untitled];
+
+    if (!editor || !editor.document || supportedSchemes.indexOf(editor.document.uri.scheme) === -1) {
         return;
     }
 
