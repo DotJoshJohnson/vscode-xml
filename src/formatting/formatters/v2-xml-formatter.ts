@@ -138,7 +138,12 @@ export class V2XmlFormatter implements XmlFormatter {
                 // if this was a self-closing tag, we need to decrement the indent level and add a newLine
                 if (pc === "/") {
                     indentLevel--;
-                    output += `>${options.newLine}`;
+                    output += ">";
+
+                    // only add a newline here if one doesn't already exist (issue #147)
+                    if (nc !== "\r" && nc !== "\n") {
+                        output += options.newLine;
+                    }
                 }
 
                 else {
