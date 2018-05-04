@@ -222,6 +222,6 @@
     "dependencies": {
         "xmldom": "^0.1.27",
         "xpath": "0.0.27",
-        "xqlint": "^0.4.0"
+        "xqlint": "^0.4.1"
     }
 }
