@@ -3,9 +3,8 @@ import { FormattingOptions } from "vscode";
 
 import { TestDataLoader } from "./test-utils/test-data-loader";
 
-import { XmlFormatter } from "../formatting/xml-formatter";
-import { XmlFormattingOptions } from "../formatting/xml-formatting-options";
-import { V2XmlFormatter } from "../formatting/formatters/v2-xml-formatter";
+import { XmlFormatter, XmlFormattingOptions } from "../formatting";
+import { V2XmlFormatter } from "../formatting/formatters";
 
 describe("V2XmlFormatter", () => {
 

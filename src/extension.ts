@@ -1,19 +1,16 @@
-import { languages, window, workspace, commands } from "vscode";
 import {
-    ExtensionContext, Memento, TextEditor, TextEditorSelectionChangeEvent,
-    TextEditorSelectionChangeKind, WorkspaceConfiguration
-} from "vscode";
+    commands, languages, window, workspace, ExtensionContext, Memento,
+    TextEditor, TextEditorSelectionChangeEvent, TextEditorSelectionChangeKind
+    } from "vscode";
 
-import { createDocumentSelector } from "./common/create-document-selector";
-import { XQueryCompletionItemProvider } from "./completion/xquery-completion-item-provider";
-import { formatAsXml } from "./formatting/commands/formatAsXml";
-import { minifyXml } from "./formatting/commands/minifyXml";
-import { XmlFormatterFactory } from "./formatting/xml-formatter";
-import { XmlFormattingEditProvider } from "./formatting/xml-formatting-edit-provider";
-import { XQueryLinter } from "./linting/xquery-linter";
-import { XmlTreeDataProvider } from "./tree-view/xml-tree-data-provider";
-import { evaluateXPath } from "./xpath/commands/evaluateXPath";
-import { executeXQuery } from "./xquery-execution/commands/executeXQuery";
+import { createDocumentSelector } from "./common";
+import { XQueryCompletionItemProvider } from "./completion";
+import { XmlFormatterFactory, XmlFormattingEditProvider } from "./formatting";
+import { formatAsXml, minifyXml } from "./formatting/commands";
+import { XQueryLinter } from "./linting";
+import { XmlTreeDataProvider } from "./tree-view";
+import { evaluateXPath } from "./xpath/commands";
+import { executeXQuery } from "./xquery-execution/commands";
 
 import * as constants from "./constants";
 
