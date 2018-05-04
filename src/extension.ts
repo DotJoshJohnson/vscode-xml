@@ -3,7 +3,7 @@ import {
     TextEditor, TextEditorSelectionChangeEvent, TextEditorSelectionChangeKind
     } from "vscode";
 
-import { createDocumentSelector } from "./common";
+import { createDocumentSelector, ExtensionState } from "./common";
 import { XQueryCompletionItemProvider } from "./completion";
 import { XmlFormatterFactory, XmlFormattingEditProvider } from "./formatting";
 import { formatAsXml, minifyXml } from "./formatting/commands";
@@ -14,11 +14,8 @@ import { executeXQuery } from "./xquery-execution/commands";
 
 import * as constants from "./constants";
 
-export const ExtensionState: { global?: Memento, workspace?: Memento } = { };
-
 export function activate(context: ExtensionContext) {
-    ExtensionState.global = context.globalState;
-    ExtensionState.workspace = context.workspaceState;
+    ExtensionState.configure(context);
 
     const config = workspace.getConfiguration(constants.extensionPrefix);
 

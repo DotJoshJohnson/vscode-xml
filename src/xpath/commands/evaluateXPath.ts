@@ -1,8 +1,8 @@
 import { window, workspace } from "vscode";
 import { TextEditor, TextEditorEdit, ViewColumn } from "vscode";
 
+import { ExtensionState } from "../../common";
 import * as constants from "../../constants";
-import { ExtensionState } from "../../extension";
 
 import { EvaluatorResult, EvaluatorResultType, XPathEvaluator } from "../xpath-evaluator";
 
