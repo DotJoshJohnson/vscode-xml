@@ -1,7 +1,7 @@
-import { window, workspace } from "vscode";
+import { window } from "vscode";
 import { TextEditor, TextEditorEdit, ViewColumn } from "vscode";
 
-import { ExtensionState } from "../../common";
+import { Configuration, ExtensionState } from "../../common";
 import * as constants from "../../constants";
 
 import { EvaluatorResult, EvaluatorResultType, XPathEvaluator } from "../xpath-evaluator";
@@ -17,13 +17,11 @@ class HistoricQuery {
 }
 
 export async function evaluateXPath(editor: TextEditor, edit: TextEditorEdit): Promise<void> {
-    const config = workspace.getConfiguration(constants.extensionPrefix);
-
     // if there is no workspace, we will track queries in the global Memento
     const memento = ExtensionState.workspace || ExtensionState.global;
 
     // get the xpath persistence setting
-    const persistQueries = config.get<boolean>(constants.configKeys.persistXPathQuery, true);
+    const persistQueries = Configuration.persistXPathQuery;
 
     // get the last query if there is one for this document
     // if not, try pulling the last query ran, regardless of document
@@ -49,7 +47,7 @@ export async function evaluateXPath(editor: TextEditor, edit: TextEditorEdit): P
         return;
     }
 
-    const ignoreDefaultNamespace = config.get<boolean>(constants.configKeys.ignoreDefaultNamespace, true);
+    const ignoreDefaultNamespace = Configuration.ignoreDefaultNamespace;
 
     // run the query
     const xml = editor.document.getText();

@@ -12,7 +12,7 @@ export function minifyXml(editor: TextEditor, edit: TextEditorEdit): void {
     const xmlFormattingOptions = XmlFormattingOptionsFactory.getXmlFormattingOptions({
         insertSpaces: <boolean>editor.options.insertSpaces,
         tabSize: <number>editor.options.tabSize
-    }, editor.document.eol);
+    }, editor.document);
 
     const endPosition = editor.document.lineAt(editor.document.lineCount - 1).rangeIncludingLineBreak.end;
     const range = new Range(editor.document.positionAt(0), endPosition);

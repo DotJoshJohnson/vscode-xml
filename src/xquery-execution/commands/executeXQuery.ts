@@ -4,10 +4,9 @@ import { Disposable, Range, TextEditor, TextEditorEdit, Uri } from "vscode";
 import * as constants from "../../constants";
 
 import { ChildProcess } from "../child-process";
+import { Configuration } from "../../common";
 
 export async function executeXQuery(editor: TextEditor, edit: TextEditorEdit): Promise<void> {
-    const config = workspace.getConfiguration(constants.extensionPrefix);
-
     // this disposable will be used for creating status bar messages
     let disposable: Disposable;
 
@@ -16,8 +15,8 @@ export async function executeXQuery(editor: TextEditor, edit: TextEditorEdit): P
         return;
     }
 
-    const executable = config.get<string>(constants.configKeys.xqueryExecutionEngine, null);
-    let args = config.get<string[]>(constants.configKeys.xqueryExecutionArguments, []);
+    const executable = Configuration.xqueryExecutionEngine;
+    let args = Configuration.xqueryExecutionArguments || [];
 
     if (!executable || executable === "") {
         const action = await window.showWarningMessage("An XQuery execution engine has not been defined.", "Define Now");
@@ -32,8 +31,8 @@ export async function executeXQuery(editor: TextEditor, edit: TextEditorEdit): P
     let inputFile: Uri;
     disposable = window.setStatusBarMessage("Searching for XML files in folder...");
 
-    const searchPattern = config.get<string>(constants.configKeys.xqueryExecutionInputSearchPattern);
-    const inputLimit = config.get<number>(constants.configKeys.xqueryExecutionInputLimit);
+    const searchPattern = Configuration.xqueryExecutionInputSearchPattern;
+    const inputLimit = Configuration.xqueryExecutionInputLimit;
 
     const files = await workspace.findFiles(searchPattern, "", inputLimit);
 

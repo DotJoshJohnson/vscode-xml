@@ -85,13 +85,13 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Ignore default xmlns attributes when evaluating XPath.",
-                    "scope": "resource"
+                    "scope": "window"
                 },
                 "xmlTools.persistXPathQuery": {
                     "type": "boolean",
                     "default": true,
                     "description": "Remember the last XPath query used.",
-                    "scope": "resource"
+                    "scope": "window"
                 },
                 "xmlTools.removeCommentsOnMinify": {
                     "type": "boolean",
@@ -115,7 +115,7 @@
                     "type": "string",
                     "default": "v2",
                     "description": "Supported XML Formatters: classic",
-                    "scope": "resource"
+                    "scope": "window"
                 },
                 "xmlTools.xqueryExecutionArguments": {
                     "type": "array",
@@ -128,25 +128,25 @@
                         "$(input.output.xml"
                     ],
                     "description": "Arguments to be passed to the XQuery execution engine.",
-                    "scope": "resource"
+                    "scope": "window"
                 },
                 "xmlTools.xqueryExecutionEngine": {
                     "type": "string",
                     "default": "",
                     "description": "The full path to the executable to run when executing XQuery scripts.",
-                    "scope": "resource"
+                    "scope": "window"
                 },
                 "xmlTools.xqueryExecutionInputLimit": {
                     "type": "integer",
                     "default": 100,
                     "description": "The maximum number of input files to enumerate when executing XQuery scripts.",
-                    "scope": "resource"
+                    "scope": "window"
                 },
                 "xmlTools.xqueryExecutionInputSearchPattern": {
                     "type": "string",
                     "default": "**/*.xml",
                     "description": "The pattern used to search for input XML files when executing XQuery scripts.",
-                    "scope": "resource"
+                    "scope": "window"
                 }
             }
         },

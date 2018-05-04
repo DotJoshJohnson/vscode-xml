@@ -11,21 +11,6 @@ export namespace contextKeys {
     export const xmlTreeViewEnabled = "xmlTreeViewEnabled";
 }
 
-export namespace configKeys {
-    export const enableXmlTreeView = "enableXmlTreeView";
-    export const enableXmlTreeViewMetadata = "enableXmlTreeViewMetadata";
-    export const enableXmlTreeViewCursorSync = "enableXmlTreeViewCursorSync";
-    export const ignoreDefaultNamespace = "ignoreDefaultNamespace";
-    export const persistXPathQuery = "persistXPathQuery";
-    export const removeCommentsOnMinify = "removeCommentsOnMinify";
-    export const splitAttributesOnFormat = "splitAttributesOnFormat";
-    export const splitXmlnsOnFormat = "splitXmlnsOnFormat";
-    export const xqueryExecutionArguments = "xqueryExecutionArguments";
-    export const xqueryExecutionEngine = "xqueryExecutionEngine";
-    export const xqueryExecutionInputLimit = "xqueryExecutionInputLimit";
-    export const xqueryExecutionInputSearchPattern = "xqueryExecutionInputSearchPattern";
-}
-
 export namespace diagnosticCollections {
     export const xquery = "XQueryDiagnostics";
 }

@@ -1,22 +1,20 @@
 import { commands, window, workspace } from "vscode";
 import {
     Event, EventEmitter, ExtensionContext, Position, TextEditor, TreeDataProvider,
-    TreeItem, TreeItemCollapsibleState, WorkspaceConfiguration
+    TreeItem, TreeItemCollapsibleState
 } from "vscode";
 
 import * as path from "path";
 import { DOMParser } from "xmldom";
 
+import { Configuration } from "../common";
 import * as constants from "../constants";
 
 export class XmlTreeDataProvider implements TreeDataProvider<any> {
-    private _config: WorkspaceConfiguration;
     private _onDidChangeTreeData: EventEmitter<any> = new EventEmitter<any>();
     private _xmlDocument: Document;
 
     constructor(private _context: ExtensionContext) {
-        this._config = workspace.getConfiguration(constants.extensionPrefix);
-
         window.onDidChangeActiveTextEditor(() => {
             this._refreshTree();
         });
@@ -33,8 +31,8 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
     }
 
     getTreeItem(element: Node): TreeItem | Thenable<TreeItem> {
-        const enableMetadata = this._config.get<boolean>(constants.configKeys.enableXmlTreeViewMetadata);
-        const enableSync = this._config.get<boolean>(constants.configKeys.enableXmlTreeViewCursorSync);
+        const enableMetadata = Configuration.enableXmlTreeViewMetadata;
+        const enableSync = Configuration.enableXmlTreeViewCursorSync;
 
         const treeItem = new TreeItem(element.localName);
 
@@ -208,7 +206,7 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
             return;
         }
 
-        const enableTreeView = this._config.get<boolean>(constants.configKeys.enableXmlTreeView, true);
+        const enableTreeView = Configuration.enableXmlTreeView;
 
         commands.executeCommand(constants.nativeCommands.setContext, constants.contextKeys.xmlTreeViewEnabled, enableTreeView);
 

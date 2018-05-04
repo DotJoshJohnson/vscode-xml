@@ -3,7 +3,7 @@ import {
     TextEditor, TextEditorSelectionChangeEvent, TextEditorSelectionChangeKind
     } from "vscode";
 
-import { createDocumentSelector, ExtensionState } from "./common";
+import { createDocumentSelector, ExtensionState, Configuration } from "./common";
 import { XQueryCompletionItemProvider } from "./completion";
 import { XmlFormatterFactory, XmlFormattingEditProvider } from "./formatting";
 import { formatAsXml, minifyXml } from "./formatting/commands";
@@ -17,8 +17,6 @@ import * as constants from "./constants";
 export function activate(context: ExtensionContext) {
     ExtensionState.configure(context);
 
-    const config = workspace.getConfiguration(constants.extensionPrefix);
-
     const xmlXsdDocSelector = [...createDocumentSelector(constants.languageIds.xml), ...createDocumentSelector(constants.languageIds.xsd)];
     const xqueryDocSelector = createDocumentSelector(constants.languageIds.xquery);
 
@@ -28,7 +26,7 @@ export function activate(context: ExtensionContext) {
     );
 
     /* Formatting Features */
-    const xmlFormattingEditProvider = new XmlFormattingEditProvider(config, XmlFormatterFactory.getXmlFormatter());
+    const xmlFormattingEditProvider = new XmlFormattingEditProvider(XmlFormatterFactory.getXmlFormatter());
 
     context.subscriptions.push(
         commands.registerTextEditorCommand(constants.commands.formatAsXml, formatAsXml),
@@ -49,7 +47,7 @@ export function activate(context: ExtensionContext) {
         treeDataProvider: treeViewDataProvider
     });
 
-    if (config.get<boolean>(constants.configKeys.enableXmlTreeViewCursorSync)) {
+    if (Configuration.enableXmlTreeViewCursorSync) {
         window.onDidChangeTextEditorSelection(x => {
             if (x.kind === TextEditorSelectionChangeKind.Mouse && x.selections.length > 0) {
                 treeView.reveal(treeViewDataProvider.getNodeAtPosition(x.selections[0].start));

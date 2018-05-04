@@ -1,6 +1,6 @@
-import { workspace } from "vscode";
-import { EndOfLine, FormattingOptions } from "vscode";
+import { EndOfLine, FormattingOptions, TextDocument } from "vscode";
 
+import { Configuration } from "../common";
 import * as constants from "../constants";
 
 export interface XmlFormattingOptions {
@@ -12,15 +12,13 @@ export interface XmlFormattingOptions {
 }
 
 export class XmlFormattingOptionsFactory {
-    static getXmlFormattingOptions(formattingOptions: FormattingOptions, eol: EndOfLine): XmlFormattingOptions {
-        const config = workspace.getConfiguration(constants.extensionPrefix);
-
+    static getXmlFormattingOptions(formattingOptions: FormattingOptions, document: TextDocument): XmlFormattingOptions {
         return {
             editorOptions: formattingOptions,
-            newLine: (eol === EndOfLine.CRLF) ? "\r\n" : "\n",
-            removeCommentsOnMinify: config.get<boolean>(constants.configKeys.removeCommentsOnMinify),
-            splitAttributesOnFormat: config.get<boolean>(constants.configKeys.splitAttributesOnFormat),
-            splitXmlnsOnFormat: config.get<boolean>(constants.configKeys.splitXmlnsOnFormat)
+            newLine: (document.eol === EndOfLine.CRLF) ? "\r\n" : "\n",
+            removeCommentsOnMinify: Configuration.removeCommentsOnMinify(document.uri),
+            splitAttributesOnFormat: Configuration.splitAttributesOnFormat(document.uri),
+            splitXmlnsOnFormat: Configuration.splitXmlnsOnFormat(document.uri)
         };
     }
 }

@@ -1,5 +1,6 @@
 import { workspace } from "vscode";
 
+import { Configuration } from "../common";
 import * as constants from "../constants";
 import { ClassicXmlFormatter } from "./formatters/classic-xml-formatter";
 import { V2XmlFormatter } from "./formatters/v2-xml-formatter";
@@ -19,7 +20,7 @@ export class XmlFormatterFactory {
             return XmlFormatterFactory._xmlFormatter;
         }
 
-        const xmlFormatterImplementationSetting = workspace.getConfiguration(constants.extensionPrefix).get<string>("xmlFormatterImplementation");
+        const xmlFormatterImplementationSetting = Configuration.xmlFormatterImplementation;
         let xmlFormatterImplementation: XmlFormatter;
 
         switch (xmlFormatterImplementationSetting) {
