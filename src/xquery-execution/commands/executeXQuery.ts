@@ -1,10 +1,10 @@
-import { commands, window, workspace } from "vscode";
+import { window, workspace } from "vscode";
 import { Disposable, Range, TextEditor, TextEditorEdit, Uri } from "vscode";
 
 import * as constants from "../../constants";
 
 import { ChildProcess } from "../child-process";
-import { Configuration } from "../../common";
+import { Configuration, NativeCommands } from "../../common";
 
 export async function executeXQuery(editor: TextEditor, edit: TextEditorEdit): Promise<void> {
     // this disposable will be used for creating status bar messages
@@ -22,7 +22,7 @@ export async function executeXQuery(editor: TextEditor, edit: TextEditorEdit): P
         const action = await window.showWarningMessage("An XQuery execution engine has not been defined.", "Define Now");
 
         if (action === "Define Now") {
-            commands.executeCommand(constants.nativeCommands.openGlobalSettings);
+            NativeCommands.openGlobalSettings();
         }
 
         return;

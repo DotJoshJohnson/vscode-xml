@@ -1,4 +1,4 @@
-import { commands, window, workspace } from "vscode";
+import { window, workspace } from "vscode";
 import {
     Event, EventEmitter, ExtensionContext, Position, TextEditor, TreeDataProvider,
     TreeItem, TreeItemCollapsibleState
@@ -7,7 +7,7 @@ import {
 import * as path from "path";
 import { DOMParser } from "xmldom";
 
-import { Configuration } from "../common";
+import { Configuration, NativeCommands } from "../common";
 import * as constants from "../constants";
 
 export class XmlTreeDataProvider implements TreeDataProvider<any> {
@@ -199,7 +199,7 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
 
     private _refreshTree(): void {
         if (!this.activeEditor || this.activeEditor.document.languageId !== constants.languageIds.xml) {
-            commands.executeCommand(constants.nativeCommands.setContext, constants.contextKeys.xmlTreeViewEnabled, false);
+            NativeCommands.setContext(constants.contextKeys.xmlTreeViewEnabled, false);
 
             this._xmlDocument = null;
             this._onDidChangeTreeData.fire();
@@ -208,7 +208,7 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
 
         const enableTreeView = Configuration.enableXmlTreeView;
 
-        commands.executeCommand(constants.nativeCommands.setContext, constants.contextKeys.xmlTreeViewEnabled, enableTreeView);
+        NativeCommands.setContext(constants.contextKeys.xmlTreeViewEnabled, enableTreeView);
 
         const xml = this.activeEditor.document.getText();
 

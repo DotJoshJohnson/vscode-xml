@@ -1,5 +1,3 @@
-export const extensionPrefix = "xmlTools";
-
 export namespace commands {
     export const evaluateXPath = "xmlTools.evaluateXPath";
     export const executeXQuery = "xmlTools.executeXQuery";
@@ -22,10 +20,7 @@ export namespace languageIds {
 }
 
 export namespace nativeCommands {
-    export const cursorMove = "cursorMove";
-    export const openGlobalSettings = "workbench.action.openGlobalSettings";
     export const revealLine = "revealLine";
-    export const setContext = "setContext";
 }
 
 export namespace stateKeys {

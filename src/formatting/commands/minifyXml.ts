@@ -1,4 +1,4 @@
-import { commands, workspace } from "vscode";
+import { workspace } from "vscode";
 import { ProviderResult, Range, TextEdit, TextEditor, TextEditorEdit } from "vscode";
 
 import * as constants from "../../constants";

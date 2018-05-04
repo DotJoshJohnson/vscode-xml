@@ -1,6 +1,7 @@
-import { commands, workspace } from "vscode";
+import { workspace } from "vscode";
 import { ProviderResult, Range, TextEdit, TextEditor, TextEditorEdit } from "vscode";
 
+import { NativeCommands } from "../../common";
 import * as constants from "../../constants";
 
 import { XmlFormatterFactory } from "../xml-formatter";
@@ -38,14 +39,8 @@ export function formatAsXml(editor: TextEditor, edit: TextEditorEdit): void {
             editBuilder.replace(textEdit.range, textEdit.newText);
 
             // wiggle the cursor to deselect the formatted XML (is there a non-hacky way to go about this?)
-            await commands.executeCommand(constants.nativeCommands.cursorMove, {
-                to: "left",
-                by: "character"
-            });
-            await commands.executeCommand(constants.nativeCommands.cursorMove, {
-                to: "right",
-                by: "character"
-            });
+            await NativeCommands.cursorMove("left", "character");
+            await NativeCommands.cursorMove("right", "character");
         });
     }
 }
