@@ -1,8 +1,8 @@
-tsconfig.json
-CONTRIBUTING.md
+.vscode/**
+.vscode-test/**
+out/test/**
+out/**/*.map
+src/**
 .gitignore
-.vscode
-resources/wiki-images
-typings
-**/*.ts
-**/*.vsix
+tsconfig.json
+vsc-extension-quickstart.md

@@ -1,0 +1,13 @@
+<root>
+    <element>text</element>
+    <!--
+        <Description>
+            Any description.
+        </Description>
+        <Keyword UUID="fd8e6b13-9865-4d8c-9ecd-5ff08a0cf2e2"/>
+        <Parameters>
+            <Parameter Name="ParameterName1">The Parameter Name.</Parameter>
+            <Parameter Name="ParameterName2" PossibleValues="Val1,Val2" DefaultValue="Val1"/>
+        </Parameters>
+    -->
+</root>

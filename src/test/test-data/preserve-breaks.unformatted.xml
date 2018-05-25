@@ -1,0 +1,12 @@
+<root>
+    <element>text</element>
+    <element>text</element>
+
+    <element>text</element>
+    <element>text</element>
+
+    <element>
+        <element2>text</element2>
+    </element2>
+
+</root>
