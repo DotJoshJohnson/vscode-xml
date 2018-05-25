@@ -22,6 +22,8 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         workspace.onDidChangeTextDocument(() => {
             this._refreshTree();
         });
+
+        this._refreshTree();
     }
 
     onDidChangeTreeData = this._onDidChangeTreeData.event;
