@@ -218,7 +218,8 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
             this._xmlDocument = new DOMParser({
                 errorHandler: () => {
                     throw new Error("Invalid Document");
-                }
+                },
+                locator: {}
             }).parseFromString(xml, "text/xml");
         }
 
