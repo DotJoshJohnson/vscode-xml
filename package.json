@@ -13,6 +13,7 @@
         "color": "#FFFFFF",
         "theme": "light"
     },
+    "icon": "resources/xml.png",
     "homepage": "https://github.com/DotJoshJohnson/vscode-xml",
     "repository": {
         "type": "git",
@@ -26,7 +27,7 @@
     },
     "categories": [
         "Formatters",
-        "Languages",
+        "Programming Languages",
         "Linters",
         "Other"
     ],
@@ -185,6 +186,20 @@
             }
         ],
         "menus": {
+            "commandPalette": [
+                {
+                    "command": "xmlTools.evaluateXPath",
+                    "when": "editorLangId == xml"
+                },
+                {
+                    "command": "xmlTools.executeXQuery",
+                    "when": "editorLangId == xquery"
+                },
+                {
+                    "command": "xmlTools.minifyXml",
+                    "when": "editorLangId == xml"
+                }
+            ],
             "editor/context": [
                 {
                     "command": "xmlTools.minifyXml",
