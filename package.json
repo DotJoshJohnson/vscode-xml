@@ -13,6 +13,7 @@
         "color": "#FFFFFF",
         "theme": "light"
     },
+    "icon": "resources/xml.png",
     "homepage": "https://github.com/DotJoshJohnson/vscode-xml",
     "repository": {
         "type": "git",
