@@ -186,6 +186,20 @@
             }
         ],
         "menus": {
+            "commandPalette": [
+                {
+                    "command": "xmlTools.evaluateXPath",
+                    "when": "editorLangId == xml"
+                },
+                {
+                    "command": "xmlTools.executeXQuery",
+                    "when": "editorLangId == xquery"
+                },
+                {
+                    "command": "xmlTools.minifyXml",
+                    "when": "editorLangId == xml"
+                }
+            ],
             "editor/context": [
                 {
                     "command": "xmlTools.minifyXml",
