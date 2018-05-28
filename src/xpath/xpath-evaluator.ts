@@ -12,6 +12,19 @@ export class EvaluatorResultType {
     static NODE_COLLECTION = 1;
 }
 
+export class XPathResultTypes {
+    static ANY_TYPE = 0;
+    static NUMBER_TYPE = 1;
+    static STRING_TYPE = 2;
+    static BOOLEAN_TYPE = 3;
+    static UNORDERED_NODE_ITERATOR_TYPE = 4;
+    static ORDERED_NODE_ITERATOR_TYPE = 5;
+    static UNORDERED_NODE_SNAPSHOT_TYPE = 6;
+    static ORDERED_NODE_SNAPSHOT_TYPE = 7;
+    static ANY_UNORDERED_NODE_TYPE = 8;
+    static FIRST_ORDERED_NODE_TYPE = 9;
+}
+
 export class XPathEvaluator {
     static evaluate(query: string, xml: string, ignoreDefaultNamespace: boolean): EvaluatorResult {
         if (ignoreDefaultNamespace) {
@@ -29,17 +42,17 @@ export class XPathEvaluator {
         evaluatorResult.type = EvaluatorResultType.SCALAR_TYPE;
 
         switch (xPathResult.resultType) {
-            case xPathResult.NUMBER_TYPE:
+            case XPathResultTypes.NUMBER_TYPE:
                 evaluatorResult.result = xPathResult.numberValue;
                 break;
-            case xPathResult.STRING_TYPE:
+            case XPathResultTypes.STRING_TYPE:
                 evaluatorResult.result = xPathResult.stringValue;
                 break;
-            case xPathResult.BOOLEAN_TYPE:
+            case XPathResultTypes.BOOLEAN_TYPE:
                 evaluatorResult.result = xPathResult.booleanValue;
                 break;
-            case xPathResult.UNORDERED_NODE_ITERATOR_TYPE:
-            case xPathResult.ORDERED_NODE_ITERATOR_TYPE:
+            case XPathResultTypes.UNORDERED_NODE_ITERATOR_TYPE:
+            case XPathResultTypes.ORDERED_NODE_ITERATOR_TYPE:
                 evaluatorResult.result = xPathResult.booleanValue;
 
                 let node: Node;
