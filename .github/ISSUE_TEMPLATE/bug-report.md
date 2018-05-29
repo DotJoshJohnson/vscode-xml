@@ -1,7 +1,6 @@
 ---
 name: Bug Report
-about: Create a Bug Report
-
+about: Something (aside from the formatter) isn't working right!
 ---
 
 **Description**
