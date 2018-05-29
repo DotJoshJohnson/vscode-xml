@@ -51,6 +51,10 @@ describe("V2XmlFormatter", () => {
             testFormatter(xmlFormatter, options, "maintain-comment-formatting");
         });
 
+        it("should handle single-quotes in attributes", () => {
+            testFormatter(xmlFormatter, options, "single-quotes");
+        });
+
     });
 
 });
