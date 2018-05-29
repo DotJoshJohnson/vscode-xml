@@ -78,7 +78,7 @@
                 },
                 "xmlTools.enableXmlTreeViewCursorSync": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Enables auto-reveal of elements in the XML Document view when a start tag is clicked in the editor.",
                     "scope": "window"
                 },
