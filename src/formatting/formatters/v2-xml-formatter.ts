@@ -120,15 +120,15 @@ export class V2XmlFormatter implements XmlFormatter {
             }
 
             // entering StartTag.Attribute.AttributeValue
-            else if (location === Location.Attribute && cc === "\"") {
-                output += "\"";
+            else if (location === Location.Attribute && (cc === "\"" || cc === "'")) {
+                output += cc;
                 lastNonTextLocation = location;
                 location = Location.AttributeValue;
             }
 
             // exiting StartTag.Attribute.AttributeValue, entering StartTag
-            else if (location === Location.AttributeValue && cc === "\"") {
-                output += "\"";
+            else if (location === Location.AttributeValue && (cc === "\"" || cc === "'")) {
+                output += cc;
                 lastNonTextLocation = location;
                 location = Location.StartTag;
             }
