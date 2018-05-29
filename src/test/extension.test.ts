@@ -55,6 +55,10 @@ describe("V2XmlFormatter", () => {
             testFormatter(xmlFormatter, options, "single-quotes");
         });
 
+        it("should not add extra line breaks before start tags", () => {
+            testFormatter(xmlFormatter, options, "issue-178");
+        });
+
     });
 
 });
