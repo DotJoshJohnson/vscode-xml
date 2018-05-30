@@ -86,6 +86,12 @@
                     "description": "Enables auto-reveal of elements in the XML Document view when a start tag is clicked in the editor.",
                     "scope": "window"
                 },
+                "xmlTools.enforcePrettySelfClosingTagOnFormat": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enforces a space before the forward slash at the end of a self-closing XML tag.",
+                    "scope": "resource"
+                },
                 "xmlTools.ignoreDefaultNamespace": {
                     "type": "boolean",
                     "default": true,

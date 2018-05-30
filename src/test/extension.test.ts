@@ -17,6 +17,7 @@ describe("V2XmlFormatter", () => {
                 insertSpaces: true,
                 tabSize: 4
             },
+            enforcePrettySelfClosingTagOnFormat: false,
             newLine: "\r\n",
             removeCommentsOnMinify: false,
             splitAttributesOnFormat: false,
@@ -60,7 +61,11 @@ describe("V2XmlFormatter", () => {
         });
 
         it("should allow users to enforce space before self-closing tag slash", () => {
+            options.enforcePrettySelfClosingTagOnFormat = true;
+
             testFormatter(xmlFormatter, options, "issue-149");
+
+            options.enforcePrettySelfClosingTagOnFormat = false;
         });
 
     });

@@ -135,6 +135,14 @@ export class V2XmlFormatter implements XmlFormatter {
                 location = Location.StartTag;
             }
 
+            // approaching the end of a self-closing tag where there was no whitespace (issue #149)
+            else if ((location === Location.StartTag || location === Location.StartTagName)
+                && cc === "/"
+                && pc !== " "
+                && options.enforcePrettySelfClosingTagOnFormat) {
+                    output += " /";
+            }
+
             // exiting StartTag or StartTag.StartTagName, entering Text
             else if ((location === Location.StartTag || location === Location.StartTagName) && cc === ">") {
                 // if this was a self-closing tag, we need to decrement the indent level and add a newLine
