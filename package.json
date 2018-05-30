@@ -124,6 +124,10 @@
                 },
                 "xmlTools.xmlFormatterImplementation": {
                     "type": "string",
+                    "enum": [
+                        "classic",
+                        "v2"
+                    ],
                     "default": "v2",
                     "description": "Supported XML Formatters: classic",
                     "scope": "window"
