@@ -39,6 +39,7 @@ export class V2XmlFormatter implements XmlFormatter {
             const nc = xml.charAt(i + 1);
             const nnc = xml.charAt(i + 2);
             const pc = xml.charAt(i - 1);
+            const ppc = xml.charAt(i - 2);
 
             // entering CData
             if (location === Location.Text && cc === "<" && nc === "!" && nnc === "[") {
@@ -86,7 +87,8 @@ export class V2XmlFormatter implements XmlFormatter {
             // entering StartTag.StartTagName
             else if (location === Location.Text && cc === "<" && ["/", "!"].indexOf(nc) === -1) {
                 // if this occurs after another tag, prepend a line break
-                if (pc === ">") {
+                // but do not add one if the previous tag was self-closing (it already adds its own)
+                if (pc === ">" && ppc !== "/") {
                     output += `${options.newLine}${this._getIndent(options, indentLevel)}<`;
                 }
 
@@ -120,17 +122,25 @@ export class V2XmlFormatter implements XmlFormatter {
             }
 
             // entering StartTag.Attribute.AttributeValue
-            else if (location === Location.Attribute && cc === "\"") {
-                output += "\"";
+            else if (location === Location.Attribute && (cc === "\"" || cc === "'")) {
+                output += cc;
                 lastNonTextLocation = location;
                 location = Location.AttributeValue;
             }
 
             // exiting StartTag.Attribute.AttributeValue, entering StartTag
-            else if (location === Location.AttributeValue && cc === "\"") {
-                output += "\"";
+            else if (location === Location.AttributeValue && (cc === "\"" || cc === "'")) {
+                output += cc;
                 lastNonTextLocation = location;
                 location = Location.StartTag;
+            }
+
+            // approaching the end of a self-closing tag where there was no whitespace (issue #149)
+            else if ((location === Location.StartTag || location === Location.StartTagName)
+                && cc === "/"
+                && pc !== " "
+                && options.enforcePrettySelfClosingTagOnFormat) {
+                    output += " /";
             }
 
             // exiting StartTag or StartTag.StartTagName, entering Text

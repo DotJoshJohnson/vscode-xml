@@ -43,6 +43,10 @@ export class Configuration {
         return this._getForWindow<string>("xqueryExecutionInputSearchPattern");
     }
 
+    static enforcePrettySelfClosingTagOnFormat(resource: Uri): boolean {
+        return this._getForResource<boolean>("enforcePrettySelfClosingTagOnFormat", resource);
+    }
+
     static removeCommentsOnMinify(resource: Uri): boolean {
         return this._getForResource<boolean>("removeCommentsOnMinify", resource);
     }

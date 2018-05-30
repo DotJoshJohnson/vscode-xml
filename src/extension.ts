@@ -9,7 +9,7 @@ import { XmlFormatterFactory, XmlFormattingEditProvider } from "./formatting";
 import { formatAsXml, minifyXml } from "./formatting/commands";
 import { XQueryLinter } from "./linting";
 import { XmlTreeDataProvider } from "./tree-view";
-import { evaluateXPath } from "./xpath/commands";
+import { evaluateXPath, getCurrentXPath } from "./xpath/commands";
 import { executeXQuery } from "./xquery-execution/commands";
 
 import * as constants from "./constants";
@@ -61,7 +61,8 @@ export function activate(context: ExtensionContext) {
 
     /* XPath Features */
     context.subscriptions.push(
-        commands.registerTextEditorCommand(constants.commands.evaluateXPath, evaluateXPath)
+        commands.registerTextEditorCommand(constants.commands.evaluateXPath, evaluateXPath),
+        commands.registerTextEditorCommand(constants.commands.getCurrentXPath, getCurrentXPath)
     );
 
     /* XQuery Features */

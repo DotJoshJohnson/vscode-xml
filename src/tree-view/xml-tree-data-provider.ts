@@ -7,12 +7,13 @@ import {
 import * as path from "path";
 import { DOMParser } from "xmldom";
 
-import { Configuration, NativeCommands } from "../common";
+import { Configuration, NativeCommands, XmlTraverser } from "../common";
 import * as constants from "../constants";
 
 export class XmlTreeDataProvider implements TreeDataProvider<any> {
     private _onDidChangeTreeData: EventEmitter<any> = new EventEmitter<any>();
     private _xmlDocument: Document;
+    private _xmlTraverser: XmlTraverser;
 
     constructor(private _context: ExtensionContext) {
         window.onDidChangeActiveTextEditor(() => {
@@ -38,13 +39,13 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
 
         const treeItem = new TreeItem(element.localName);
 
-        if (!this._isElement(element)) {
+        if (!this._xmlTraverser.isElement(element)) {
             treeItem.label = `${element.localName} = "${element.nodeValue}"`;
         }
 
         else if (enableMetadata) {
-            const childAttributes = this._getChildAttributeArray(<Element>element);
-            const childElements = this._getChildElementArray(<Element>element);
+            const childAttributes = this._xmlTraverser.getChildAttributeArray(<Element>element);
+            const childElements = this._xmlTraverser.getChildElementArray(<Element>element);
             const totalChildren = (childAttributes.length + childElements.length);
 
             if (totalChildren > 0) {
@@ -64,7 +65,7 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
                 treeItem.label += ")";
             }
 
-            if (this._hasSimilarSiblings(<Element>element) && enableSync) {
+            if (this._xmlTraverser.hasSimilarSiblings(<Element>element) && enableSync) {
                 treeItem.label += ` [line ${(element as any).lineNumber}]`;
             }
         }
@@ -88,8 +89,8 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
             this._refreshTree();
         }
 
-        if (this._isElement(element)) {
-            return [].concat(this._getChildAttributeArray(<Element>element), this._getChildElementArray(<Element>element));
+        if (this._xmlTraverser.isElement(element)) {
+            return [].concat(this._xmlTraverser.getChildAttributeArray(<Element>element), this._xmlTraverser.getChildElementArray(<Element>element));
         }
 
         else if (this._xmlDocument) {
@@ -102,78 +103,21 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
     }
 
     getParent(element: Node): Node {
-        if (!element || !element.parentNode || !element.parentNode.parentNode) {
+        if ((!element || !element.parentNode || !element.parentNode.parentNode) && !(element as any).ownerElement) {
             return undefined;
         }
 
-        return element.parentNode;
+        return element.parentNode || (element as any).ownerElement;
     }
 
     getNodeAtPosition(position: Position): Node {
-        return this._getNodeAtPositionCore(position, this._xmlDocument.documentElement);
-    }
-
-    private _getNodeAtPositionCore(position: Position, contextElement: Element): Node {
-        if (!contextElement) {
-            return undefined;
-        }
-
-        if (((contextElement as any).lineNumber - 1) === position.line) {
-            return contextElement;
-        }
-
-        const children = this._getChildElementArray(<Element>contextElement);
-        let result: Node;
-
-        for (let i = 0; i < children.length; i++) {
-            const child = children[i];
-
-            result = this._getNodeAtPositionCore(position, child);
-
-            if (result) {
-                return result;
-            }
-        }
-
-        return undefined;
-    }
-
-    private _getChildAttributeArray(node: Element): any[] {
-        if (!node.attributes) {
-            return [];
-        }
-
-        const array = new Array<any>();
-
-        for (let i = 0; i < node.attributes.length; i++) {
-            array.push(node.attributes[i]);
-        }
-
-        return array;
-    }
-
-    private _getChildElementArray(node: Element): any[] {
-        if (!node.childNodes) {
-            return [];
-        }
-
-        const array = new Array<any>();
-
-        for (let i = 0; i < node.childNodes.length; i++) {
-            const child = node.childNodes[i];
-
-            if (this._isElement(child)) {
-                array.push(child);
-            }
-        }
-
-        return array;
+        return this._xmlTraverser.getNodeAtPosition(position);
     }
 
     private _getIcon(element: Node): any {
         let type = "element";
 
-        if (!this._isElement(element)) {
+        if (!this._xmlTraverser.isElement(element)) {
             type = "attribute";
         }
 
@@ -183,20 +127,6 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         };
 
         return icon;
-    }
-
-    private _hasSimilarSiblings(element: Element): boolean {
-        if (!element || !element.parentNode) {
-            return false;
-        }
-
-        const siblings = this._getChildElementArray(<Element>element.parentNode);
-
-        return (siblings.filter(x => x.tagName === element.tagName).length > 1);
-    }
-
-    private _isElement(node: Node): boolean {
-        return (!!node && !!(node as Element).tagName);
     }
 
     private _refreshTree(): void {
@@ -225,6 +155,11 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
 
         catch {
             this._xmlDocument = new DOMParser().parseFromString("<InvalidDocument />", "text/xml");
+        }
+
+        finally {
+            this._xmlTraverser = this._xmlTraverser || new XmlTraverser(this._xmlDocument);
+            this._xmlTraverser.xmlDocument = this._xmlDocument;
         }
 
         this._onDidChangeTreeData.fire();

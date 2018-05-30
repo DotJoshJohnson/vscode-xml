@@ -101,7 +101,7 @@ export async function executeXQuery(editor: TextEditor, edit: TextEditorEdit): P
         return value
             .replace("$(script)", editor.document.uri.fsPath)
             .replace("$(input)", inputFile.fsPath)
-            .replace("$(project)", workspace.rootPath);
+            .replace("$(project)", (workspace.workspaceFolders) ? workspace.workspaceFolders[0].uri.fsPath : "");
     });
 
     try {

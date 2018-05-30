@@ -2,7 +2,7 @@
     "name": "xml",
     "displayName": "XML Tools",
     "description": "XML Formatting, XQuery, and XPath Tools for Visual Studio Code",
-    "version": "2.1.1",
+    "version": "2.2.0",
     "preview": false,
     "publisher": "DotJoshJohnson",
     "author": {
@@ -56,6 +56,10 @@
                 "title": "XML Tools: Format as XML"
             },
             {
+                "command": "xmlTools.getCurrentXPath",
+                "title": "XML Tools: Get Current XPath"
+            },
+            {
                 "command": "xmlTools.minifyXml",
                 "title": "XML Tools: Minify XML"
             }
@@ -78,9 +82,15 @@
                 },
                 "xmlTools.enableXmlTreeViewCursorSync": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Enables auto-reveal of elements in the XML Document view when a start tag is clicked in the editor.",
                     "scope": "window"
+                },
+                "xmlTools.enforcePrettySelfClosingTagOnFormat": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enforces a space before the forward slash at the end of a self-closing XML tag.",
+                    "scope": "resource"
                 },
                 "xmlTools.ignoreDefaultNamespace": {
                     "type": "boolean",
@@ -114,6 +124,10 @@
                 },
                 "xmlTools.xmlFormatterImplementation": {
                     "type": "string",
+                    "enum": [
+                        "classic",
+                        "v2"
+                    ],
                     "default": "v2",
                     "description": "Supported XML Formatters: classic",
                     "scope": "window"
@@ -194,6 +208,10 @@
                 {
                     "command": "xmlTools.executeXQuery",
                     "when": "editorLangId == xquery"
+                },
+                {
+                    "command": "xmlTools.getCurrentXPath",
+                    "when": "editorLangId == xml"
                 },
                 {
                     "command": "xmlTools.minifyXml",

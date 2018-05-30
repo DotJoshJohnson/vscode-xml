@@ -17,6 +17,7 @@ describe("V2XmlFormatter", () => {
                 insertSpaces: true,
                 tabSize: 4
             },
+            enforcePrettySelfClosingTagOnFormat: false,
             newLine: "\r\n",
             removeCommentsOnMinify: false,
             splitAttributesOnFormat: false,
@@ -49,6 +50,22 @@ describe("V2XmlFormatter", () => {
 
         it("should maintain comment formatting", () => {
             testFormatter(xmlFormatter, options, "maintain-comment-formatting");
+        });
+
+        it("should handle single-quotes in attributes", () => {
+            testFormatter(xmlFormatter, options, "single-quotes");
+        });
+
+        it("should not add extra line breaks before start tags", () => {
+            testFormatter(xmlFormatter, options, "issue-178");
+        });
+
+        it("should allow users to enforce space before self-closing tag slash", () => {
+            options.enforcePrettySelfClosingTagOnFormat = true;
+
+            testFormatter(xmlFormatter, options, "issue-149");
+
+            options.enforcePrettySelfClosingTagOnFormat = false;
         });
 
     });
