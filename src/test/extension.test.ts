@@ -59,6 +59,10 @@ describe("V2XmlFormatter", () => {
             testFormatter(xmlFormatter, options, "issue-178");
         });
 
+        it("should allow users to enforce space before self-closing tag slash", () => {
+            testFormatter(xmlFormatter, options, "issue-149");
+        });
+
     });
 
 });
