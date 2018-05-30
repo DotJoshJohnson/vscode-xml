@@ -2,6 +2,7 @@ export namespace commands {
     export const evaluateXPath = "xmlTools.evaluateXPath";
     export const executeXQuery = "xmlTools.executeXQuery";
     export const formatAsXml = "xmlTools.formatAsXml";
+    export const getCurrentXPath = "xmlTools.getCurrentXPath";
     export const minifyXml = "xmlTools.minifyXml";
 }
 

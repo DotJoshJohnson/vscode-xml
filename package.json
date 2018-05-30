@@ -56,6 +56,10 @@
                 "title": "XML Tools: Format as XML"
             },
             {
+                "command": "xmlTools.getCurrentXPath",
+                "title": "XML Tools: Get Current XPath"
+            },
+            {
                 "command": "xmlTools.minifyXml",
                 "title": "XML Tools: Minify XML"
             }
@@ -194,6 +198,10 @@
                 {
                     "command": "xmlTools.executeXQuery",
                     "when": "editorLangId == xquery"
+                },
+                {
+                    "command": "xmlTools.getCurrentXPath",
+                    "when": "editorLangId == xml"
                 },
                 {
                     "command": "xmlTools.minifyXml",
