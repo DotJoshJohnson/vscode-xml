@@ -21,6 +21,7 @@
 * **`xmlTools.enableXmlTreeView`:** Enables the XML Tree View for XML documents.
 * **`xmlTools.enableXmlTreeViewMetadata`:** Enables attribute and child element counts in the XML Document view.
 * **`xmlTools.enableXmlTreeViewCursorSync`:** Enables auto-reveal of elements in the XML Document view when a start tag is clicked in the editor.
+* **`xmlTools.enforcePrettySelfClosingTagOnFormat`:** Ensures a space is added before the forward slash at the end of a self-closing tag.
 * **`xmlTools.ignoreDefaultNamespace`:** Ignore default xmlns attributes when evaluating XPath.
 * **`xmlTools.persistXPathQuery`:** Remember the last XPath query used.
 * **`xmlTools.removeCommentsOnMinify`:** Remove XML comments during minification.
