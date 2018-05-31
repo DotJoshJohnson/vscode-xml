@@ -68,6 +68,10 @@ describe("V2XmlFormatter", () => {
             options.enforcePrettySelfClosingTagOnFormat = false;
         });
 
+        it("should properly format closing tag after self-closing tag", () => {
+            testFormatter(xmlFormatter, options, "issue-185");
+        });
+
     });
 
 });
