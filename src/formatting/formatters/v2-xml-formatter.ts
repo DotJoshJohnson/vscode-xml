@@ -169,7 +169,7 @@ export class V2XmlFormatter implements XmlFormatter {
                 indentLevel--;
 
                 // if the end tag immediately follows a line break, just add an indentation
-                // if the end tag immediately follows another end tag, add a line break and indent
+                // if the end tag immediately follows another end tag or a self-closing tag (issue #185), add a line break and indent
                 // otherwise, this should be treated as a same-line end tag(ex. <element>text</element>)
                 if (pc === "\n") {
                     output += `${this._getIndent(options, indentLevel)}<`;
@@ -177,6 +177,10 @@ export class V2XmlFormatter implements XmlFormatter {
 
                 else if (lastNonTextLocation === Location.EndTag) {
                     output += `${options.newLine}${this._getIndent(options, indentLevel)}<`;
+                }
+
+                else if (pc === ">" && ppc === "/") {
+                    output += `${this._getIndent(options, indentLevel)}<`;
                 }
 
                 else {
