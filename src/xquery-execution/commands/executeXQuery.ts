@@ -15,8 +15,8 @@ export async function executeXQuery(editor: TextEditor, edit: TextEditorEdit): P
         return;
     }
 
-    const executable = Configuration.xqueryExecutionEngine;
-    let args = Configuration.xqueryExecutionArguments || [];
+    const executable = Configuration.xqueryExecutable;
+    let args = Configuration.xqueryExecutableArgs || [];
 
     if (!executable || executable === "") {
         const action = await window.showWarningMessage("An XQuery execution engine has not been defined.", "Define Now");
@@ -31,8 +31,8 @@ export async function executeXQuery(editor: TextEditor, edit: TextEditorEdit): P
     let inputFile: Uri;
     disposable = window.setStatusBarMessage("Searching for XML files in folder...");
 
-    const searchPattern = Configuration.xqueryExecutionInputSearchPattern;
-    const inputLimit = Configuration.xqueryExecutionInputLimit;
+    const searchPattern = Configuration.xqueryInputFilesSearchPattern;
+    const inputLimit = Configuration.xqueryInputFilesLimit;
 
     const files = await workspace.findFiles(searchPattern, "", inputLimit);
 

@@ -156,13 +156,13 @@
                     "description": "Command-line arguments to pass to the executable.",
                     "scope": "application"
                 },
-                "xmlTools.xquery.inputFileLimit": {
+                "xmlTools.xquery.inputFilesLimit": {
                     "type": "integer",
                     "default": 100,
                     "description": "The maximum number of input files to enumerate.",
                     "scope": "application"
                 },
-                "xmlTools.xquery.inputFileSearchPattern": {
+                "xmlTools.xquery.inputFilesSearchPattern": {
                     "type": "string",
                     "default": "**/*.xml",
                     "description": "The pattern used to search for input XML files.",

@@ -20,7 +20,7 @@ export class XmlFormatterFactory {
             return XmlFormatterFactory._xmlFormatter;
         }
 
-        const xmlFormatterImplementationSetting = Configuration.xmlFormatterImplementation;
+        const xmlFormatterImplementationSetting = Configuration.formatterImplementation;
         let xmlFormatterImplementation: XmlFormatter;
 
         switch (xmlFormatterImplementationSetting) {

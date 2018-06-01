@@ -21,7 +21,7 @@ export async function evaluateXPath(editor: TextEditor, edit: TextEditorEdit): P
     const memento = ExtensionState.workspace || ExtensionState.global;
 
     // get the xpath persistence setting
-    const persistQueries = Configuration.persistXPathQuery;
+    const persistQueries = Configuration.xpathRememberLastQuery;
 
     // get the last query if there is one for this document
     // if not, try pulling the last query ran, regardless of document
@@ -47,7 +47,7 @@ export async function evaluateXPath(editor: TextEditor, edit: TextEditorEdit): P
         return;
     }
 
-    const ignoreDefaultNamespace = Configuration.ignoreDefaultNamespace;
+    const ignoreDefaultNamespace = Configuration.xpathIgnoreDefaultNamespace;
 
     // run the query
     const xml = editor.document.getText();
