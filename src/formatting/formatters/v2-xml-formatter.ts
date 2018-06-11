@@ -32,6 +32,7 @@ export class V2XmlFormatter implements XmlFormatter {
         let indentLevel = 0;
         let location = Location.Text;
         let lastNonTextLocation = Location.Text; // hah
+        let attributeQuote = "";
 
         // NOTE: all "exiting" checks should appear after their associated "entering" checks
         for (let i = 0; i < xml.length; i++) {
@@ -126,13 +127,17 @@ export class V2XmlFormatter implements XmlFormatter {
                 output += cc;
                 lastNonTextLocation = location;
                 location = Location.AttributeValue;
+
+                attributeQuote = cc;
             }
 
             // exiting StartTag.Attribute.AttributeValue, entering StartTag
-            else if (location === Location.AttributeValue && (cc === "\"" || cc === "'")) {
+            else if (location === Location.AttributeValue && cc === attributeQuote) {
                 output += cc;
                 lastNonTextLocation = location;
                 location = Location.StartTag;
+
+                attributeQuote = undefined;
             }
 
             // approaching the end of a self-closing tag where there was no whitespace (issue #149)
