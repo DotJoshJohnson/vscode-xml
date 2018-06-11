@@ -72,6 +72,10 @@ describe("V2XmlFormatter", () => {
             testFormatter(xmlFormatter, options, "issue-185");
         });
 
+        it("should support single quotes within double-quoptes attributes and vice-versa", () => {
+            testFormatter(xmlFormatter, options, "issue-187");
+        });
+
     });
 
 });

@@ -1,0 +1,17 @@
+<Project>
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>None</DebugType>
+        <Optimize>true</Optimize>
+    </PropertyGroup>
+    <ItemGroup Condition=" '$(Configuration)'=='Release' ">
+        <Content Remove="appsettings.Development.json" />
+    </ItemGroup>
+    <ItemGroup Condition=" '$(Configuration)'=='Debug' ">
+        <Content Remove="appsettings.Production.json" />
+    </ItemGroup>
+</Project>
