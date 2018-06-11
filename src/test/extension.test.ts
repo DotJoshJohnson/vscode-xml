@@ -76,6 +76,10 @@ describe("V2XmlFormatter", () => {
             testFormatter(xmlFormatter, options, "issue-187");
         });
 
+        it("should not ruin attributes with unusual characters", () => {
+            testFormatter(xmlFormatter, options, "issue-189");
+        });
+
     });
 
 });
