@@ -1,78 +1,69 @@
 import { workspace, Uri } from "vscode";
 
 const ExtensionTopLevelSection = "xmlTools";
-const UseNewSettingsSection = "core.useNewSettings";
 
 export class Configuration {
-    static get treeViewEnabled(): boolean {
-        return this._getForWindow<boolean>("treeView.enabled", "enableXmlTreeView");
+    static get enableXmlTreeView(): boolean {
+        return this._getForWindow<boolean>("enableXmlTreeView");
     }
 
-    static get treeViewShowMetadata(): boolean {
-        return this._getForWindow<boolean>("treeView.showMetadata", "enableXmlTreeViewMetadata");
+    static get enableXmlTreeViewMetadata(): boolean {
+        return this._getForWindow<boolean>("enableXmlTreeViewMetadata");
     }
 
-    static get treeViewSyncCursor(): boolean {
-        return this._getForWindow<boolean>("treeView.syncCursor", "enableXmlTreeViewCursorSync");
+    static get enableXmlTreeViewCursorSync(): boolean {
+        return this._getForWindow<boolean>("enableXmlTreeViewCursorSync");
     }
 
-    static get xpathIgnoreDefaultNamespace(): boolean {
-        return this._getForWindow<boolean>("xpath.ignoreDefaultNamespace", "ignoreDefaultNamespace");
+    static get ignoreDefaultNamespace(): boolean {
+        return this._getForWindow<boolean>("ignoreDefaultNamespace");
     }
 
-    static get xpathRememberLastQuery(): boolean {
-        return this._getForWindow<boolean>("xpath.rememberLastQuery", "persistXPathQuery");
+    static get persistXPathQuery(): boolean {
+        return this._getForWindow<boolean>("persistXPathQuery");
     }
 
-    static get formatterImplementation(): string {
-        return this._getForWindow<string>("formatter.implementation", "xmlFormatterImplementation");
+    static get xmlFormatterImplementation(): string {
+        return this._getForWindow<string>("xmlFormatterImplementation");
     }
 
-    static get xqueryExecutableArgs(): string[] {
-        return this._getForWindow<string[]>("xquery.executableArgs", "xqueryExecutionArguments");
+    static get xqueryExecutionArguments(): string[] {
+        return this._getForWindow<string[]>("xqueryExecutionArguments");
     }
 
-    static get xqueryExecutable(): string {
-        return this._getForWindow<string>("xquery.executable", "xqueryExecutionEngine");
+    static get xqueryExecutionEngine(): string {
+        return this._getForWindow<string>("xqueryExecutionEngine");
     }
 
-    static get xqueryInputFilesLimit(): number {
-        return this._getForWindow<number>("xquery.inputFilesLimit", "xqueryExecutionInputLimit");
+    static get xqueryExecutionInputLimit(): number {
+        return this._getForWindow<number>("xqueryExecutionInputLimit");
     }
 
-    static get xqueryInputFilesSearchPattern(): string {
-        return this._getForWindow<string>("xquery.inputFilesSearchPattern", "xqueryExecutionInputSearchPattern");
+    static get xqueryExecutionInputSearchPattern(): string {
+        return this._getForWindow<string>("xqueryExecutionInputSearchPattern");
     }
 
-    static formatterAddSpaceBeforeSelfClose(resource: Uri): boolean {
-        return this._getForResource<boolean>("formatter.addSpaceBeforeSelfClose", resource, "enforcePrettySelfClosingTagOnFormat");
+    static enforcePrettySelfClosingTagOnFormat(resource: Uri): boolean {
+        return this._getForResource<boolean>("enforcePrettySelfClosingTagOnFormat", resource);
     }
 
-    static formatterRemoveCommentsOnMinify(resource: Uri): boolean {
-        return this._getForResource<boolean>("formatter.removeCommentsOnMinify", resource, "removeCommentsOnMinify");
+    static removeCommentsOnMinify(resource: Uri): boolean {
+        return this._getForResource<boolean>("removeCommentsOnMinify", resource);
     }
 
-    static formatterSplitAttributes(resource: Uri): boolean {
-        return this._getForResource<boolean>("formatter.splitAttributes", resource, "splitAttributesOnFormat");
+    static splitAttributesOnFormat(resource: Uri): boolean {
+        return this._getForResource<boolean>("splitAttributesOnFormat", resource);
     }
 
-    static formatterSplitXmlnsAttributes(resource: Uri): boolean {
-        return this._getForResource<boolean>("formatter.splitXmlnsAttributes", resource, "splitXmlnsOnFormat");
+    static splitXmlnsOnFormat(resource: Uri): boolean {
+        return this._getForResource<boolean>("splitXmlnsOnFormat", resource);
     }
 
-    private static _getForResource<T>(section: string, resource: Uri, oldSection?: string): T {
-        if (oldSection && !workspace.getConfiguration(ExtensionTopLevelSection).get<boolean>(UseNewSettingsSection)) {
-            section = oldSection;
-        }
-
+    private static _getForResource<T>(section: string, resource: Uri): T {
         return workspace.getConfiguration(ExtensionTopLevelSection, resource).get<T>(section);
     }
 
-    private static _getForWindow<T>(section: string, oldSection?: string): T  {
-        if (oldSection && !workspace.getConfiguration(ExtensionTopLevelSection).get<boolean>(UseNewSettingsSection)) {
-            section = oldSection;
-        }
-
+    private static _getForWindow<T>(section: string): T  {
         return workspace.getConfiguration(ExtensionTopLevelSection).get<T>(section);
     }
 }

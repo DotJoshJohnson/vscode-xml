@@ -47,7 +47,7 @@ export function activate(context: ExtensionContext) {
         treeDataProvider: treeViewDataProvider
     });
 
-    if (Configuration.treeViewSyncCursor) {
+    if (Configuration.enableXmlTreeViewCursorSync) {
         window.onDidChangeTextEditorSelection(x => {
             if (x.kind === TextEditorSelectionChangeKind.Mouse && x.selections.length > 0) {
                 treeView.reveal(treeViewDataProvider.getNodeAtPosition(x.selections[0].start));

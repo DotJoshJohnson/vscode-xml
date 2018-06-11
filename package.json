@@ -68,160 +68,58 @@
             "title": "XML Tools Configuration",
             "type": "object",
             "properties": {
-                "xmlTools.core.useNewSettings": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Enables use of the new 'nested' settings instead of the current 'flattened' settings."
-                },
-                "xmlTools.formatter.addSpaceBeforeSelfClose": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Ensures a space exists before the '/>' in self-closing tags.",
-                    "scope": "resource"
-                },
-                "xmlTools.formatter.implementation": {
-                    "type": "string",
-                    "default": "v2",
-                    "description": "Defines the XML formatter implementation used for formatting and minification.",
-                    "enum": [
-                        "classic",
-                        "v2"
-                    ],
-                    "scope": "application"
-                },
-                "xmlTools.formatter.splitAttributes": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Places each attribute (except the first) on a new line. Includes xmlns attributes.",
-                    "scope": "resource"
-                },
-                "xmlTools.formatter.splitXmlnsAttributes": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Places each xmlns attribute on a new line.",
-                    "scope": "resource"
-                },
-                "xmlTools.formatter.stripCommentsOnMinify": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Removes comments from XML during minification.",
-                    "scope": "resource"
-                },
-                "xmlTools.treeView.enabled": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Enables the XML Tree View feature.",
-                    "scope": "application"
-                },
-                "xmlTools.treeView.showMetadata": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Displays attributes such as 'children' and 'attributes' counts in the XML tree view.",
-                    "scope": "application"
-                },
-                "xmlTools.treeView.syncCursor": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Reveals an element or atribute in the tree view when clicked in the editor.",
-                    "scope": "application"
-                },
-                "xmlTools.xpath.ignoreDefaultNamespace": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Ignores default xmlns attributes.",
-                    "scope": "application"
-                },
-                "xmlTools.xpath.rememberLastQuery": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Remembers the last query you executed for the current file.",
-                    "scope": "application"
-                },
-                "xmlTools.xquery.executable": {
-                    "type": "string",
-                    "default": true,
-                    "description": "The full path to the executable to use for executing scripts.",
-                    "scope": "application"
-                },
-                "xmlTools.xquery.executableArgs": {
-                    "type": "array",
-                    "default": [
-                        "-xquery",
-                        "$(script)",
-                        "-in",
-                        "$(input)",
-                        "-out",
-                        "$(input).output.xml"
-                    ],
-                    "description": "Command-line arguments to pass to the executable.",
-                    "scope": "application"
-                },
-                "xmlTools.xquery.inputFilesLimit": {
-                    "type": "integer",
-                    "default": 100,
-                    "description": "The maximum number of input files to enumerate.",
-                    "scope": "application"
-                },
-                "xmlTools.xquery.inputFilesSearchPattern": {
-                    "type": "string",
-                    "default": "**/*.xml",
-                    "description": "The pattern used to search for input XML files.",
-                    "scope": "application"
-                },
-
-
                 "xmlTools.enableXmlTreeView": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Deprecated. Use 'xmlTools.treeView.enabled' instead.",
+                    "description": "Enables the XML Document view in the explorer for XML documents.",
                     "scope": "window"
                 },
                 "xmlTools.enableXmlTreeViewMetadata": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Deprecated. Use 'xmlTools.treeView.showMetadata' instead.",
+                    "description": "Enables attribute and child element counts in the XML Document view.",
                     "scope": "window"
                 },
                 "xmlTools.enableXmlTreeViewCursorSync": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Deprecated. Use 'xmlTools.treeView.syncCursor' instead.",
+                    "description": "Enables auto-reveal of elements in the XML Document view when a start tag is clicked in the editor.",
                     "scope": "window"
                 },
                 "xmlTools.enforcePrettySelfClosingTagOnFormat": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Deprecated. Use 'xmlTools.formatter.addSpaceBeforeSelfClose' instead.",
+                    "description": "Enforces a space before the forward slash at the end of a self-closing XML tag.",
                     "scope": "resource"
                 },
                 "xmlTools.ignoreDefaultNamespace": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Deprecated. Use 'xmlTools.xpath.ignoreDefaultNamespace' instead.",
+                    "description": "Ignore default xmlns attributes when evaluating XPath.",
                     "scope": "window"
                 },
                 "xmlTools.persistXPathQuery": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Deprecated. Use 'xmlTools.xpath.rememberLastQuery' instead.",
+                    "description": "Remember the last XPath query used.",
                     "scope": "window"
                 },
                 "xmlTools.removeCommentsOnMinify": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Deprecated. Use 'xmlTools.formatter.removeCommentsOnMinify' instead.",
+                    "description": "Remove XML comments during minification.",
                     "scope": "resource"
                 },
                 "xmlTools.splitAttributesOnFormat": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Deprecated. Use 'xmlTools.formatter.splitAttributes' instead.",
+                    "description": "Put each attribute on a new line when formatting XML. Overrides `xmlTools.splitXmlsOnFormat` if set to `true`.",
                     "scope": "resource"
                 },
                 "xmlTools.splitXmlnsOnFormat": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Deprecated. Use 'xmlTools.formatter.splitXmlnsAttributes' instead.",
+                    "description": "Put each xmlns attribute on a new line when formatting XML.",
                     "scope": "resource"
                 },
                 "xmlTools.xmlFormatterImplementation": {
@@ -231,7 +129,7 @@
                         "v2"
                     ],
                     "default": "v2",
-                    "description": "Deprecated. Use 'xmlTools.formatter.implementation' instead.",
+                    "description": "Supported XML Formatters: classic",
                     "scope": "window"
                 },
                 "xmlTools.xqueryExecutionArguments": {
@@ -242,27 +140,27 @@
                         "-in",
                         "$(input)",
                         "-out",
-                        "$(input).output.xml"
+                        "$(input.output.xml"
                     ],
-                    "description": "Deprecated. Use 'xmlTools.xquery.executableArgs' instead.",
+                    "description": "Arguments to be passed to the XQuery execution engine.",
                     "scope": "window"
                 },
                 "xmlTools.xqueryExecutionEngine": {
                     "type": "string",
                     "default": "",
-                    "description": "Deprecated. Use 'xmlTools.xquery.executable' instead.",
+                    "description": "The full path to the executable to run when executing XQuery scripts.",
                     "scope": "window"
                 },
                 "xmlTools.xqueryExecutionInputLimit": {
                     "type": "integer",
                     "default": 100,
-                    "description": "Deprecated. Use 'xmlTools.xquery.inputFileLimit' instead.",
+                    "description": "The maximum number of input files to enumerate when executing XQuery scripts.",
                     "scope": "window"
                 },
                 "xmlTools.xqueryExecutionInputSearchPattern": {
                     "type": "string",
                     "default": "**/*.xml",
-                    "description": "Deprecated. Use 'xmlTools.xquery.inputFileSearchPattern' instead.",
+                    "description": "The pattern used to search for input XML files when executing XQuery scripts.",
                     "scope": "window"
                 }
             }

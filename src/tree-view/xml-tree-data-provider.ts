@@ -34,8 +34,8 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
     }
 
     getTreeItem(element: Node): TreeItem | Thenable<TreeItem> {
-        const enableMetadata = Configuration.treeViewShowMetadata;
-        const enableSync = Configuration.treeViewSyncCursor;
+        const enableMetadata = Configuration.enableXmlTreeViewMetadata;
+        const enableSync = Configuration.enableXmlTreeViewCursorSync;
 
         const treeItem = new TreeItem(element.localName);
 
@@ -138,7 +138,7 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
             return;
         }
 
-        const enableTreeView = Configuration.treeViewEnabled;
+        const enableTreeView = Configuration.enableXmlTreeView;
 
         NativeCommands.setContext(constants.contextKeys.xmlTreeViewEnabled, enableTreeView);
 
