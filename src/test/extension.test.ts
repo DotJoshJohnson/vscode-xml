@@ -68,6 +68,18 @@ describe("V2XmlFormatter", () => {
             options.enforcePrettySelfClosingTagOnFormat = false;
         });
 
+        it("should properly format closing tag after self-closing tag", () => {
+            testFormatter(xmlFormatter, options, "issue-185");
+        });
+
+        it("should support single quotes within double-quoptes attributes and vice-versa", () => {
+            testFormatter(xmlFormatter, options, "issue-187");
+        });
+
+        it("should not ruin attributes with unusual characters", () => {
+            testFormatter(xmlFormatter, options, "issue-189");
+        });
+
     });
 
 });

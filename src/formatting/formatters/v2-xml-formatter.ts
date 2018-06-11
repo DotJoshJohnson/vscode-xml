@@ -32,6 +32,7 @@ export class V2XmlFormatter implements XmlFormatter {
         let indentLevel = 0;
         let location = Location.Text;
         let lastNonTextLocation = Location.Text; // hah
+        let attributeQuote = "";
 
         // NOTE: all "exiting" checks should appear after their associated "entering" checks
         for (let i = 0; i < xml.length; i++) {
@@ -126,13 +127,17 @@ export class V2XmlFormatter implements XmlFormatter {
                 output += cc;
                 lastNonTextLocation = location;
                 location = Location.AttributeValue;
+
+                attributeQuote = cc;
             }
 
             // exiting StartTag.Attribute.AttributeValue, entering StartTag
-            else if (location === Location.AttributeValue && (cc === "\"" || cc === "'")) {
+            else if (location === Location.AttributeValue && cc === attributeQuote) {
                 output += cc;
                 lastNonTextLocation = location;
                 location = Location.StartTag;
+
+                attributeQuote = undefined;
             }
 
             // approaching the end of a self-closing tag where there was no whitespace (issue #149)
@@ -169,7 +174,7 @@ export class V2XmlFormatter implements XmlFormatter {
                 indentLevel--;
 
                 // if the end tag immediately follows a line break, just add an indentation
-                // if the end tag immediately follows another end tag, add a line break and indent
+                // if the end tag immediately follows another end tag or a self-closing tag (issue #185), add a line break and indent
                 // otherwise, this should be treated as a same-line end tag(ex. <element>text</element>)
                 if (pc === "\n") {
                     output += `${this._getIndent(options, indentLevel)}<`;
@@ -177,6 +182,10 @@ export class V2XmlFormatter implements XmlFormatter {
 
                 else if (lastNonTextLocation === Location.EndTag) {
                     output += `${options.newLine}${this._getIndent(options, indentLevel)}<`;
+                }
+
+                else if (pc === ">" && ppc === "/") {
+                    output += `${this._getIndent(options, indentLevel)}<`;
                 }
 
                 else {
