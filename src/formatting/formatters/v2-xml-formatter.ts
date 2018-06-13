@@ -95,6 +95,8 @@ export class V2XmlFormatter implements XmlFormatter {
                 }
 
                 else {
+                    // removing trailing non-breaking whitespace here prevents endless indentations (issue #193)
+                    output = this._removeTrailingNonBreakingWhitespace(output);
                     output += `${this._getIndent(options, indentLevel)}<`;
                 }
 
@@ -178,6 +180,8 @@ export class V2XmlFormatter implements XmlFormatter {
                 // if the end tag immediately follows another end tag or a self-closing tag (issue #185), add a line break and indent
                 // otherwise, this should be treated as a same-line end tag(ex. <element>text</element>)
                 if (pc === "\n" || lineBreakSpree) {
+                    // removing trailing non-breaking whitespace here prevents endless indentations (issue #193)
+                    output = this._removeTrailingNonBreakingWhitespace(output);
                     output += `${this._getIndent(options, indentLevel)}<`;
                     lineBreakSpree = false;
                 }
@@ -227,6 +231,10 @@ export class V2XmlFormatter implements XmlFormatter {
 
     private _getIndent(options: XmlFormattingOptions, indentLevel: number): string {
         return ((options.editorOptions.insertSpaces) ? " ".repeat(options.editorOptions.tabSize) : "\t").repeat(indentLevel);
+    }
+
+    private _removeTrailingNonBreakingWhitespace(text: string): string {
+        return text.replace(/[^\r\n\S]+$/, "");
     }
 
     private _sanitizeComments(xml: string): string {
