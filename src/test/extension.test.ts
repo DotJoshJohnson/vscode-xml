@@ -80,6 +80,10 @@ describe("V2XmlFormatter", () => {
             testFormatter(xmlFormatter, options, "issue-189");
         });
 
+        it("should not add extra line breaks before closing tags", () => {
+            testFormatter(xmlFormatter, options, "issue-193");
+        });
+
     });
 
 });
