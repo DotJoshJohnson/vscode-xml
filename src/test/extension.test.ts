@@ -84,6 +84,10 @@ describe("V2XmlFormatter", () => {
             testFormatter(xmlFormatter, options, "issue-193");
         });
 
+        it("should not add extra whitespace before CDATA", () => {
+            testFormatter(xmlFormatter, options, "issue-194");
+        });
+
     });
 
 });

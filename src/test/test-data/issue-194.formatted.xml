@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<madeup>
+    <some>
+        <element>This is ok</element>
+        <other><![CDATA[Here is my cdata]]></other>
+    </some>
+</madeup>
