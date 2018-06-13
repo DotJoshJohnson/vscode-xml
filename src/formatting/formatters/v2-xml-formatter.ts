@@ -45,7 +45,14 @@ export class V2XmlFormatter implements XmlFormatter {
 
             // entering CData
             if (location === Location.Text && cc === "<" && nc === "!" && nnc === "[") {
-                output += `${this._getIndent(options, indentLevel)}<`;
+                if (pc === ">" && ppc !== "/") {
+                    output += "<";
+                }
+
+                else {
+                    output += `${this._getIndent(options, indentLevel)}<`;
+                }
+
                 location = Location.CData;
             }
 
