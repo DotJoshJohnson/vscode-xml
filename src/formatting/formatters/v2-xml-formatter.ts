@@ -33,6 +33,7 @@ export class V2XmlFormatter implements XmlFormatter {
         let location = Location.Text;
         let lastNonTextLocation = Location.Text; // hah
         let attributeQuote = "";
+        let lineBreakSpree = false;
 
         // NOTE: all "exiting" checks should appear after their associated "entering" checks
         for (let i = 0; i < xml.length; i++) {
@@ -176,8 +177,9 @@ export class V2XmlFormatter implements XmlFormatter {
                 // if the end tag immediately follows a line break, just add an indentation
                 // if the end tag immediately follows another end tag or a self-closing tag (issue #185), add a line break and indent
                 // otherwise, this should be treated as a same-line end tag(ex. <element>text</element>)
-                if (pc === "\n") {
+                if (pc === "\n" || lineBreakSpree) {
                     output += `${this._getIndent(options, indentLevel)}<`;
+                    lineBreakSpree = false;
                 }
 
                 else if (lastNonTextLocation === Location.EndTag) {
@@ -204,6 +206,14 @@ export class V2XmlFormatter implements XmlFormatter {
 
             // Text
             else {
+                if (cc === "\n") {
+                    lineBreakSpree = true;
+                }
+
+                else if (lineBreakSpree && /\S/.test(cc)) {
+                    lineBreakSpree = false;
+                }
+
                 output += cc;
             }
         }
