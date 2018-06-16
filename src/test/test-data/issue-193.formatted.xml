@@ -1,0 +1,12 @@
+<xsl:template name="btn-export-excel-pdf">
+    <div class="row">
+        <div class="col-md button-wrapper text-center">
+            <a class="btn btn-outline-info" role="button" href="javascript:template.printToPdf()" target="_blank">
+                <i class="far fa-file-pdf">&#160;</i> Export to PDF                                        
+            </a>                  &#160;                                                        
+            <a class="btn btn-outline-info" role="button" href="javascript:template.exportToExcel()" target="_blank">
+                <i class="far fa-file-excel">&#160;</i> Export to EXCEL                                        
+            </a>
+        </div>
+    </div>
+</xsl:template>

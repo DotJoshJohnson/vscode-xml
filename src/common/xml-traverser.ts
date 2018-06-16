@@ -64,7 +64,19 @@ export class XmlTraverser {
     }
 
     getSiblings(node: Node): Node[] {
-        return [...this.getChildAttributeArray(<Element>node.parentNode), ...this.getChildElementArray(node.parentNode)];
+        if (this.isElement(node)) {
+            return this.getSiblingElements(node);
+        }
+
+        return this.getSiblingAttributes(node);
+    }
+
+    getSiblingAttributes(node: Node): Node[] {
+        return this.getChildAttributeArray(<Element>node.parentNode);
+    }
+
+    getSiblingElements(node: Node): Node[] {
+        return this.getChildElementArray(node.parentNode);
     }
 
     hasSimilarSiblings(node: Node): boolean {

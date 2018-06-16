@@ -33,6 +33,7 @@ export class V2XmlFormatter implements XmlFormatter {
         let location = Location.Text;
         let lastNonTextLocation = Location.Text; // hah
         let attributeQuote = "";
+        let lineBreakSpree = false;
 
         // NOTE: all "exiting" checks should appear after their associated "entering" checks
         for (let i = 0; i < xml.length; i++) {
@@ -44,7 +45,14 @@ export class V2XmlFormatter implements XmlFormatter {
 
             // entering CData
             if (location === Location.Text && cc === "<" && nc === "!" && nnc === "[") {
-                output += `${this._getIndent(options, indentLevel)}<`;
+                if (pc === ">" && ppc !== "/") {
+                    output += "<";
+                }
+
+                else {
+                    output += `${this._getIndent(options, indentLevel)}<`;
+                }
+
                 location = Location.CData;
             }
 
@@ -94,6 +102,8 @@ export class V2XmlFormatter implements XmlFormatter {
                 }
 
                 else {
+                    // removing trailing non-breaking whitespace here prevents endless indentations (issue #193)
+                    output = this._removeTrailingNonBreakingWhitespace(output);
                     output += `${this._getIndent(options, indentLevel)}<`;
                 }
 
@@ -176,8 +186,11 @@ export class V2XmlFormatter implements XmlFormatter {
                 // if the end tag immediately follows a line break, just add an indentation
                 // if the end tag immediately follows another end tag or a self-closing tag (issue #185), add a line break and indent
                 // otherwise, this should be treated as a same-line end tag(ex. <element>text</element>)
-                if (pc === "\n") {
+                if (pc === "\n" || lineBreakSpree) {
+                    // removing trailing non-breaking whitespace here prevents endless indentations (issue #193)
+                    output = this._removeTrailingNonBreakingWhitespace(output);
                     output += `${this._getIndent(options, indentLevel)}<`;
+                    lineBreakSpree = false;
                 }
 
                 else if (lastNonTextLocation === Location.EndTag) {
@@ -204,6 +217,14 @@ export class V2XmlFormatter implements XmlFormatter {
 
             // Text
             else {
+                if (cc === "\n") {
+                    lineBreakSpree = true;
+                }
+
+                else if (lineBreakSpree && /\S/.test(cc)) {
+                    lineBreakSpree = false;
+                }
+
                 output += cc;
             }
         }
@@ -217,6 +238,10 @@ export class V2XmlFormatter implements XmlFormatter {
 
     private _getIndent(options: XmlFormattingOptions, indentLevel: number): string {
         return ((options.editorOptions.insertSpaces) ? " ".repeat(options.editorOptions.tabSize) : "\t").repeat(indentLevel);
+    }
+
+    private _removeTrailingNonBreakingWhitespace(text: string): string {
+        return text.replace(/[^\r\n\S]+$/, "");
     }
 
     private _sanitizeComments(xml: string): string {
