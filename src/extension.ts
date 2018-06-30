@@ -3,7 +3,7 @@ import {
     TextEditor, TextEditorSelectionChangeEvent, TextEditorSelectionChangeKind
     } from "vscode";
 
-import { createDocumentSelector, ExtensionState, Configuration } from "./common";
+import { createDocumentSelector, DocumentContext, ExtensionState, Configuration } from "./common";
 import { XQueryCompletionItemProvider } from "./completion";
 import { XmlFormatterFactory, XmlFormattingEditProvider } from "./formatting";
 import { formatAsXml, minifyXml } from "./formatting/commands";
@@ -16,6 +16,9 @@ import * as constants from "./constants";
 
 export function activate(context: ExtensionContext) {
     ExtensionState.configure(context);
+    DocumentContext.configure(context);
+
+    /* Document Change Handlers */
 
     const xmlXsdDocSelector = [...createDocumentSelector(constants.languageIds.xml), ...createDocumentSelector(constants.languageIds.xsd)];
     const xqueryDocSelector = createDocumentSelector(constants.languageIds.xquery);
