@@ -140,7 +140,7 @@
                         "-in",
                         "$(input)",
                         "-out",
-                        "$(input.output.xml"
+                        "$(input).output.xml"
                     ],
                     "description": "Arguments to be passed to the XQuery execution engine.",
                     "scope": "window"
