@@ -25,7 +25,7 @@
 * **`xmlTools.ignoreDefaultNamespace`:** Ignore default xmlns attributes when evaluating XPath.
 * **`xmlTools.persistXPathQuery`:** Remember the last XPath query used.
 * **`xmlTools.removeCommentsOnMinify`:** Remove XML comments during minification.
-* **`xmlTools.splitAttributesOnFormat`:** Put each attribute on a new line when formatting XML. Overrides `xmlTools.splitXmlsOnFormat` if set to `true`. (V2 Formatter Only)
+* **`xmlTools.splitAttributesOnFormat`:** Put each attribute on a new line when formatting XML. Overrides `xmlTools.splitXmlnsOnFormat` if set to `true`. (V2 Formatter Only)
 * **`xmlTools.splitXmlnsOnFormat`:** Put each xmlns attribute on a new line when formatting XML.
 * **`xmlTools.xmlFormatterImplementation`:** Supported XML Formatters: `classic`, `v2`.
 * **`xmlTools.xqueryExecutionArguments`:** Arguments to be passed to the XQuery execution engine.
