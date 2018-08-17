@@ -88,6 +88,10 @@ describe("V2XmlFormatter", () => {
             testFormatter(xmlFormatter, options, "issue-194");
         });
 
+        it("should support mixed content", () => {
+            testFormatter(xmlFormatter, options, "issue-200");
+        });
+
     });
 
 });
