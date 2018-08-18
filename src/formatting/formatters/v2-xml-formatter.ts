@@ -30,10 +30,38 @@ export class V2XmlFormatter implements XmlFormatter {
         let output = "";
 
         let indentLevel = 0;
-        let location = Location.Text;
-        let lastNonTextLocation = Location.Text; // hah
         let attributeQuote = "";
         let lineBreakSpree = false;
+        let lastWordCharacter: string | undefined;
+        let inMixedContent = false;
+
+        const locationHistory: Location[] = [Location.Text];
+
+        function isLastNonTextLocation(loc: Location): boolean {
+            for (let i = (locationHistory.length - 1); i >= 0; i--) {
+                if (locationHistory[i] !== Location.Text) {
+                    return (loc === locationHistory[i]);
+                }
+            }
+
+            return false;
+        }
+
+        function isLocation(loc: Location): boolean {
+            return loc === locationHistory[locationHistory.length - 1];
+        }
+
+        function refreshMixedContentFlag(): void {
+            inMixedContent = (isLastNonTextLocation(Location.StartTag) || isLastNonTextLocation(Location.EndTag)) && lastWordCharacter !== undefined;
+        }
+
+        function setLocation(loc: Location): void {
+            if (loc === Location.Text) {
+                lastWordCharacter = undefined;
+            }
+
+            locationHistory.push(loc);
+        }
 
         // NOTE: all "exiting" checks should appear after their associated "entering" checks
         for (let i = 0; i < xml.length; i++) {
@@ -44,7 +72,7 @@ export class V2XmlFormatter implements XmlFormatter {
             const ppc = xml.charAt(i - 2);
 
             // entering CData
-            if (location === Location.Text && cc === "<" && nc === "!" && nnc === "[") {
+            if (isLocation(Location.Text) && cc === "<" && nc === "!" && nnc === "[") {
                 if (pc === ">" && ppc !== "/") {
                     output += "<";
                 }
@@ -53,74 +81,85 @@ export class V2XmlFormatter implements XmlFormatter {
                     output += `${this._getIndent(options, indentLevel)}<`;
                 }
 
-                location = Location.CData;
+                setLocation(Location.CData);
             }
 
             // exiting CData
-            else if (location === Location.CData && cc === "]" && nc === "]" && nnc === ">") {
+            else if (isLocation(Location.CData) && cc === "]" && nc === "]" && nnc === ">") {
                 output += "]]>";
 
                 i += 2;
-                lastNonTextLocation = location;
-                location = Location.Text;
+
+                setLocation(Location.Text);
             }
 
             // entering Comment
-            else if (location === Location.Text && cc === "<" && nc === "!" && nnc === "-") {
+            else if (isLocation(Location.Text) && cc === "<" && nc === "!" && nnc === "-") {
                 output += `${this._getIndent(options, indentLevel)}<`;
-                location = Location.Comment;
+
+                setLocation(Location.Comment);
             }
 
             // exiting Comment
-            else if (location === Location.Comment && cc === "-" && nc === "-" && nnc === ">") {
+            else if (isLocation(Location.Comment) && cc === "-" && nc === "-" && nnc === ">") {
                 output += "-->";
 
                 i += 2;
-                lastNonTextLocation = location;
-                location = Location.Text;
+
+                setLocation(Location.Text);
             }
 
             // entering SpecialTag
-            else if (location === Location.Text && cc === "<" && (nc === "!" || nc === "?")) {
+            else if (isLocation(Location.Text) && cc === "<" && (nc === "!" || nc === "?")) {
                 output += `${this._getIndent(options, indentLevel)}<`;
-                location = Location.SpecialTag;
+
+                setLocation(Location.SpecialTag);
             }
 
             // exiting SpecialTag
-            else if (location === Location.SpecialTag && cc === ">") {
+            else if (isLocation(Location.SpecialTag) && cc === ">") {
                 output += `>`;
-                lastNonTextLocation = location;
-                location = Location.Text;
+
+                setLocation(Location.Text);
             }
 
             // entering StartTag.StartTagName
-            else if (location === Location.Text && cc === "<" && ["/", "!"].indexOf(nc) === -1) {
+            else if (isLocation(Location.Text) && cc === "<" && ["/", "!"].indexOf(nc) === -1) {
+                refreshMixedContentFlag();
+
                 // if this occurs after another tag, prepend a line break
                 // but do not add one if the previous tag was self-closing (it already adds its own)
-                if (pc === ">" && ppc !== "/") {
+                if (pc === ">" && ppc !== "/" && !inMixedContent) {
                     output += `${options.newLine}${this._getIndent(options, indentLevel)}<`;
                 }
 
-                else {
+                else if (!inMixedContent) {
                     // removing trailing non-breaking whitespace here prevents endless indentations (issue #193)
                     output = this._removeTrailingNonBreakingWhitespace(output);
                     output += `${this._getIndent(options, indentLevel)}<`;
                 }
 
+                else {
+                    output += "<";
+
+                    indentLevel--;
+                }
+
                 indentLevel++;
-                location = Location.StartTagName;
+
+                setLocation(Location.StartTagName);
             }
 
             // exiting StartTag.StartTagName, enter StartTag
-            else if (location === Location.StartTagName && cc === " ") {
+            else if (isLocation(Location.StartTagName) && cc === " ") {
                 output += " ";
-                lastNonTextLocation = location;
-                location = Location.StartTag;
+
+                setLocation(Location.StartTag);
             }
 
             // entering StartTag.Attribute
-            else if (location === Location.StartTag && [" ", "/", ">"].indexOf(cc) === -1) {
-                if (lastNonTextLocation === Location.AttributeValue
+            else if (isLocation(Location.StartTag) && [" ", "/", ">"].indexOf(cc) === -1) {
+                if (locationHistory[locationHistory.length - 2] === Location.AttributeValue
                     && ((options.splitXmlnsOnFormat
                         && xml.substr(i, 5).toLowerCase() === "xmlns")
                         || options.splitAttributesOnFormat)) {
@@ -128,30 +167,30 @@ export class V2XmlFormatter implements XmlFormatter {
                 }
 
                 output += cc;
-                lastNonTextLocation = location;
-                location = Location.Attribute;
+
+                setLocation(Location.Attribute);
             }
 
             // entering StartTag.Attribute.AttributeValue
-            else if (location === Location.Attribute && (cc === "\"" || cc === "'")) {
+            else if (isLocation(Location.Attribute) && (cc === "\"" || cc === "'")) {
                 output += cc;
-                lastNonTextLocation = location;
-                location = Location.AttributeValue;
+
+                setLocation(Location.AttributeValue);
 
                 attributeQuote = cc;
             }
 
             // exiting StartTag.Attribute.AttributeValue, entering StartTag
-            else if (location === Location.AttributeValue && cc === attributeQuote) {
+            else if (isLocation(Location.AttributeValue) && cc === attributeQuote) {
                 output += cc;
-                lastNonTextLocation = location;
-                location = Location.StartTag;
+
+                setLocation(Location.StartTag);
 
                 attributeQuote = undefined;
             }
 
             // approaching the end of a self-closing tag where there was no whitespace (issue #149)
-            else if ((location === Location.StartTag || location === Location.StartTagName)
+            else if ((isLocation(Location.StartTag) || isLocation(Location.StartTagName))
                 && cc === "/"
                 && pc !== " "
                 && options.enforcePrettySelfClosingTagOnFormat) {
@@ -159,7 +198,7 @@ export class V2XmlFormatter implements XmlFormatter {
             }
 
             // exiting StartTag or StartTag.StartTagName, entering Text
-            else if ((location === Location.StartTag || location === Location.StartTagName) && cc === ">") {
+            else if ((isLocation(Location.StartTag) || isLocation(Location.StartTagName)) && cc === ">") {
                 // if this was a self-closing tag, we need to decrement the indent level and add a newLine
                 if (pc === "/") {
                     indentLevel--;
@@ -175,29 +214,35 @@ export class V2XmlFormatter implements XmlFormatter {
                     output += ">";
                 }
 
-                lastNonTextLocation = location;
-                location = Location.Text;
+                // don't go directly from StartTagName to Text; go through StartTag first
+                if (isLocation(Location.StartTagName)) {
+                    setLocation(Location.StartTag);
+                }
+
+                setLocation(Location.Text);
             }
 
             // entering EndTag
-            else if (location === Location.Text && cc === "<" && nc === "/") {
+            else if (isLocation(Location.Text) && cc === "<" && nc === "/") {
                 indentLevel--;
+
+                refreshMixedContentFlag();
 
                 // if the end tag immediately follows a line break, just add an indentation
                 // if the end tag immediately follows another end tag or a self-closing tag (issue #185), add a line break and indent
                 // otherwise, this should be treated as a same-line end tag(ex. <element>text</element>)
-                if (pc === "\n" || lineBreakSpree) {
+                if ((pc === "\n" || lineBreakSpree) && !inMixedContent) {
                     // removing trailing non-breaking whitespace here prevents endless indentations (issue #193)
                     output = this._removeTrailingNonBreakingWhitespace(output);
                     output += `${this._getIndent(options, indentLevel)}<`;
                     lineBreakSpree = false;
                 }
 
-                else if (lastNonTextLocation === Location.EndTag) {
+                else if (isLastNonTextLocation(Location.EndTag) && !inMixedContent) {
                     output += `${options.newLine}${this._getIndent(options, indentLevel)}<`;
                 }
 
-                else if (pc === ">" && ppc === "/") {
+                else if (pc === ">" && ppc === "/" && !inMixedContent) {
                     output += `${this._getIndent(options, indentLevel)}<`;
                 }
 
@@ -205,24 +250,31 @@ export class V2XmlFormatter implements XmlFormatter {
                     output += "<";
                 }
 
-                location = Location.EndTag;
+                setLocation(Location.EndTag);
             }
 
             // exiting EndTag, entering Text
-            else if (location === Location.EndTag && cc === ">") {
+            else if (isLocation(Location.EndTag) && cc === ">") {
                 output += ">";
-                lastNonTextLocation = location;
-                location = Location.Text;
+
+                setLocation(Location.Text);
+
+                inMixedContent = false;
             }
 
             // Text
             else {
                 if (cc === "\n") {
                     lineBreakSpree = true;
+                    lastWordCharacter = undefined;
                 }
 
                 else if (lineBreakSpree && /\S/.test(cc)) {
                     lineBreakSpree = false;
+                }
+
+                if (/[\w\d]/.test(cc)) {
+                    lastWordCharacter = cc;
                 }
 
                 output += cc;
