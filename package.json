@@ -113,7 +113,7 @@
                 "xmlTools.splitAttributesOnFormat": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Put each attribute on a new line when formatting XML. Overrides `xmlTools.splitXmlsOnFormat` if set to `true`.",
+                    "description": "Put each attribute on a new line when formatting XML. Overrides `xmlTools.splitXmlnsOnFormat` if set to `true`.",
                     "scope": "resource"
                 },
                 "xmlTools.splitXmlnsOnFormat": {
@@ -140,7 +140,7 @@
                         "-in",
                         "$(input)",
                         "-out",
-                        "$(input.output.xml"
+                        "$(input).output.xml"
                     ],
                     "description": "Arguments to be passed to the XQuery execution engine.",
                     "scope": "window"
