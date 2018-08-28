@@ -1,6 +1,6 @@
 import {
     commands, languages, window, workspace, ExtensionContext, Memento,
-    TextEditor, TextEditorSelectionChangeEvent, TextEditorSelectionChangeKind
+    TextEditor, TextEditorSelectionChangeEvent, TextEditorSelectionChangeKind, DiagnosticCollection
     } from "vscode";
 
 import { createDocumentSelector, ExtensionState, Configuration } from "./common";
@@ -13,6 +13,8 @@ import { evaluateXPath, getCurrentXPath } from "./xpath/commands";
 import { executeXQuery } from "./xquery-execution/commands";
 
 import * as constants from "./constants";
+
+let diagnosticCollectionXQuery: DiagnosticCollection;
 
 export function activate(context: ExtensionContext) {
     ExtensionState.configure(context);
@@ -36,7 +38,9 @@ export function activate(context: ExtensionContext) {
     );
 
     /* Linting Features */
+    diagnosticCollectionXQuery = languages.createDiagnosticCollection(constants.diagnosticCollections.xquery);
     context.subscriptions.push(
+        diagnosticCollectionXQuery,
         window.onDidChangeActiveTextEditor(_handleChangeActiveTextEditor),
         window.onDidChangeTextEditorSelection(_handleChangeTextEditorSelection)
     );
@@ -85,9 +89,7 @@ function _handleContextChange(editor: TextEditor): void {
 
     switch (editor.document.languageId) {
         case constants.languageIds.xquery:
-            languages
-                .createDiagnosticCollection(constants.diagnosticCollections.xquery)
-                .set(editor.document.uri, new XQueryLinter().lint(editor.document.getText()));
+      diagnosticCollectionXQuery.set(editor.document.uri, new XQueryLinter().lint(editor.document.getText()));
             break;
     }
 }
