@@ -1,0 +1,19 @@
+<Job>
+  <SQLQuery      test="">
+    <SQLSelect    Test="test"     test="test">
+             <![CDATA[
+select
+*
+from test
+where
+aaa.aaa='AAA' and 
+isnull(BBB.BBB,0)=0 and
+isnull(CCTestC.CCC,0)=1 and
+DDD.DDD is null and
+exists (select 1 from EEE where EEE.EEE=EEE.EEE and EEE is null) and
+exists (select 1 from FFF where FFF.FFF=FFF.FFF) and
+'{GGG}' like '%'+GGG.GGG+'%'
+]]>
+    </SQLSelect>
+	</SQLQuery>
+</Job>
