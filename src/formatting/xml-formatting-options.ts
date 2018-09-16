@@ -10,7 +10,7 @@ export interface XmlFormattingOptions {
     removeCommentsOnMinify: boolean;
     splitAttributesOnFormat: boolean;
     splitXmlnsOnFormat: boolean;
-    initialIndentLevel: number;
+    initialIndentLevel?: number;
 }
 
 export class XmlFormattingOptionsFactory {

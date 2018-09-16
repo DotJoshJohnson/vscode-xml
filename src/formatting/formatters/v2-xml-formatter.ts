@@ -29,7 +29,7 @@ export class V2XmlFormatter implements XmlFormatter {
 
         let output = "";
 
-        let indentLevel = options.initialIndentLevel;
+        let indentLevel = options.initialIndentLevel || 0;
         let attributeQuote = "";
         let lineBreakSpree = false;
         let lastWordCharacter: string | undefined;
