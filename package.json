@@ -184,6 +184,16 @@
         ],
         "languages": [
             {
+                "id": "xml",
+                "extensions": [
+                    ".config",
+                    ".csproj",
+                    ".xml",
+                    ".xsd",
+                    ".xsl"
+                ]
+            },
+            {
                 "id": "xquery",
                 "aliases": [
                     "XQuery",
