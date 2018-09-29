@@ -17,7 +17,12 @@ import * as constants from "./constants";
 export function activate(context: ExtensionContext) {
     ExtensionState.configure(context);
 
-    const xmlXsdDocSelector = [...createDocumentSelector(constants.languageIds.xml), ...createDocumentSelector(constants.languageIds.xsd)];
+    const xmlXsdDocSelector = [
+        ...createDocumentSelector(constants.languageIds.xml),
+        ...createDocumentSelector(constants.languageIds.xsd),
+        ...createDocumentSelector(constants.languageIds.xsl)
+    ];
+
     const xqueryDocSelector = createDocumentSelector(constants.languageIds.xquery);
 
     /* Completion Features */

@@ -17,6 +17,7 @@ export namespace diagnosticCollections {
 export namespace languageIds {
     export const xml = "xml";
     export const xsd = "xsd";
+    export const xsl = "xsl";
     export const xquery = "xquery";
 }
 
