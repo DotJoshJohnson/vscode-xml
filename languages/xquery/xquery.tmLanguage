@@ -768,7 +768,7 @@
 		<key>doublequotedString</key>
 		<dict>
 			<key>begin</key>
-			<string>(?&lt;![-_a-zA-Z0-9:]&gt;)\s*"(?!\s*&lt;/[-_a-zA-Z0-9:])</string>
+			<string>(?&lt;![-_a-zA-Z0-9:'"]&gt;)\s*"(?![\w\s()']*&lt;/[-_a-zA-Z0-9:])</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>0</key>
@@ -929,7 +929,7 @@
 		<key>singlequotedString</key>
 		<dict>
 			<key>begin</key>
-			<string>(?&lt;![-_a-zA-Z0-9:]&gt;)\s*'(?!\s*&lt;/[-_a-zA-Z0-9:])</string>
+			<string>(?&lt;![-_a-zA-Z0-9:'"]&gt;)\s*'(?![\w\s()"]*&lt;/[-_a-zA-Z0-9:])</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>0</key>
