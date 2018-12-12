@@ -11,6 +11,7 @@ import { XQueryLinter } from "./linting";
 import { XmlTreeDataProvider } from "./tree-view";
 import { evaluateXPath, getCurrentXPath } from "./xpath/commands";
 import { executeXQuery } from "./xquery-execution/commands";
+import { runXSLTTransform } from "./xslt";
 
 import * as constants from "./constants";
 
@@ -48,7 +49,7 @@ export function activate(context: ExtensionContext) {
     });
 
     if (Configuration.enableXmlTreeViewCursorSync) {
-        window.onDidChangeTextEditorSelection(x => {
+        window.onDidChangeTextEditorSelection((x: any) => {
             if (x.kind === TextEditorSelectionChangeKind.Mouse && x.selections.length > 0) {
                 treeView.reveal(treeViewDataProvider.getNodeAtPosition(x.selections[0].start));
             }
@@ -68,6 +69,11 @@ export function activate(context: ExtensionContext) {
     /* XQuery Features */
     context.subscriptions.push(
         commands.registerTextEditorCommand(constants.commands.executeXQuery, executeXQuery)
+    );
+
+    /* XSLT Transformation Features */
+    context.subscriptions.push(
+        commands.registerCommand(constants.commands.runXSLTTransform, runXSLTTransform)
     );
 }
 

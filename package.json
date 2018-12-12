@@ -23,7 +23,7 @@
         "url": "https://github.com/DotJoshJohnson/vscode-xml/issues"
     },
     "engines": {
-        "vscode": "^1.22.2"
+        "vscode": "^1.29.0"
     },
     "categories": [
         "Formatters",
@@ -36,6 +36,7 @@
         "onCommand:xmlTools.executeXQuery",
         "onCommand:xmlTools.formatAsXml",
         "onCommand:xmlTools.minifyXml",
+        "onCommand:xmlTools.runXSLTTransform",
         "onLanguage:xml",
         "onLanguage:xquery",
         "onLanguage:xsl"
@@ -62,6 +63,10 @@
             {
                 "command": "xmlTools.minifyXml",
                 "title": "XML Tools: Minify XML"
+            },
+            {
+                "command": "xmlTools.runXSLTTransform",
+                "title": "XML Tools: Run XSLT Transformation"
             }
         ],
         "configuration": {
@@ -250,11 +255,12 @@
         "@types/xmldom": "^0.1.29",
         "tslint": "^5.9.1",
         "typescript": "^2.6.1",
-        "vscode": "^1.1.16"
+        "vscode": "^1.1.26"
     },
     "dependencies": {
         "xmldom": "^0.1.27",
         "xpath": "0.0.27",
-        "xqlint": "^0.4.1"
+        "xqlint": "^0.4.1",
+        "xslt-processor": "^0.11.1"
     }
 }

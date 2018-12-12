@@ -1,10 +1,11 @@
 import * as assert from "assert";
-import { FormattingOptions } from "vscode";
 
 import { TestDataLoader } from "./test-utils/test-data-loader";
 
 import { XmlFormatter, XmlFormattingOptions } from "../formatting";
 import { V2XmlFormatter } from "../formatting/formatters";
+import { readFileSync } from "fs";
+import { XSLTTransform } from "../xslt/xslt-transform";
 
 describe("V2XmlFormatter", () => {
 
@@ -90,6 +91,13 @@ describe("V2XmlFormatter", () => {
 
         it("should support mixed content", () => {
             testFormatter(xmlFormatter, options, "issue-200");
+        });
+        it("show transform XML to XSLT", () => {
+            assert.doesNotThrow(() => {
+                const xml = TestDataLoader.load("xslt-transform.xml");
+                const xslt = TestDataLoader.load("xslt-transform.xsl");
+                new XSLTTransform(xml, xslt).apply();
+            });
         });
 
     });

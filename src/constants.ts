@@ -4,6 +4,7 @@ export namespace commands {
     export const formatAsXml = "xmlTools.formatAsXml";
     export const getCurrentXPath = "xmlTools.getCurrentXPath";
     export const minifyXml = "xmlTools.minifyXml";
+    export const runXSLTTransform = "xmlTools.runXSLTTransform";
 }
 
 export namespace contextKeys {

@@ -37,10 +37,10 @@ export class XmlTreeDataProvider implements TreeDataProvider<any> {
         const enableMetadata = Configuration.enableXmlTreeViewMetadata;
         const enableSync = Configuration.enableXmlTreeViewCursorSync;
 
-        const treeItem = new TreeItem(element.localName);
+        const treeItem = new TreeItem((<Element>element).localName);
 
         if (!this._xmlTraverser.isElement(element)) {
-            treeItem.label = `${element.localName} = "${element.nodeValue}"`;
+            treeItem.label = `${(<Element>element).localName} = "${element.nodeValue}"`;
         }
 
         else if (enableMetadata) {

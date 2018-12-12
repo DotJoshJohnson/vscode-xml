@@ -1,0 +1,48 @@
+<schedule>
+    <week>
+        <weektext>Orientation Week 1</weektext>
+        <start_date>2018-07-30</start_date>
+        <end_date>2018-08-11</end_date>
+        <events>
+            <event>
+                <event_id>2317</event_id>
+                <day>Sunday</day>
+                <start_date_time>2018-08-06T07:30:00</start_date_time>
+                <end_date_time>2018-08-06T12:00:00</end_date_time>
+                <length>270</length>
+                <event_title>Training</event_title>
+                <short_name>Training</short_name>
+                <instances>
+                    <instance>
+                        <start_date_time>2018-08-06T07:30:00</start_date_time>
+                        <end_date_time>2018-08-06T12:00:00</end_date_time>
+                        <room>See Course Website</room>
+                        <instructors>
+                            <instructor>... TBA</instructor>
+                        </instructors>
+                    </instance>
+                </instances>
+            </event>
+            <event>
+                <event_id>2316</event_id>
+                <day>Sunday</day>
+                <start_date_time>2018-08-06T08:10:00</start_date_time>
+                <end_date_time>2018-08-06T12:00:00</end_date_time>
+                <length>230</length>
+                <event_title>Challenge Course</event_title>
+                <short_name>Challenge</short_name>
+                <instances>
+                    <instance>
+                        <start_date_time>2018-08-06T08:10:00</start_date_time>
+                        <end_date_time>2018-08-06T12:00:00</end_date_time>
+                        <room>See Course Website</room>
+                        <instructors>
+                            <instructor>Person One</instructor>
+                            <instructor>Person Two</instructor>
+                        </instructors>
+                    </instance>
+                </instances>
+            </event>
+        </events>
+    </week>
+</schedule>
