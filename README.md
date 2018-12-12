@@ -13,6 +13,7 @@
 * [XQuery Linting](https://github.com/DotJoshJohnson/vscode-xml/wiki/xquery-linting)
 * [XQuery Execution](https://github.com/DotJoshJohnson/vscode-xml/wiki/xquery-script-execution)
 * [XQuery Code Completion](https://github.com/DotJoshJohnson/vscode-xml/wiki/xquery-code-completion)
+* XSLT Transformation
 
 ## Requirements
 * VS Code `1.22.2` or higher
