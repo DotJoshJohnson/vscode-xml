@@ -35,6 +35,8 @@
         "onCommand:xmlTools.evaluateXPath",
         "onCommand:xmlTools.executeXQuery",
         "onCommand:xmlTools.formatAsXml",
+        "onCommand:xmlTools.textToXml",
+        "onCommand:xmlTools.xmlToText",
         "onCommand:xmlTools.minifyXml",
         "onLanguage:xml",
         "onLanguage:xquery",
@@ -54,6 +56,14 @@
             {
                 "command": "xmlTools.formatAsXml",
                 "title": "XML Tools: Format as XML"
+            },
+            {
+                "command": "xmlTools.textToXml",
+                "title": "XML Tools: Convert text to XML (&lt;&gt; -> <>)"
+            },
+            {
+                "command": "xmlTools.xmlToText",
+                "title": "XML Tools: Convert XML to text  (<> -> &lt;&gt;)"
             },
             {
                 "command": "xmlTools.getCurrentXPath",
