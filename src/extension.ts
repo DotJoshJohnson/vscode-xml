@@ -1,18 +1,20 @@
 import {
     commands, languages, window, workspace, ExtensionContext, Memento,
-    TextEditor, TextEditorSelectionChangeEvent, TextEditorSelectionChangeKind
+    TextEditor, TextEditorSelectionChangeEvent, TextEditorSelectionChangeKind, DiagnosticCollection
     } from "vscode";
 
 import { createDocumentSelector, ExtensionState, Configuration } from "./common";
 import { XQueryCompletionItemProvider } from "./completion";
 import { XmlFormatterFactory, XmlFormattingEditProvider } from "./formatting";
-import { formatAsXml, minifyXml } from "./formatting/commands";
+import { formatAsXml, minifyXml, xmlToText, textToXml } from "./formatting/commands";
 import { XQueryLinter } from "./linting";
 import { XmlTreeDataProvider } from "./tree-view";
 import { evaluateXPath, getCurrentXPath } from "./xpath/commands";
 import { executeXQuery } from "./xquery-execution/commands";
 
 import * as constants from "./constants";
+
+let diagnosticCollectionXQuery: DiagnosticCollection;
 
 export function activate(context: ExtensionContext) {
     ExtensionState.configure(context);
@@ -30,13 +32,17 @@ export function activate(context: ExtensionContext) {
 
     context.subscriptions.push(
         commands.registerTextEditorCommand(constants.commands.formatAsXml, formatAsXml),
+        commands.registerTextEditorCommand(constants.commands.xmlToText, xmlToText),
+        commands.registerTextEditorCommand(constants.commands.textToXml, textToXml),
         commands.registerTextEditorCommand(constants.commands.minifyXml, minifyXml),
         languages.registerDocumentFormattingEditProvider(xmlXsdDocSelector, xmlFormattingEditProvider),
         languages.registerDocumentRangeFormattingEditProvider(xmlXsdDocSelector, xmlFormattingEditProvider)
     );
 
     /* Linting Features */
+    diagnosticCollectionXQuery = languages.createDiagnosticCollection(constants.diagnosticCollections.xquery);
     context.subscriptions.push(
+        diagnosticCollectionXQuery,
         window.onDidChangeActiveTextEditor(_handleChangeActiveTextEditor),
         window.onDidChangeTextEditorSelection(_handleChangeTextEditorSelection)
     );
@@ -85,9 +91,7 @@ function _handleContextChange(editor: TextEditor): void {
 
     switch (editor.document.languageId) {
         case constants.languageIds.xquery:
-            languages
-                .createDiagnosticCollection(constants.diagnosticCollections.xquery)
-                .set(editor.document.uri, new XQueryLinter().lint(editor.document.getText()));
+      diagnosticCollectionXQuery.set(editor.document.uri, new XQueryLinter().lint(editor.document.getText()));
             break;
     }
 }

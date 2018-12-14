@@ -20,7 +20,7 @@ export class V2XmlFormatter implements XmlFormatter {
         xml = xml.replace(/"\s+(?=[^\s]+=)/g, "\" "); // spaces between attributes
         xml = xml.replace(/"\s+(?=>)/g, "\""); // spaces between the last attribute and tag close (>)
         xml = xml.replace(/"\s+(?=\/>)/g, "\" "); // spaces between the last attribute and tag close (/>)
-        xml = xml.replace(/[^ <>="]\s+[^ <>="]+=/g, (match: string) => { // spaces between the node name and the first attribute
+        xml = xml.replace(/(?!<!\[CDATA\[)[^ <>="]\s+[^ <>="]+=(?![^<]*?\]\]>)/g, (match: string) => { // spaces between the node name and the first attribute
             return match.replace(/\s+/g, " ");
         });
 
@@ -29,7 +29,7 @@ export class V2XmlFormatter implements XmlFormatter {
 
         let output = "";
 
-        let indentLevel = 0;
+        let indentLevel = options.initialIndentLevel || 0;
         let attributeQuote = "";
         let lineBreakSpree = false;
         let lastWordCharacter: string | undefined;
@@ -194,7 +194,7 @@ export class V2XmlFormatter implements XmlFormatter {
                 && cc === "/"
                 && pc !== " "
                 && options.enforcePrettySelfClosingTagOnFormat) {
-                    output += " /";
+                output += " /";
             }
 
             // exiting StartTag or StartTag.StartTagName, entering Text

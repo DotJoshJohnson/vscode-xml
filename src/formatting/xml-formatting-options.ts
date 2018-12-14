@@ -10,6 +10,7 @@ export interface XmlFormattingOptions {
     removeCommentsOnMinify: boolean;
     splitAttributesOnFormat: boolean;
     splitXmlnsOnFormat: boolean;
+    initialIndentLevel?: number;
 }
 
 export class XmlFormattingOptionsFactory {
@@ -20,7 +21,8 @@ export class XmlFormattingOptionsFactory {
             newLine: (document.eol === EndOfLine.CRLF) ? "\r\n" : "\n",
             removeCommentsOnMinify: Configuration.removeCommentsOnMinify(document.uri),
             splitAttributesOnFormat: Configuration.splitAttributesOnFormat(document.uri),
-            splitXmlnsOnFormat: Configuration.splitXmlnsOnFormat(document.uri)
+            splitXmlnsOnFormat: Configuration.splitXmlnsOnFormat(document.uri),
+            initialIndentLevel: 0
         };
     }
 }
