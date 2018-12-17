@@ -100,6 +100,9 @@ describe("V2XmlFormatter", () => {
             });
         });
 
+        it("should not remove spaces between the node name and the first attribute within CDATA", () => {
+            testFormatter(xmlFormatter, options, "issue-227");
+        });
     });
 
 });

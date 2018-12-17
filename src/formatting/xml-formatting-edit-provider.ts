@@ -22,10 +22,43 @@ export class XmlFormattingEditProvider implements DocumentFormattingEditProvider
     }
 
     provideDocumentRangeFormattingEdits(document: TextDocument, range: Range, options: FormattingOptions, token: CancellationToken): ProviderResult<TextEdit[]> {
-        let xml = document.getText(range);
+        const allXml = document.getText();
+        let selectedXml = document.getText(range);
+        const extFormattingOptions = XmlFormattingOptionsFactory.getXmlFormattingOptions(options, document);
 
-        xml = this.xmlFormatter.formatXml(xml, XmlFormattingOptionsFactory.getXmlFormattingOptions(options, document));
+        const selectionStartOffset = document.offsetAt(range.start);
+        let tabCount = 0;
+        let spaceCount = 0;
 
-        return [ TextEdit.replace(range, xml) ];
+        for (let i = (selectionStartOffset - 1); i >= 0; i--) {
+            const cc = allXml.charAt(i);
+
+            if (/\t/.test(cc)) {
+                tabCount++;
+            }
+
+            else if (/ /.test(cc)) {
+                spaceCount++;
+            }
+
+            else {
+                break;
+            }
+        }
+
+        if (options.insertSpaces) {
+            extFormattingOptions.initialIndentLevel = Math.ceil(spaceCount / (options.tabSize || 1));
+        }
+
+        else {
+            extFormattingOptions.initialIndentLevel = tabCount;
+        }
+
+        selectedXml = this.xmlFormatter.formatXml(selectedXml, extFormattingOptions);
+
+        // we need to remove the leading whitespace because the formatter will add an indent before the first element
+        selectedXml = selectedXml.replace(/^\s+/, "");
+
+        return [TextEdit.replace(range, selectedXml)];
     }
 }

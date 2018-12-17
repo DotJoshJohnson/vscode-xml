@@ -2,7 +2,7 @@
     "name": "xml",
     "displayName": "XML Tools",
     "description": "XML Formatting, XQuery, and XPath Tools for Visual Studio Code",
-    "version": "2.3.2",
+    "version": "2.4.0",
     "preview": false,
     "publisher": "DotJoshJohnson",
     "author": {
@@ -35,6 +35,8 @@
         "onCommand:xmlTools.evaluateXPath",
         "onCommand:xmlTools.executeXQuery",
         "onCommand:xmlTools.formatAsXml",
+        "onCommand:xmlTools.textToXml",
+        "onCommand:xmlTools.xmlToText",
         "onCommand:xmlTools.minifyXml",
         "onCommand:xmlTools.runXSLTTransform",
         "onLanguage:xml",
@@ -55,6 +57,14 @@
             {
                 "command": "xmlTools.formatAsXml",
                 "title": "XML Tools: Format as XML"
+            },
+            {
+                "command": "xmlTools.textToXml",
+                "title": "XML Tools: Convert text to XML (&lt;&gt; -> <>)"
+            },
+            {
+                "command": "xmlTools.xmlToText",
+                "title": "XML Tools: Convert XML to text  (<> -> &lt;&gt;)"
             },
             {
                 "command": "xmlTools.getCurrentXPath",
@@ -188,6 +198,16 @@
             }
         ],
         "languages": [
+            {
+                "id": "xml",
+                "extensions": [
+                    ".config",
+                    ".csproj",
+                    ".xml",
+                    ".xsd",
+                    ".xsl"
+                ]
+            },
             {
                 "id": "xquery",
                 "aliases": [
