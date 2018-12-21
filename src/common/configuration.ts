@@ -43,6 +43,10 @@ export class Configuration {
         return this._getForWindow<string>("xqueryExecutionInputSearchPattern");
     }
 
+    static addNewLineAfterSelfClosingTag(resource: Uri): boolean {
+        return this._getForResource<boolean>("addNewLineAfterSelfClosingTag", resource);
+    }
+
     static enforcePrettySelfClosingTagOnFormat(resource: Uri): boolean {
         return this._getForResource<boolean>("enforcePrettySelfClosingTagOnFormat", resource);
     }

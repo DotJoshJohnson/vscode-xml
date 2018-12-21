@@ -21,7 +21,9 @@ describe("V2XmlFormatter", () => {
             newLine: "\r\n",
             removeCommentsOnMinify: false,
             splitAttributesOnFormat: false,
-            splitXmlnsOnFormat: true
+            splitXmlnsOnFormat: true,
+            addNewLineAfterSelfClosingTag: false
+
         };
 
         it("should handle basic XML", () => {
@@ -97,7 +99,11 @@ describe("V2XmlFormatter", () => {
         });
 
         it("should optionally add line break after self-closing tag", () => {
+            options.addNewLineAfterSelfClosingTag = true;
+
             testFormatter(xmlFormatter, options, "issue-235");
+
+            options.addNewLineAfterSelfClosingTag = false;
         });
     });
 

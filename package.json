@@ -78,6 +78,12 @@
             "title": "XML Tools Configuration",
             "type": "object",
             "properties": {
+                "xmlTools.addNewLineAfterSelfClosingTag": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Adds a newline after self-closing XML tags on format.",
+                    "scope": "resource"
+                },
                 "xmlTools.enableXmlTreeView": {
                     "type": "boolean",
                     "default": true,
