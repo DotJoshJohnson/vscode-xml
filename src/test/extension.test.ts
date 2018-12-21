@@ -95,6 +95,10 @@ describe("V2XmlFormatter", () => {
         it("should not remove spaces between the node name and the first attribute within CDATA", () => {
             testFormatter(xmlFormatter, options, "issue-227");
         });
+
+        it("should optionally add line break after self-closing tag", () => {
+            testFormatter(xmlFormatter, options, "issue-235");
+        });
     });
 
 });
