@@ -224,7 +224,9 @@ export class V2XmlFormatter implements XmlFormatter {
 
             // entering EndTag
             else if (isLocation(Location.Text) && cc === "<" && nc === "/") {
-                indentLevel--;
+                if (!inMixedContent) {
+                    indentLevel--;
+                }
 
                 refreshMixedContentFlag();
 
