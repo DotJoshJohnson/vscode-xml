@@ -107,11 +107,22 @@ export class XmlTraverser {
             columnRange[0] = (columnRange[0] - contextNode.nodeName.length);
         }
 
-        if (lineNumber === (position.line + 1) && ((position.character + 1) >= columnRange[0] && (position.character + 1) < columnRange[1])) {
+        if (this._checkRange(lineNumber, position, columnRange)) {
             return contextNode;
         }
 
         if (this.isElement(contextNode)) {
+            // if the element contains text, check to see if the cursor is present in the text
+            const textContent = (contextNode as Element).textContent;
+
+            if (textContent) {
+                columnRange[1] = (columnRange[1] + textContent.length);
+
+                if (this._checkRange(lineNumber, position, columnRange)) {
+                    return contextNode;
+                }
+            }
+
             const children = [...this.getChildAttributeArray(<Element>contextNode), ...this.getChildElementArray(contextNode)];
             let result: Node;
 
@@ -127,6 +138,10 @@ export class XmlTraverser {
         }
 
         return undefined;
+    }
+
+    private _checkRange(lineNumber: number, position: Position, columnRange: number[]): boolean {
+        return (lineNumber === (position.line + 1) && ((position.character + 1) >= columnRange[0] && (position.character + 1) < columnRange[1]));
     }
 
     private _getNodeWidthInCharacters(node: Node) {
