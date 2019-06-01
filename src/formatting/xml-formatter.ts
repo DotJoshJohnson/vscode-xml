@@ -29,17 +29,6 @@ export class XmlFormatterFactory {
             default: xmlFormatterImplementation = new V2XmlFormatter(); break;
         }
 
-        // warn users about the new formatter
-        const formatterWarningKey = "xmlTools.v2FormatterWarning.shown";
-
-        if (!ExtensionState.global.get<boolean>(formatterWarningKey) && xmlFormatterImplementation instanceof V2XmlFormatter) {
-            // tslint:disable-next-line:max-line-length
-            window.showInformationMessage("Heads up! We've rewritten the XML formatter. If you liked the old one better, it's still there. Just set the 'xmlTools.xmlFormatterImplementation' setting to 'classic'.")
-                .then(() => {
-                    ExtensionState.global.update(formatterWarningKey, true);
-                });
-        }
-
         return (XmlFormatterFactory._xmlFormatter = xmlFormatterImplementation);
     }
 }
