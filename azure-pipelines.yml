@@ -1,0 +1,32 @@
+name: "$(Build.SourceBranchName)-$(Build.SourceVersion)$(Rev:.r)"
+pr:
+  - master
+  
+trigger:
+  - "refs/tags/*"
+
+pool:
+  vmImage: "windows-2019"
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: "10.x"
+  displayName: "Install NodeJS"
+
+- script: |
+    npm install -g vsce
+  displayName: "Install VSCE"
+
+- script: |
+    npm install
+  displayName: "NPM Install"
+
+- script: |
+    vsce package --out "$(Build.ArtifactStagingDirectory)/xml-$(Build.SourceBranchName)-$(Build.SourceVersion).vsix"
+  displayName: "VSCE Package"
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: $(Build.ArtifactStagingDirectory)
+    artifactName: drop
