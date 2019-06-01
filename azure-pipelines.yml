@@ -1,3 +1,4 @@
+name: $(Build.SourceBranch)$(Rev:.r)
 pr:
   - master
   
@@ -22,7 +23,7 @@ steps:
   displayName: "NPM Install"
 
 - script: |
-    vsce package --out $(Build.ArtifactStagingDirectory)
+    vsce package --out "$(Build.ArtifactStagingDirectory)/xml-tools.vsix"
   displayName: "VSCE Package"
 
 - task: PublishBuildArtifacts@1
