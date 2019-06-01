@@ -44,7 +44,7 @@ describe("V2XmlFormatter", () => {
             testFormatter(xmlFormatter, options, "preformatted");
         });
 
-        it ("should preserve line breaks between elements", () => {
+        it("should preserve line breaks between elements", () => {
             testFormatter(xmlFormatter, options, "preserve-breaks");
         });
 
@@ -94,6 +94,10 @@ describe("V2XmlFormatter", () => {
 
         it("should not remove spaces between the node name and the first attribute within CDATA", () => {
             testFormatter(xmlFormatter, options, "issue-227");
+        });
+
+        it("should handle mixed content as a child of another element", () => {
+            testFormatter(xmlFormatter, options, "issue-257");
         });
     });
 
