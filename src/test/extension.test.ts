@@ -101,6 +101,26 @@ describe("V2XmlFormatter", () => {
         });
     });
 
+    describe("#minifyXml(xml, options)", () => {
+
+        const options = {
+            editorOptions: {
+                insertSpaces: true,
+                tabSize: 4
+            },
+            enforcePrettySelfClosingTagOnFormat: false,
+            newLine: "\r\n",
+            removeCommentsOnMinify: false,
+            splitAttributesOnFormat: false,
+            splitXmlnsOnFormat: true
+        };
+
+        it("should preserve whitespace on minify if xml:space is set to 'preserve-whitespace'", () => {
+            testMinifier(xmlFormatter, options, "issue-262");
+        });
+
+    });
+
 });
 
 function testFormatter(xmlFormatter: XmlFormatter, options: XmlFormattingOptions, fileLabel: string): void {
@@ -110,4 +130,13 @@ function testFormatter(xmlFormatter: XmlFormatter, options: XmlFormattingOptions
     const actualFormattedXml = xmlFormatter.formatXml(unformattedXml, options);
 
     assert.equal(actualFormattedXml, expectedFormattedXml, "Actual formatted XML does not match expected formatted XML.");
+}
+
+function testMinifier(xmlFormatter: XmlFormatter, options: XmlFormattingOptions, fileLabel: string): void {
+    const expectedMinifiedXml = TestDataLoader.load(`${fileLabel}.minified.xml`);
+    const unminifiedXml = TestDataLoader.load(`${fileLabel}.unminified.xml`);
+
+    const actualMinifiedXml = xmlFormatter.minifyXml(unminifiedXml, options);
+
+    assert.equal(actualMinifiedXml, expectedMinifiedXml, "Actual minified XML does not match expected minified XML.");
 }

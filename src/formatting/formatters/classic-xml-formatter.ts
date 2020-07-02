@@ -66,7 +66,7 @@ export class ClassicXmlFormatter implements XmlFormatter {
     }
 
     minifyXml(xml: string, options: XmlFormattingOptions): string {
-        xml = this._stripLineBreaks(options, xml); // all line breaks outside of CDATA elements
+        xml = this._stripLineBreaks(options, xml); // all line breaks outside of CDATA elements and comments
         xml = (options.removeCommentsOnMinify) ? xml.replace(/\<![ \r\n\t]*(--([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)\>/g, "") : xml;
         xml = xml.replace(/>\s{0,}</g, "><"); // insignificant whitespace between tags
         xml = xml.replace(/"\s+(?=[^\s]+=)/g, "\" "); // spaces between attributes
@@ -87,28 +87,62 @@ export class ClassicXmlFormatter implements XmlFormatter {
         return `${options.newLine}${indentPattern.repeat(level)}${trailingValue}`;
     }
 
+    /**
+     * Removes line breaks outside of CDATA, comment, and xml:space="preserve" blocks.
+     */
     private _stripLineBreaks(options: XmlFormattingOptions, xml: string): string {
         let output = "";
         const inTag = false;
         const inTagName = false;
-        let inCdata = false;
+        let inCdataOrComment = false;
         const inAttribute = false;
+
+        let preserveSpace = false;
+        let level = 0;
+        let levelpreserveSpaceActivated = 0;
 
         for (let i = 0; i < xml.length; i++) {
             const char: string = xml.charAt(i);
             const prev: string = xml.charAt(i - 1);
             const next: string = xml.charAt(i + 1);
 
+            // CDATA and comments
             if (char === "!" && (xml.substr(i, 8) === "![CDATA[" || xml.substr(i, 3) === "!--")) {
-                inCdata = true;
-            } else if (char === "]" && (xml.substr(i, 3) === "]]>")) {
-                inCdata = false;
-            } else if (char === "-" && (xml.substr(i, 3) === "-->")) {
-                inCdata = false;
-            } else if (char.search(/[\r\n]/g) > -1 && !inCdata) {
+                inCdataOrComment = true;
+            }
+
+            else if (char === "]" && (xml.substr(i, 3) === "]]>")) {
+                inCdataOrComment = false;
+            }
+
+            else if (char === "-" && (xml.substr(i, 3) === "-->")) {
+                inCdataOrComment = false;
+            }
+
+            // xml:space="preserve"
+            if (char === ">" && prev !== "/") {
+                level++;
+            }
+
+            else if (!inCdataOrComment && char === "/" && (prev === "<" || next === ">")) {
+                level--;
+            }
+
+            if (char === "x" && (xml.substr(i, 20).toLowerCase() === `xml:space="preserve"`)) {
+                preserveSpace = true;
+                levelpreserveSpaceActivated = level;
+            }
+
+            else if (!inCdataOrComment && preserveSpace && (char === "/" && (prev === "<" || next === ">")) && (level === levelpreserveSpaceActivated)) {
+                preserveSpace = false;
+            }
+
+            if (char.search(/[\r\n]/g) > -1 && !inCdataOrComment && !preserveSpace) {
                 if (/\r/.test(char) && /\S|\r|\n/.test(prev) && /\S|\r|\n/.test(xml.charAt(i + options.newLine.length))) {
                     output += char;
-                } else if (/\n/.test(char) && /\S|\r|\n/.test(xml.charAt(i - options.newLine.length)) && /\S|\r|\n/.test(next)) {
+                }
+
+                else if (/\n/.test(char) && /\S|\r|\n/.test(xml.charAt(i - options.newLine.length)) && /\S|\r|\n/.test(next)) {
                     output += char;
                 }
 
