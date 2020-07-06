@@ -291,7 +291,7 @@ export class V2XmlFormatter implements XmlFormatter {
     }
 
     private _getIndent(options: XmlFormattingOptions, indentLevel: number): string {
-        return ((options.editorOptions.insertSpaces) ? " ".repeat(options.editorOptions.tabSize) : "\t").repeat(indentLevel);
+        return ((options.editorOptions.insertSpaces) ? " ".repeat(options.editorOptions.tabSize) : "\t").repeat(Math.max(indentLevel, 0));
     }
 
     private _removeTrailingNonBreakingWhitespace(text: string): string {
