@@ -23,6 +23,7 @@ export function textToXml(textEditor: TextEditor): void {
                 .replace(/&lt;/g, "<")
                 .replace(/&gt;/g, ">")
                 .replace(/&amp;/g, "&")
+                // tslint:disable-next-line
                 .replace(/&quot;/g, '"')
                 .replace(/&apos;/g, "'");
 

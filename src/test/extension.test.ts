@@ -124,19 +124,21 @@ describe("V2XmlFormatter", () => {
 });
 
 function testFormatter(xmlFormatter: XmlFormatter, options: XmlFormattingOptions, fileLabel: string): void {
-    const expectedFormattedXml = TestDataLoader.load(`${fileLabel}.formatted.xml`);
+    const expectedFormattedXml = TestDataLoader.load(`${fileLabel}.formatted.xml`).replace(/\r/g, "");
     const unformattedXml = TestDataLoader.load(`${fileLabel}.unformatted.xml`);
 
-    const actualFormattedXml = xmlFormatter.formatXml(unformattedXml, options);
+    const actualFormattedXml = xmlFormatter.formatXml(unformattedXml, options).replace(/\r/g, "");
 
-    assert.equal(actualFormattedXml, expectedFormattedXml, "Actual formatted XML does not match expected formatted XML.");
+    // tslint:disable-next-line
+    assert.ok((actualFormattedXml === expectedFormattedXml), `Actual formatted XML does not match expected formatted XML.\n\nACTUAL\n${actualFormattedXml.replace(/\s/, "~ws~")}\n\nEXPECTED\n${expectedFormattedXml.replace(/\s/, "~ws~")}`);
 }
 
 function testMinifier(xmlFormatter: XmlFormatter, options: XmlFormattingOptions, fileLabel: string): void {
-    const expectedMinifiedXml = TestDataLoader.load(`${fileLabel}.minified.xml`);
+    const expectedMinifiedXml = TestDataLoader.load(`${fileLabel}.minified.xml`).replace(/\r/g, "");
     const unminifiedXml = TestDataLoader.load(`${fileLabel}.unminified.xml`);
 
-    const actualMinifiedXml = xmlFormatter.minifyXml(unminifiedXml, options);
+    const actualMinifiedXml = xmlFormatter.minifyXml(unminifiedXml, options).replace(/\r/g, "");
 
-    assert.equal(actualMinifiedXml, expectedMinifiedXml, "Actual minified XML does not match expected minified XML.");
+    // tslint:disable-next-line
+    assert.ok((actualMinifiedXml === expectedMinifiedXml), `Actual minified XML does not match expected minified XML.\n\nACTUAL\n${actualMinifiedXml.replace(/\s/, "~ws~")}\n\nEXPECTED\n${expectedMinifiedXml.replace(/\s/, "~ws~")}`);
 }
