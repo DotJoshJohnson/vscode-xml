@@ -124,21 +124,21 @@ describe("V2XmlFormatter", () => {
 });
 
 function testFormatter(xmlFormatter: XmlFormatter, options: XmlFormattingOptions, fileLabel: string): void {
-    const expectedFormattedXml = TestDataLoader.load(`${fileLabel}.formatted.xml`).replace(/\r/, "").trim();
+    const expectedFormattedXml = TestDataLoader.load(`${fileLabel}.formatted.xml`).replace(/\r/g, "");
     const unformattedXml = TestDataLoader.load(`${fileLabel}.unformatted.xml`);
 
-    const actualFormattedXml = xmlFormatter.formatXml(unformattedXml, options).replace(/\r/, "").trim();
+    const actualFormattedXml = xmlFormatter.formatXml(unformattedXml, options).replace(/\r/g, "");
 
     // tslint:disable-next-line
-    assert.ok((actualFormattedXml === expectedFormattedXml), `Actual formatted XML does not match expected formatted XML.\n\nACTUAL\n${actualFormattedXml.replace(/\n/, "~n").replace(" ", "~s")}\n\nEXPECTED\n${expectedFormattedXml.replace(/\n/, "~n").replace(" ", "~s")}`);
+    assert.ok((actualFormattedXml === expectedFormattedXml), `Actual formatted XML does not match expected formatted XML.\n\nACTUAL\n${actualFormattedXml}\n\nEXPECTED\n${expectedFormattedXml}`);
 }
 
 function testMinifier(xmlFormatter: XmlFormatter, options: XmlFormattingOptions, fileLabel: string): void {
-    const expectedMinifiedXml = TestDataLoader.load(`${fileLabel}.minified.xml`).replace(/\r/, "").trim();
+    const expectedMinifiedXml = TestDataLoader.load(`${fileLabel}.minified.xml`).replace(/\r/g, "");
     const unminifiedXml = TestDataLoader.load(`${fileLabel}.unminified.xml`);
 
-    const actualMinifiedXml = xmlFormatter.minifyXml(unminifiedXml, options).replace(/\r/, "").trim();
+    const actualMinifiedXml = xmlFormatter.minifyXml(unminifiedXml, options).replace(/\r/g, "");
 
     // tslint:disable-next-line
-    assert.ok((actualMinifiedXml === expectedMinifiedXml), `Actual minified XML does not match expected minified XML.\n\nACTUAL\n${actualMinifiedXml.replace(/\n/, "~n").replace(" ", "~s")}\n\nEXPECTED\n${expectedMinifiedXml.replace(/\n/, "~n").replace(" ", "~s")}`);
+    assert.ok((actualMinifiedXml === expectedMinifiedXml), `Actual minified XML does not match expected minified XML.\n\nACTUAL\n${actualMinifiedXml}\n\nEXPECTED\n${expectedMinifiedXml}`);
 }
