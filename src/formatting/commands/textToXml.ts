@@ -19,7 +19,14 @@ export function textToXml(textEditor: TextEditor): void {
                 );
             }
             const txt = textEditor.document.getText(new Range(selection.start, selection.end));
-            const transformed = txt.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+            const transformed = txt
+                .replace(/&lt;/g, "<")
+                .replace(/&gt;/g, ">")
+                .replace(/&amp;/g, "&")
+                // tslint:disable-next-line
+                .replace(/&quot;/g, '"')
+                .replace(/&apos;/g, "'");
+
             textEdit.replace(selection, transformed);
         });
     });

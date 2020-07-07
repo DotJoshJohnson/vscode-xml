@@ -99,15 +99,50 @@ describe("V2XmlFormatter", () => {
         it("should handle mixed content as a child of another element", () => {
             testFormatter(xmlFormatter, options, "issue-257");
         });
+
+        it("should not touch CDATA content", () => {
+            testFormatter(xmlFormatter, options, "issue-293");
+        });
+    });
+
+    describe("#minifyXml(xml, options)", () => {
+
+        const options = {
+            editorOptions: {
+                insertSpaces: true,
+                tabSize: 4
+            },
+            enforcePrettySelfClosingTagOnFormat: false,
+            newLine: "\r\n",
+            removeCommentsOnMinify: false,
+            splitAttributesOnFormat: false,
+            splitXmlnsOnFormat: true
+        };
+
+        it("should preserve whitespace on minify if xml:space is set to 'preserve-whitespace'", () => {
+            testMinifier(xmlFormatter, options, "issue-262");
+        });
+
     });
 
 });
 
 function testFormatter(xmlFormatter: XmlFormatter, options: XmlFormattingOptions, fileLabel: string): void {
-    const expectedFormattedXml = TestDataLoader.load(`${fileLabel}.formatted.xml`);
+    const expectedFormattedXml = TestDataLoader.load(`${fileLabel}.formatted.xml`).replace(/\r/g, "");
     const unformattedXml = TestDataLoader.load(`${fileLabel}.unformatted.xml`);
 
-    const actualFormattedXml = xmlFormatter.formatXml(unformattedXml, options);
+    const actualFormattedXml = xmlFormatter.formatXml(unformattedXml, options).replace(/\r/g, "");
 
-    assert.equal(actualFormattedXml, expectedFormattedXml, "Actual formatted XML does not match expected formatted XML.");
+    // tslint:disable-next-line
+    assert.ok((actualFormattedXml === expectedFormattedXml), `Actual formatted XML does not match expected formatted XML.\n\nACTUAL\n${actualFormattedXml.replace(/\s/g, "~ws~")}\n\nEXPECTED\n${expectedFormattedXml.replace(/\s/g, "~ws~")}`);
+}
+
+function testMinifier(xmlFormatter: XmlFormatter, options: XmlFormattingOptions, fileLabel: string): void {
+    const expectedMinifiedXml = TestDataLoader.load(`${fileLabel}.minified.xml`).replace(/\r/g, "");
+    const unminifiedXml = TestDataLoader.load(`${fileLabel}.unminified.xml`);
+
+    const actualMinifiedXml = xmlFormatter.minifyXml(unminifiedXml, options).replace(/\r/g, "");
+
+    // tslint:disable-next-line
+    assert.ok((actualMinifiedXml === expectedMinifiedXml), `Actual minified XML does not match expected minified XML.\n\nACTUAL\n${actualMinifiedXml.replace(/\s/g, "~ws~")}\n\nEXPECTED\n${expectedMinifiedXml.replace(/\s/g, "~ws~")}`);
 }

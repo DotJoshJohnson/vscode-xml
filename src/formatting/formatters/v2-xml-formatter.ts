@@ -7,9 +7,9 @@ const MagicalStringOfWonders = "~::~MAAAGIC~::~";
 /* tslint:disable no-use-before-declare */
 export class V2XmlFormatter implements XmlFormatter {
     formatXml(xml: string, options: XmlFormattingOptions): string {
-        // this replaces all "<" brackets inside of comments to a magical string
-        // so the following minification steps don't mess with comment formatting
-        xml = this._sanitizeComments(xml);
+        // this replaces all "<" brackets inside of comments and CDATA to a magical string
+        // so the following minification steps don't mess with comment and CDATA formatting
+        xml = this._sanitizeCommentsAndCDATA(xml);
 
         // remove whitespace from between tags, except for line breaks
         xml = xml.replace(/>\s{0,}</g, (match: string) => {
@@ -25,7 +25,7 @@ export class V2XmlFormatter implements XmlFormatter {
         });
 
         // the coast is clear - we can drop those "<" brackets back in
-        xml = this._unsanitizeComments(xml);
+        xml = this._unsanitizeCommentsAndCDATA(xml);
 
         let output = "";
 
@@ -291,16 +291,16 @@ export class V2XmlFormatter implements XmlFormatter {
     }
 
     private _getIndent(options: XmlFormattingOptions, indentLevel: number): string {
-        return ((options.editorOptions.insertSpaces) ? " ".repeat(options.editorOptions.tabSize) : "\t").repeat(indentLevel);
+        return ((options.editorOptions.insertSpaces) ? " ".repeat(options.editorOptions.tabSize) : "\t").repeat(Math.max(indentLevel, 0));
     }
 
     private _removeTrailingNonBreakingWhitespace(text: string): string {
         return text.replace(/[^\r\n\S]+$/, "");
     }
 
-    private _sanitizeComments(xml: string): string {
+    private _sanitizeCommentsAndCDATA(xml: string): string {
         let output = "";
-        let inComment = false;
+        let inCommentOrCDATA = false;
 
         for (let i = 0; i < xml.length; i++) {
             const cc = xml[i];
@@ -308,20 +308,20 @@ export class V2XmlFormatter implements XmlFormatter {
             const nnc = xml.charAt(i + 2);
             const pc = xml.charAt(i - 1);
 
-            if (!inComment && cc === "<" && nc === "!" && nnc === "-") {
-                inComment = true;
-                output += "<!--";
+            if (!inCommentOrCDATA && cc === "<" && nc === "!" && (nnc === "-" || nnc === "[")) {
+                inCommentOrCDATA = true;
+                output += (nnc === "-") ? "<!--" : "<![CDATA[";
 
-                i += 3;
+                i += (nnc === "-") ? 3 : 8;
             }
 
-            else if (inComment && cc === "<") {
+            else if (inCommentOrCDATA && cc === "<") {
                 output += MagicalStringOfWonders;
             }
 
-            else if (inComment && cc === "-" && nc === "-" && nnc === ">") {
-                inComment = false;
-                output += "-->";
+            else if (inCommentOrCDATA && (cc === "-" && nc === "-" && nnc === ">") || (cc === "]" && nc === "]" && nnc === ">")) {
+                inCommentOrCDATA = false;
+                output += (cc === "-") ? "-->" : "]]>";
 
                 i += 2;
             }
@@ -334,7 +334,7 @@ export class V2XmlFormatter implements XmlFormatter {
         return output;
     }
 
-    private _unsanitizeComments(xml: string): string {
+    private _unsanitizeCommentsAndCDATA(xml: string): string {
         return xml.replace(new RegExp(MagicalStringOfWonders, "g"), "<");
     }
 }

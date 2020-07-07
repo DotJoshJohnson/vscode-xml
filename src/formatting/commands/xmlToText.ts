@@ -19,7 +19,13 @@ export function xmlToText(textEditor: TextEditor): void {
                 );
             }
             const txt = textEditor.document.getText(new Range(selection.start, selection.end));
-            const transformed = txt.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            const transformed = txt
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/&/g, "&amp;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&apos;");
+
             textEdit.replace(selection, transformed);
         });
     });

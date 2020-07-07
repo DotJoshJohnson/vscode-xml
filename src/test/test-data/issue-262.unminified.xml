@@ -1,0 +1,18 @@
+<tests>
+<test>1.
+2.
+3.
+4.</test>
+<test xml:space="preserve">1.
+2.
+3.
+4.</test>
+<test>1.
+ 2.
+ 3.
+ 4.</test>
+<test xml:space="preserve">1.
+ 2.
+ 3.
+ 4.</test>
+</tests>
