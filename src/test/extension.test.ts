@@ -130,7 +130,7 @@ function testFormatter(xmlFormatter: XmlFormatter, options: XmlFormattingOptions
     const actualFormattedXml = xmlFormatter.formatXml(unformattedXml, options).replace(/\r/g, "");
 
     // tslint:disable-next-line
-    assert.ok((actualFormattedXml === expectedFormattedXml), `Actual formatted XML does not match expected formatted XML.\n\nACTUAL\n${actualFormattedXml}\n\nEXPECTED\n${expectedFormattedXml}`);
+    assert.ok((actualFormattedXml === expectedFormattedXml), `Actual formatted XML does not match expected formatted XML.\n\nACTUAL\n${actualFormattedXml.replace(/\s/, "~ws~")}\n\nEXPECTED\n${expectedFormattedXml.replace(/\s/, "~ws~")}`);
 }
 
 function testMinifier(xmlFormatter: XmlFormatter, options: XmlFormattingOptions, fileLabel: string): void {
@@ -140,5 +140,5 @@ function testMinifier(xmlFormatter: XmlFormatter, options: XmlFormattingOptions,
     const actualMinifiedXml = xmlFormatter.minifyXml(unminifiedXml, options).replace(/\r/g, "");
 
     // tslint:disable-next-line
-    assert.ok((actualMinifiedXml === expectedMinifiedXml), `Actual minified XML does not match expected minified XML.\n\nACTUAL\n${actualMinifiedXml}\n\nEXPECTED\n${expectedMinifiedXml}`);
+    assert.ok((actualMinifiedXml === expectedMinifiedXml), `Actual minified XML does not match expected minified XML.\n\nACTUAL\n${actualMinifiedXml.replace(/\s/, "~ws~")}\n\nEXPECTED\n${expectedMinifiedXml.replace(/\s/, "~ws~")}`);
 }
