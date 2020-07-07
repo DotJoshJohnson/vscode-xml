@@ -24,4 +24,4 @@ jobs:
     - name: "Publish to Marketplace"
       uses: "sigma/vsce-publish-action@v0.0.2"
       with:
-        vsce_token: ""
+        vsce_token: ${{ secrets.VSCE_TOKEN }}
