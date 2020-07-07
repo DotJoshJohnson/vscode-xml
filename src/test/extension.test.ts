@@ -129,6 +129,7 @@ function testFormatter(xmlFormatter: XmlFormatter, options: XmlFormattingOptions
 
     const actualFormattedXml = xmlFormatter.formatXml(unformattedXml, options).replace(/\r/, "");
 
+    // tslint:disable-next-line
     assert.ok((actualFormattedXml === expectedFormattedXml), `Actual formatted XML does not match expected formatted XML.\n\nACTUAL\n${actualFormattedXml}\n\nEXPECTED\n${expectedFormattedXml}`);
 }
 
@@ -138,5 +139,6 @@ function testMinifier(xmlFormatter: XmlFormatter, options: XmlFormattingOptions,
 
     const actualMinifiedXml = xmlFormatter.minifyXml(unminifiedXml, options).replace(/\r/, "");
 
+    // tslint:disable-next-line
     assert.ok((actualMinifiedXml === expectedMinifiedXml), `Actual minified XML does not match expected minified XML.\n\nACTUAL\n${actualMinifiedXml}\n\nEXPECTED\n${expectedMinifiedXml}`);
 }
