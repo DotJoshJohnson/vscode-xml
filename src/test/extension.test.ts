@@ -99,6 +99,10 @@ describe("V2XmlFormatter", () => {
         it("should handle mixed content as a child of another element", () => {
             testFormatter(xmlFormatter, options, "issue-257");
         });
+
+        it("should not touch CDATA content", () => {
+            testFormatter(xmlFormatter, options, "issue-293");
+        });
     });
 
     describe("#minifyXml(xml, options)", () => {
@@ -130,7 +134,7 @@ function testFormatter(xmlFormatter: XmlFormatter, options: XmlFormattingOptions
     const actualFormattedXml = xmlFormatter.formatXml(unformattedXml, options).replace(/\r/g, "");
 
     // tslint:disable-next-line
-    assert.ok((actualFormattedXml === expectedFormattedXml), `Actual formatted XML does not match expected formatted XML.\n\nACTUAL\n${actualFormattedXml.replace(/\s/, "~ws~")}\n\nEXPECTED\n${expectedFormattedXml.replace(/\s/, "~ws~")}`);
+    assert.ok((actualFormattedXml === expectedFormattedXml), `Actual formatted XML does not match expected formatted XML.\n\nACTUAL\n${actualFormattedXml.replace(/\s/g, "~ws~")}\n\nEXPECTED\n${expectedFormattedXml.replace(/\s/g, "~ws~")}`);
 }
 
 function testMinifier(xmlFormatter: XmlFormatter, options: XmlFormattingOptions, fileLabel: string): void {
@@ -140,5 +144,5 @@ function testMinifier(xmlFormatter: XmlFormatter, options: XmlFormattingOptions,
     const actualMinifiedXml = xmlFormatter.minifyXml(unminifiedXml, options).replace(/\r/g, "");
 
     // tslint:disable-next-line
-    assert.ok((actualMinifiedXml === expectedMinifiedXml), `Actual minified XML does not match expected minified XML.\n\nACTUAL\n${actualMinifiedXml.replace(/\s/, "~ws~")}\n\nEXPECTED\n${expectedMinifiedXml.replace(/\s/, "~ws~")}`);
+    assert.ok((actualMinifiedXml === expectedMinifiedXml), `Actual minified XML does not match expected minified XML.\n\nACTUAL\n${actualMinifiedXml.replace(/\s/g, "~ws~")}\n\nEXPECTED\n${expectedMinifiedXml.replace(/\s/g, "~ws~")}`);
 }
