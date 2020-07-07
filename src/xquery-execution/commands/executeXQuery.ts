@@ -78,7 +78,7 @@ export async function executeXQuery(editor: TextEditor, edit: TextEditorEdit): P
 
     for (let i = 0; i < args.length; i++) {
         if (i > 0) {
-            if (args[i - 1].search(/out|result/)) {
+            if (args[i].search(/out|result/) !== -1) {
                 outputPath = args[i];
                 outputPathPos = i;
             }
