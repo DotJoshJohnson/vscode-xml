@@ -103,6 +103,10 @@ describe("V2XmlFormatter", () => {
         it("should not touch CDATA content", () => {
             testFormatter(xmlFormatter, options, "issue-293");
         });
+
+        it("should not add trailing whitespace", () => {
+            testFormatter(xmlFormatter, options, "issue-288");
+        });
     });
 
     describe("#minifyXml(xml, options)", () => {
