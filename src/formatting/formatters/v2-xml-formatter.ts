@@ -163,6 +163,10 @@ export class V2XmlFormatter implements XmlFormatter {
                     && ((options.splitXmlnsOnFormat
                         && xml.substr(i, 5).toLowerCase() === "xmlns")
                         || options.splitAttributesOnFormat)) {
+
+                    // trim the end of output here to ensure there is no trailing whitespace (issue #288)
+                    output = this._removeTrailingNonBreakingWhitespace(output);
+
                     output += `${options.newLine}${this._getIndent(options, indentLevel)}`;
                 }
 
