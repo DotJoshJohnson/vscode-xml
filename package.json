@@ -200,7 +200,9 @@
                     ".csproj",
                     ".xml",
                     ".xsd",
-                    ".xsl"
+                    ".xsl",
+                    ".plist",
+                    ".mobileconfig"
                 ]
             },
             {
