@@ -2,7 +2,7 @@
     "name": "xml",
     "displayName": "XML Tools",
     "description": "XML Formatting, XQuery, and XPath Tools for Visual Studio Code",
-    "version": "2.5.0",
+    "version": "2.5.1",
     "preview": false,
     "publisher": "DotJoshJohnson",
     "author": {
