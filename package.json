@@ -159,7 +159,7 @@
                     "type": "string",
                     "default": "",
                     "description": "The full path to the executable to run when executing XQuery scripts.",
-                    "scope": "window"
+                    "scope": "machine"
                 },
                 "xmlTools.xqueryExecutionInputLimit": {
                     "type": "integer",
