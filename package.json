@@ -245,6 +245,11 @@
                     "command": "xmlTools.minifyXml",
                     "group": "1_modification@100",
                     "when": "editorLangId == 'xml'"
+                },
+                {
+                    "command": "xmlTools.getCurrentXPath",
+                    "group": "z_commands",
+                    "when": "editorLangId == 'xml'"
                 }
             ]
         },

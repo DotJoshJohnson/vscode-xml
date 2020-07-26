@@ -107,6 +107,10 @@ describe("V2XmlFormatter", () => {
         it("should not add trailing whitespace", () => {
             testFormatter(xmlFormatter, options, "issue-288");
         });
+
+        it("should handle mixed content on the same line as another element", () => {
+            testFormatter(xmlFormatter, options, "issue-294");
+        });
     });
 
     describe("#minifyXml(xml, options)", () => {
