@@ -108,7 +108,7 @@ describe("V2XmlFormatter", () => {
             testFormatter(xmlFormatter, options, "issue-288");
         });
 
-        it("should handle mixed content on the same line as another element", () => {
+        it("should handle mixed content on the same line as another element without error", () => {
             testFormatter(xmlFormatter, options, "issue-294");
         });
     });
