@@ -72,6 +72,10 @@
             {
                 "command": "xmlTools.minifyXml",
                 "title": "XML Tools: Minify XML"
+            },
+            {
+                "command": "xmlTools.minifyXmlSelection",
+                "title": "XML Tools: Minify XML (Selection)"
             }
         ],
         "configuration": {
@@ -245,6 +249,11 @@
                     "command": "xmlTools.minifyXml",
                     "group": "1_modification@100",
                     "when": "editorLangId == 'xml'"
+                },
+                {
+                    "command": "xmlTools.minifyXmlSelection",
+                    "group": "1_modification@100",
+                    "when": "editorLangId == 'xml' && editorHasSelection"
                 },
                 {
                     "command": "xmlTools.getCurrentXPath",
