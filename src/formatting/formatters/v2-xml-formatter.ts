@@ -17,12 +17,18 @@ export class V2XmlFormatter implements XmlFormatter {
         });
 
         // do some light minification to get rid of insignificant whitespace
-        xml = xml.replace(/"\s+(?=[^\s]+=)/g, "\" "); // spaces between attributes
+        if (!options.preserveSpacesBetweenAttributes) {
+            xml = xml.replace(/"\s+(?=[^\s]+=)/g, "\" "); // spaces between attributes
+        }
+
         xml = xml.replace(/"\s+(?=>)/g, "\""); // spaces between the last attribute and tag close (>)
         xml = xml.replace(/"\s+(?=\/>)/g, "\" "); // spaces between the last attribute and tag close (/>)
-        xml = xml.replace(/(?!<!\[CDATA\[)[^ <>="]\s+[^ <>="]+=(?![^<]*?\]\]>)/g, (match: string) => { // spaces between the node name and the first attribute
-            return match.replace(/\s+/g, " ");
-        });
+
+        if (!options.preserveSpacesBetweenAttributes) {
+            xml = xml.replace(/(?!<!\[CDATA\[)[^ <>="]\s+[^ <>="]+=(?![^<]*?\]\]>)/g, (match: string) => { // spaces between the node name and the first attribute
+                return match.replace(/\s+/g, " ");
+            });
+        }
 
         // the coast is clear - we can drop those "<" brackets back in
         xml = this._unsanitizeCommentsAndCDATA(xml);
