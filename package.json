@@ -176,6 +176,12 @@
                     "default": "**/*.xml",
                     "description": "The pattern used to search for input XML files when executing XQuery scripts.",
                     "scope": "window"
+                },
+                "xmlTools.preserveSpacesBetweenAttributes": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Preserves any spaces between attributes during formatting.",
+                    "scope": "resource"
                 }
             }
         },

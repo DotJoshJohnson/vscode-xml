@@ -21,7 +21,8 @@ describe("V2XmlFormatter", () => {
             newLine: "\r\n",
             removeCommentsOnMinify: false,
             splitAttributesOnFormat: false,
-            splitXmlnsOnFormat: true
+            splitXmlnsOnFormat: true,
+            preserveSpacesBetweenAttributes: false
         };
 
         it("should handle basic XML", () => {
@@ -111,6 +112,14 @@ describe("V2XmlFormatter", () => {
         it("should handle mixed content on the same line as another element without error", () => {
             testFormatter(xmlFormatter, options, "issue-294");
         });
+
+        it("should optionally preserve whitespace between attributes", () => {
+            options.preserveSpacesBetweenAttributes = true;
+
+            testFormatter(xmlFormatter, options, "issue-308");
+
+            options.preserveSpacesBetweenAttributes = false;
+        });
     });
 
     describe("#minifyXml(xml, options)", () => {
@@ -124,7 +133,8 @@ describe("V2XmlFormatter", () => {
             newLine: "\r\n",
             removeCommentsOnMinify: false,
             splitAttributesOnFormat: false,
-            splitXmlnsOnFormat: true
+            splitXmlnsOnFormat: true,
+            preserveSpacesBetweenAttributes: false
         };
 
         it("should preserve whitespace on minify if xml:space is set to 'preserve-whitespace'", () => {
