@@ -59,11 +59,15 @@ export class Configuration {
         return this._getForResource<boolean>("splitXmlnsOnFormat", resource);
     }
 
+    static preserveSpacesBetweenAttributes(resource: Uri): boolean {
+        return this._getForResource<boolean>("preserveSpacesBetweenAttributes", resource);
+    }
+
     private static _getForResource<T>(section: string, resource: Uri): T {
         return workspace.getConfiguration(ExtensionTopLevelSection, resource).get<T>(section);
     }
 
-    private static _getForWindow<T>(section: string): T  {
+    private static _getForWindow<T>(section: string): T {
         return workspace.getConfiguration(ExtensionTopLevelSection).get<T>(section);
     }
 }
