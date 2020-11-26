@@ -1,0 +1,11 @@
+<object type="output parameters">
+    <!-- output directory -->
+    <param name="output directory" type="string" default="output"></param>
+    <!-- output files -->
+    <param name="crystal file"     required="false" type="string" default="Slime_-_crystals"></param>
+    <param name="macrocell file"   required="false" type="string" default="Slime_-_macrocells"></param>
+    <param name="macrolayer file"  required="false" type="string" default="Slime_-_macrolayers"></param>
+    <param name="area file"        required="false" type="string" default="Nerd_-_Area"></param>
+    <param name="final stack file" required="false" type="string" default="Mads_-_Final_Stack"></param>
+    <param name="all stacks file"  required="false" type="string" default="Mads_-_All_Stacks"></param>
+</object>

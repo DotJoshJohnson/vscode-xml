@@ -1,7 +1,6 @@
 import { EndOfLine, FormattingOptions, TextDocument } from "vscode";
 
 import { Configuration } from "../common";
-import * as constants from "../constants";
 
 export interface XmlFormattingOptions {
     editorOptions: FormattingOptions;
@@ -11,6 +10,7 @@ export interface XmlFormattingOptions {
     splitAttributesOnFormat: boolean;
     splitXmlnsOnFormat: boolean;
     initialIndentLevel?: number;
+    preserveSpacesBetweenAttributes: boolean;
 }
 
 export class XmlFormattingOptionsFactory {
@@ -22,7 +22,8 @@ export class XmlFormattingOptionsFactory {
             removeCommentsOnMinify: Configuration.removeCommentsOnMinify(document.uri),
             splitAttributesOnFormat: Configuration.splitAttributesOnFormat(document.uri),
             splitXmlnsOnFormat: Configuration.splitXmlnsOnFormat(document.uri),
-            initialIndentLevel: 0
+            initialIndentLevel: 0,
+            preserveSpacesBetweenAttributes: Configuration.preserveSpacesBetweenAttributes(document.uri)
         };
     }
 }

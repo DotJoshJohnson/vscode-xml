@@ -6,6 +6,7 @@ export namespace commands {
     export const textToXml = "xmlTools.textToXml";
     export const getCurrentXPath = "xmlTools.getCurrentXPath";
     export const minifyXml = "xmlTools.minifyXml";
+    export const minifyXmlSelection = "xmlTools.minifyXmlSelection";
 }
 
 export namespace contextKeys {

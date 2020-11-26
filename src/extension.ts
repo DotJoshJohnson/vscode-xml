@@ -1,12 +1,12 @@
 import {
     commands, languages, window, workspace, ExtensionContext, Memento,
     TextEditor, TextEditorSelectionChangeEvent, TextEditorSelectionChangeKind, DiagnosticCollection
-    } from "vscode";
+} from "vscode";
 
 import { createDocumentSelector, ExtensionState, Configuration } from "./common";
 import { XQueryCompletionItemProvider } from "./completion";
 import { XmlFormatterFactory, XmlFormattingEditProvider } from "./formatting";
-import { formatAsXml, minifyXml, xmlToText, textToXml } from "./formatting/commands";
+import { formatAsXml, minifyXml, xmlToText, textToXml, minifyXmlSelection } from "./formatting/commands";
 import { XQueryLinter } from "./linting";
 import { XmlTreeDataProvider } from "./tree-view";
 import { evaluateXPath, getCurrentXPath } from "./xpath/commands";
@@ -35,6 +35,7 @@ export function activate(context: ExtensionContext) {
         commands.registerTextEditorCommand(constants.commands.xmlToText, xmlToText),
         commands.registerTextEditorCommand(constants.commands.textToXml, textToXml),
         commands.registerTextEditorCommand(constants.commands.minifyXml, minifyXml),
+        commands.registerTextEditorCommand(constants.commands.minifyXmlSelection, minifyXmlSelection),
         languages.registerDocumentFormattingEditProvider(xmlXsdDocSelector, xmlFormattingEditProvider),
         languages.registerDocumentRangeFormattingEditProvider(xmlXsdDocSelector, xmlFormattingEditProvider)
     );
@@ -91,7 +92,7 @@ function _handleContextChange(editor: TextEditor): void {
 
     switch (editor.document.languageId) {
         case constants.languageIds.xquery:
-      diagnosticCollectionXQuery.set(editor.document.uri, new XQueryLinter().lint(editor.document.getText()));
+            diagnosticCollectionXQuery.set(editor.document.uri, new XQueryLinter().lint(editor.document.getText()));
             break;
     }
 }
